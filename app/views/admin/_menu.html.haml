@@ -1,0 +1,15 @@
+%ul.nav
+  %li
+    = link_to "Dashboard", "/"
+  %li
+    = link_to "Clienten", "/admin/clients"
+  %li
+    = link_to "Oefeningen", exercises_path
+
+  - if current_user.has_role?(:admin) || current_user.has_role?(:superadmin)
+    %li
+      = link_to "Logopedisten", '/admin/logopedisten'
+    %li
+      = link_to "Alle gebruikers", '/admin/users'
+    %li
+      = link_to "Logs", '/admin/logs'

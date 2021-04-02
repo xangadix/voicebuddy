@@ -1,0 +1,6 @@
+= link_to "/app/oefening/#{exercise.id}", :class => "oefening_list_item" do
+  .thumbnail
+    = image_tag "ilse_screen"
+  .title= exercise.name
+  .preset.hidden= EXERCISES[exercise.preset.to_i][:name]
+  .arrow_right

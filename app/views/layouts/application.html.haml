@@ -1,0 +1,25 @@
+!!! 5
+%html{lang: I18n.locale}
+  %head
+    %title
+      VoiceBuddy
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    = stylesheet_link_tag 'application', :media => 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    = favicon_link_tag asset_path('favicon')
+    %link{:rel=>"apple-touch-icon", :sizes=>"128x128", :href=>"logo_128_touch_icon.png"}
+  %body#site
+
+    .grid-container
+      %header.header
+        = render partial: '/site/header'
+
+      .main-content
+        - flash.each do |type, msg|
+          .alert.alert-info= msg
+
+        = yield
+
+      %footer.footer

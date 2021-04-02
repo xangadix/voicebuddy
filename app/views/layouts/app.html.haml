@@ -1,0 +1,30 @@
+!!! 5
+%html{lang: I18n.locale}
+  %head
+    %title
+      VoiceBuddy
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    = stylesheet_link_tag 'application', :media => 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    = favicon_link_tag asset_path('favicon')
+    %link{:rel=>"apple-touch-icon", :sizes=>"128x128", :href=>"logo_128_touch_icon.png"}
+
+    %meta{:name=>"format-detection", :content=>"telephone=no"}
+    %meta{:name=>"msapplication-tap-highlight", :content=>"no"}
+    %meta{:name=>"viewport", :content=>"initial-scale=1, width=device-width, viewport-fit=cover"}
+    %meta{:name=>"color-scheme", :content=>"light dark"}
+
+
+  %body#app
+
+    .grid-container
+      %header.header
+        = render partial: '/app/header'
+
+      .main-content
+        = yield
+
+      .menu
+        = render partial: '/app/bottom_menu'

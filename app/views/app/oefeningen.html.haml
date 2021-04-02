@@ -1,0 +1,9 @@
+.fancy_header Oefeningen
+
+%br
+%br
+%br
+
+.oefeningen_container
+  - Exercise.each do |ex|
+    = render partial: 'app/oefening_list_item', :locals => {:exercise => ex}

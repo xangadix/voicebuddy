@@ -1,0 +1,16 @@
+.oefening
+  = link_to "/app/oefeningen", :class => "back_btn" do
+    .arrow_left
+
+  .fancy_header= @exercise.name
+  %br
+  %br
+  %video{:src=>"/videos/720p_5000kbps_h264_1.mp4", 'webkit-playsinline': "true", :playsinline=> "true", :controls => "true"}
+
+  %br
+  %br
+  %br
+
+  .fancy_sub_header= EXERCISES[@exercise.preset][:video] unless @exercise.preset.nil?
+
+  %code= @exercise.inspect

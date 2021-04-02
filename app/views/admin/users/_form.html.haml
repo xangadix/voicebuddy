@@ -1,0 +1,58 @@
+.vakje
+  = form_with( url: ( @user.persisted? ? "/admin/users/#{user.id}" : "/admin/users" ) , model: user, local: true) do |form|
+    - if user.errors.any?
+      #error_explanation
+        %h2
+          = pluralize(user.errors.count, "error")
+          prohibited this user from being saved:
+
+        %ul
+          - user.errors.full_messages.each do |message|
+            %li= message
+
+    %label name
+    = form.text_field :name
+    %br
+
+    %label email
+    = form.text_field :email
+    %br
+
+    %label roles
+    = form.select :roles, [["beheerder", :admin],["logopedist", :logopedist],["client", :client],["demo", :demo]], {}, {:multiple => true, :class=>"multiple_select"}
+    %br
+
+    - unless @user.persisted?
+      %label password
+      = form.password_field :password
+      %br
+
+      %label confirm password
+      = form.password_field :password
+
+    - if @user.persisted?
+      %hr
+      %h3 Huidige oefeningen
+      %ul.huidige_oefeningen
+        - @user.exercises.each do |ex|
+          = render partial: '/admin/oefening_item', :locals => {:exercise => ex}
+
+      %h3 Voeg oefening toe
+      = form.select :preset, EXERCISES.map{|e| [e["naam"],e["id"]] }, {}, {class:'test'}
+      %ul.beschikbare_oefeningen
+        - EXERCISES.each do |ex|
+          %li
+            = render partial: '/admin/oefening_new', :locals => {:exercise => ex}
+            = link_to "+ #{ex["naam"]}", "add_exercise/#{ex["id"]}", :class=>"btn"
+
+    %hr
+
+    %br
+    %br
+    %br.actions
+      = form.submit
+
+
+%br
+%hr
+%br

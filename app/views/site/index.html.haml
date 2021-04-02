@@ -1,0 +1,26 @@
+#index
+  %h1 Welkom bij Voicebuddy
+  %h5 Dit is de landingspagina
+  %hr
+  %br
+
+  - if current_user
+    Hallo gebruiker met email:
+    = current_user.email
+
+    = link_to "Ga direct naar uw omgeving", "/"
+  - else
+    = link_to "inloggen in uw omgeving", "/login"
+    %br
+    %br
+    = link_to "maak nieuwe account aan", "/users/sign_up"
+
+    %br
+    %br
+    %br
+
+  %hr
+
+  %br
+  %br
+  %br

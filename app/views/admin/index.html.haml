@@ -1,0 +1,9 @@
+.welcome
+  Welcome to the admin index
+  %pre= current_user.email
+
+.current_users
+  %h3 Current Users
+  - User.each do |u|
+    = "#{u.email}, <small> #{u.roles.to_sentence} </small>".html_safe
+    %br

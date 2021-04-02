@@ -1,0 +1,20 @@
+%li
+  %h3= exercise.name
+
+  .description= exercise.description
+  %br
+  = link_to "verwijder oefening", "remove_exercise/#{exercise.id}", :class => "btn btn-danger pull-right"
+  &nbsp;
+  = link_to "bewerk oefening", "/exercises/#{exercise.id}/edit", :class => "btn btn-turq pull-right"
+  &nbsp;
+  = link_to "bekijk oefening", "/view_exercise/#{exercise.id}", :class => "btn btn-danger pull-right"
+
+  %br
+  = link_to "zet herinnering", "/view_exercise/#{exercise.id}", :class => "btn btn-danger"
+  = datetime_field_tag "reminder_date", (DateTime.now() + 36.hours).strftime("%Y-%d-%mT%H:%M")
+
+  %br
+  %br
+  %br
+  8 van
+  = number_field_tag "oefening_herhalingen", 12

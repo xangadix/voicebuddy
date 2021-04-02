@@ -1,0 +1,11 @@
+.logo
+  = link_to "/", :class => "imagelink" do
+    = image_tag "logo_medium"
+
+.title.handwriting.lg
+  Voicebuddy Logopedie oefen app
+
+.user-actions
+  = link_to "my profile", "/admin/my_profile"
+  &nbsp;|&nbsp;
+  = link_to "logout", destroy_user_session_path, :method => :delete

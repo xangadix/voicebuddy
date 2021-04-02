@@ -1,0 +1,34 @@
+#login_form
+  .form_container
+
+
+    = image_tag "logo_medium"
+
+    %br
+    %a{:onclick=>"parent.doeshelooklike('een teefje');", :href=>"javascript:"} CLICK ME
+    %br
+
+    = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+      .field
+        = f.label 'E-mail adres'
+        = f.email_field :email, autofocus: true, autocomplete: "email"
+
+      .field
+        = f.label 'wachtwoord'
+        = f.password_field :password, autocomplete: "current-password"
+
+      %br
+      - if devise_mapping.rememberable?
+        %small.field
+          = f.check_box :remember_me
+          Onthoudt mij
+      %hr
+      %br
+      .actions
+        = f.submit "Log in", :class => "btn-info"
+
+        = link_to "autologin_test", "/autologintest"       
+
+    %br
+    %br
+    %small= render "devise/shared/links"
