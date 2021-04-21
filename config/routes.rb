@@ -29,16 +29,20 @@ Rails.application.routes.draw do
   get '/users/my_profile', to: 'users#my_profile'
 
   # scope?
-  post '/app/new_login', to: 'app#new_login'
-  get '/app/test_api', to: 'app#test_api'
+  # get '/app/test_api', to: 'app#test_api'
   get '/app/login', to: 'app#login'
-  get '/app/introductie', to: 'app#introductie'
-  get '/app/info', to: 'app#info'
-  get '/app/awards', to: 'app#awards'
-  get '/app/oefening/:id', to: 'app#oefening'
-  get '/app/oefeningen', to: 'app#oefeningen'
-  get '/app/my_profile', to: 'app#my_profile'
-  get '/app', to: 'app#index'
+  post '/app/new_login', to: 'app#new_login'
+  get '/app/login_failed', to: 'app#login_failed'
+  get '/app/forgot_password', to: 'app#forgot_password'
+
+  get '/app/introductie(/:token)', to: 'app#introductie'
+  get '/app/info(/:token)', to: 'app#info'
+  get '/app/awards(/:token)', to: 'app#awards'
+  get '/app/oefening/:id(/:token)', to: 'app#oefening'
+  get '/app/oefeningen(/:token)', to: 'app#oefeningen'
+  get '/app/my_profile(/:token)', to: 'app#my_profile'
+  get '/app/update_exercise/:id/:token', to: 'exercises#update_exercise'
+  get '/app(/:token)', to: 'app#index'
 
   # scope site
   get '/site/index', to: 'site#index'

@@ -1,9 +1,23 @@
-.fancy_header Oefeningen
-
-%br
-%br
-%br
+.fancy_header Jouw Oefeningen
+.gradient-edge
 
 .oefeningen_container
-  - Exercise.each do |ex|
-    = render partial: 'app/oefening_list_item', :locals => {:exercise => ex}
+  -# Exercise.each do |ex|
+    =# render partial: 'app/oefening_list_item', :locals => {:exercise => ex}
+  - current_user.exercises.each do |exercise|
+    = render partial: 'app/oefening_list_item', :locals => {:exercise => exercise}
+
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br

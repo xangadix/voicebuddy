@@ -2,6 +2,9 @@ class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   layout 'admin'
 
+  # https://github.com/bogdan/datagrid ?
+  # https://github.com/bogdan/datagrid/wiki/Frontend
+
   # GET /users
   # GET /users.json
   def index
@@ -92,10 +95,15 @@ class Admin::UsersController < ApplicationController
     @exercise.name = @preset["naam"]
     @exercise.description = @preset["doel"]
     @exercise.video = @preset["videobestand"]
+    @exercise.thumb = @preset["thumbnail"]
+
+    # BUT... BUT... shouldn't we only save the preset id
+
     # @exercise.video = @preset["thumbnail"]
     # frequentie
     # @exercise.thumb = @preset[:thumbnail]
     # @exercise.percent_done = 0
+
     @exercise.save()
 
     @user.exercises << @exercise

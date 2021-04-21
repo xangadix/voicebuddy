@@ -1,4 +1,4 @@
-puts "loading error codes ... "
+puts "loading exercises ... "
 require 'open-uri'
 require 'json'
 
@@ -26,11 +26,12 @@ data["feed"]["entry"].each do |entry|
   temp[ entryrow ]["frequentie"]   = entry["gs$cell"]["$t"] if entry["gs$cell"]["col"].to_i == 6
   temp[ entryrow ]["materiaal"]    = entry["gs$cell"]["$t"] if entry["gs$cell"]["col"].to_i == 7
   temp[ entryrow ]["videobestand"] = entry["gs$cell"]["$t"] if entry["gs$cell"]["col"].to_i == 8
+  temp[ entryrow ]["content"]      = entry["gs$cell"]["$t"] if entry["gs$cell"]["col"].to_i == 8 # appearently more then video
   temp[ entryrow ]["thumbnail"]    = entry["gs$cell"]["$t"] if entry["gs$cell"]["col"].to_i == 9
   temp[ entryrow ]["status"]       = entry["gs$cell"]["$t"] if entry["gs$cell"]["col"].to_i == 10 # n/u
 end
 
 temp = temp.slice(1,1000) # remove headers
 Rails.logger.debug "got #{temp.count} records for exercises!"
-Rails.logger.debug temp[0].inspect
+# Rails.logger.debug temp[0].inspect
 EXERCISES = temp

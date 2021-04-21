@@ -1,14 +1,39 @@
 {
-  "application.js": "/packs/js/application-33ed3ea9894480328db8.js",
-  "application.js.map": "/packs/js/application-33ed3ea9894480328db8.js.map",
+  "app/app.js": "/packs/js/app/app-101dde898e53c091a88f.js",
+  "app/app.js.map": "/packs/js/app/app-101dde898e53c091a88f.js.map",
+  "application.js": "/packs/js/application-a8a1829fb8f6d87a9650.js",
+  "application.js.map": "/packs/js/application-a8a1829fb8f6d87a9650.js.map",
   "entrypoints": {
-    "application": {
+    "app/app": {
       "js": [
-        "/packs/js/application-33ed3ea9894480328db8.js"
+        "/packs/js/app/app-101dde898e53c091a88f.js"
       ],
       "js.map": [
-        "/packs/js/application-33ed3ea9894480328db8.js.map"
+        "/packs/js/app/app-101dde898e53c091a88f.js.map"
+      ]
+    },
+    "application": {
+      "js": [
+        "/packs/js/application-a8a1829fb8f6d87a9650.js"
+      ],
+      "js.map": [
+        "/packs/js/application-a8a1829fb8f6d87a9650.js.map"
       ]
     }
-  }
+  },
+  "media/webfonts/fa-brands-400.eot": "/packs/media/webfonts/fa-brands-400-30cc681d.eot",
+  "media/webfonts/fa-brands-400.svg": "/packs/media/webfonts/fa-brands-400-ba7ed552.svg",
+  "media/webfonts/fa-brands-400.ttf": "/packs/media/webfonts/fa-brands-400-3b89dd10.ttf",
+  "media/webfonts/fa-brands-400.woff": "/packs/media/webfonts/fa-brands-400-099a9556.woff",
+  "media/webfonts/fa-brands-400.woff2": "/packs/media/webfonts/fa-brands-400-f7307680.woff2",
+  "media/webfonts/fa-regular-400.eot": "/packs/media/webfonts/fa-regular-400-7630483d.eot",
+  "media/webfonts/fa-regular-400.svg": "/packs/media/webfonts/fa-regular-400-0bb42845.svg",
+  "media/webfonts/fa-regular-400.ttf": "/packs/media/webfonts/fa-regular-400-1f77739c.ttf",
+  "media/webfonts/fa-regular-400.woff": "/packs/media/webfonts/fa-regular-400-7124eb50.woff",
+  "media/webfonts/fa-regular-400.woff2": "/packs/media/webfonts/fa-regular-400-f0f82301.woff2",
+  "media/webfonts/fa-solid-900.eot": "/packs/media/webfonts/fa-solid-900-1042e8ca.eot",
+  "media/webfonts/fa-solid-900.svg": "/packs/media/webfonts/fa-solid-900-376c1f97.svg",
+  "media/webfonts/fa-solid-900.ttf": "/packs/media/webfonts/fa-solid-900-605ed792.ttf",
+  "media/webfonts/fa-solid-900.woff": "/packs/media/webfonts/fa-solid-900-9fe5a17c.woff",
+  "media/webfonts/fa-solid-900.woff2": "/packs/media/webfonts/fa-solid-900-e8a427e1.woff2"
 }

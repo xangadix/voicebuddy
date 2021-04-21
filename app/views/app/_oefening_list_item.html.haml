@@ -1,6 +1,72 @@
-= link_to "/app/oefening/#{exercise.id}", :class => "oefening_list_item" do
+= link_to "/app/oefening/#{exercise.id}/#{@token}", :class => "oefening_list_item" do
+
+  .content
+    .title= exercise.name
+    .description= exercise.description
+    %pre
+      = exercise.completed
+      \
+      = exercise.target
+      \
+      = exercise.achieved
+      \
+      = exercise.frequency
+      \
+      \
+      %b STREAK
+      = exercise.streak
+      \
+      = exercise.complete_streak
+      \
+      = exercise.streak_expire
+      \
+      = exercise.streak_target
+      \
+      = exercise.achieved_in_streak
+      %b
+      \
+
+
+
+    .preset.hidden= EXERCISES[exercise.preset.to_i][:name]
+
   .thumbnail
-    = image_tag "ilse_screen"
-  .title= exercise.name
-  .preset.hidden= EXERCISES[exercise.preset.to_i][:name]
+    =# image_tag "ilse_screen"
+    %image{:src=>exercise["thumb"], :width=>"200px"}
+
+  .stats
+    .score
+      - Array.new(exercise.target).each_with_index do |i, index|
+        - if exercise.completed
+          Helemaal klaar voor vandaag :)
+          - break
+        - if exercise.achieved > index
+          %i.fas.fa-lg.fa-circle{:style=>"color: green;"}
+
+        - elsif exercise.achieved + exercise.achieved_in_streak > index
+          // here will be yellow, lets check frequency and streak
+          %i.far.fa-lg.fa-circle{:style=>"color: green;"}
+
+        - elsif exercise.achieved + exercise.streak_target > index
+          // here will be yellow, lets check frequency and streak
+          %i.fas.fa-lg.fa-circle{:style=>"color: orange;"}
+
+        - elsif exercise.achieved + exercise.frequency > index
+          %i.fas.fa-lg.fa-circle{:style=>"color: orange;"}
+
+        - else
+          %i.far.fa-lg.fa-circle{:style=>"color: light-grey;"}
+
+      //.streak
+      //  = exercise.streak_status
+
+      //.streak
+      //  = exercise.achieved
+      //  = exercise.target
+      //  = exercise.frequency
+
+    .streak
+      - if exercise.streak
+        eindigd over
+        = time_ago_in_words(DateTime.now.end_of_day)
   .arrow_right

@@ -1,6 +1,6 @@
 #bottom_menu
-  .btn-group
-    %a#oefeningen.app_btn{:href=>"/app/oefeningen"}
-    %a#info.app_btn{:href=>"/app/info"}
-    %a#awards.app_btn{:href=>"/app/awards"}
-    %a#profile.app_btn{:href=>"/app/my_profile"}
+  .btn-group        
+    %a#oefeningen.app_btn{:href=>"/app/oefeningen/#{@token}"}
+    %a#info.app_btn{:href=>"/app/info/#{@token}"}
+    %a#awards.app_btn{:href=>"/app/awards/#{@token}"}
+    %a#profile.app_btn{:href=>"/app/my_profile/#{@token}"}

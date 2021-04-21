@@ -1,0 +1,970 @@
+/* line 1, app/assets/stylesheets/admin.scss */
+#admin {
+  overflow-x: hidden;
+}
+
+/* line 4, app/assets/stylesheets/admin.scss */
+#admin .grid-container {
+  display: grid;
+  grid-template-areas: "head head head" "menu main main";
+  grid-template-rows: 50px auto;
+  grid-template-columns: 120px auto;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* line 13, app/assets/stylesheets/admin.scss */
+#admin .header {
+  grid-area: head;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--baseturq);
+  color: #f5f5f5;
+}
+
+/* line 21, app/assets/stylesheets/admin.scss */
+#admin .header .logo {
+  width: 80px;
+}
+
+/* line 25, app/assets/stylesheets/admin.scss */
+#admin .header .logo .imagelink:hover {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+/* line 30, app/assets/stylesheets/admin.scss */
+#admin .header .logo img {
+  height: 40px;
+  margin: 5px 12px;
+  width: auto;
+}
+
+/* line 37, app/assets/stylesheets/admin.scss */
+#admin .header .title {
+  width: calc( 80% - 80px);
+}
+
+/* line 41, app/assets/stylesheets/admin.scss */
+#admin .header .user-actions {
+  width: 20%;
+  text-align: right;
+  padding-right: 24px;
+  color: f5f5f5;
+  font-size: 11px;
+}
+
+/* line 48, app/assets/stylesheets/admin.scss */
+#admin .header .user-actions a {
+  color: #f5f5f5;
+  text-decoration: none;
+}
+
+/* line 55, app/assets/stylesheets/admin.scss */
+#admin .menu {
+  grid-area: menu;
+  margin-top: 18px;
+  text-align: center;
+  font-family: 'babasneue', sans-serif;
+  text-decoration: none;
+  color: #DFDFDF;
+}
+
+/* line 63, app/assets/stylesheets/admin.scss */
+#admin .menu ul.nav {
+  list-style: none;
+  margin: auto;
+  padding: 0;
+  width: 90%;
+}
+
+/* line 69, app/assets/stylesheets/admin.scss */
+#admin .menu ul.nav li {
+  border: solid 1px var(--baseblue);
+  background-color: var(--baseturq);
+  padding: 8px 0px;
+  margin-bottom: 12px;
+  transition-duration: 2s;
+}
+
+/* line 75, app/assets/stylesheets/admin.scss */
+#admin .menu ul.nav li:hover {
+  background-color: #5f9985AA;
+  color: #FFFFFF;
+}
+
+/* line 80, app/assets/stylesheets/admin.scss */
+#admin .menu ul.nav li a {
+  text-decoration: none;
+  color: #DFDFDF;
+  letter-spacing: 1.2px;
+}
+
+/* line 85, app/assets/stylesheets/admin.scss */
+#admin .menu ul.nav li a:hover {
+  color: #FFFFFF;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+/* line 94, app/assets/stylesheets/admin.scss */
+#admin .main-content {
+  grid-area: main;
+  padding-top: 32px;
+  padding-left: 32px;
+}
+
+/* line 100, app/assets/stylesheets/admin.scss */
+#admin .main-content .notice {
+  background-color: var(--basebeig);
+  padding: 12px;
+  margin: 0 0 12px 0;
+  border-radius: 4px;
+  color: black;
+  font-weight: bold;
+  opacity: 0.74;
+  display: inline-block;
+}
+
+/* line 111, app/assets/stylesheets/admin.scss */
+#admin .main-content .vakje {
+  width: 90%;
+  margin: 0;
+  padding: 24px;
+  background-color: #ededed;
+  border-radius: 8px;
+}
+
+/* line 119, app/assets/stylesheets/admin.scss */
+#admin .main-content .vakje > * {
+  width: calc( 100%);
+}
+
+/* line 125, app/assets/stylesheets/admin.scss */
+#admin label {
+  font-weight: bold;
+}
+
+/* line 130, app/assets/stylesheets/admin.scss */
+#admin ul.huidige_oefeningen {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 135, app/assets/stylesheets/admin.scss */
+#admin ul.huidige_oefeningen li {
+  margin-bottom: 12px;
+  background-color: var(--basebeig);
+  padding: 12px 12px 26px 12px;
+  border-radius: 6px;
+  color: black;
+}
+
+/* line 144, app/assets/stylesheets/admin.scss */
+#admin ul.beschikbare_oefeningen {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 149, app/assets/stylesheets/admin.scss */
+#admin ul.beschikbare_oefeningen li {
+  margin-bottom: 6px;
+}
+
+/* line 155, app/assets/stylesheets/admin.scss */
+#admin table .action-buttons {
+  text-decoration: none;
+  transition-duration: 0.5s;
+  color: #101010;
+}
+
+/* line 160, app/assets/stylesheets/admin.scss */
+#admin table .action-buttons:hover, #admin table .action-buttons:visited, #admin table .action-buttons:focus {
+  text-decoration: none;
+  background: none;
+  color: #333333;
+}
+/* line 1, app/assets/stylesheets/app.scss */
+#app {
+  overflow: hidden;
+  /* Optional: show position indicator in red */
+  background-color: var(--baseblue);
+  color: #f5f5f5;
+}
+
+/* line 4, app/assets/stylesheets/app.scss */
+#app ::-webkit-scrollbar {
+  width: 0;
+  /* Remove scrollbar space */
+  background: transparent;
+  /* Optional: just make scrollbar invisible */
+}
+
+/* line 9, app/assets/stylesheets/app.scss */
+#app ::-webkit-scrollbar-thumb {
+  background: #FF000000;
+}
+
+/* line 15, app/assets/stylesheets/app.scss */
+#app h1, #app h2, #app h3, #app h4 {
+  letter-spacing: 1.1px;
+}
+
+/* line 20, app/assets/stylesheets/app.scss */
+#app .actions a, #app .actions a:hover {
+  color: #f5f5f5;
+}
+
+/* line 25, app/assets/stylesheets/app.scss */
+#app .grid-container {
+  display: grid;
+  grid-template-areas: "head" "main" "menu";
+  grid-template-rows: 0 auto 64px;
+  grid-template-columns: auto;
+  width: 100vw;
+  height: calc( 100vh - 64px);
+}
+
+/* line 36, app/assets/stylesheets/app.scss */
+#app .header {
+  grid-area: head;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--baseturq);
+  color: #f5f5f5;
+}
+
+/* line 45, app/assets/stylesheets/app.scss */
+#app .header .logo {
+  width: 80px;
+}
+
+/* line 49, app/assets/stylesheets/app.scss */
+#app .header .logo .imagelink:hover {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+/* line 54, app/assets/stylesheets/app.scss */
+#app .header .logo img {
+  height: 40px;
+  margin: 5px 12px;
+  width: auto;
+}
+
+/* line 61, app/assets/stylesheets/app.scss */
+#app .header .title {
+  width: calc( 80% - 80px);
+}
+
+/* line 65, app/assets/stylesheets/app.scss */
+#app .header .user-actions {
+  width: 20%;
+  color: #f5f5f5;
+  font-size: 11px;
+  text-align: right;
+  padding-right: 12px;
+}
+
+/* line 71, app/assets/stylesheets/app.scss */
+#app .header .user-actions a, #app .header .user-actions a:hover {
+  text-decoration: none;
+  color: #f5f5f5;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+/* line 79, app/assets/stylesheets/app.scss */
+#app #app_login_container {
+  max-width: 250px;
+  margin: auto;
+  /* Change the white to any color */
+  /* fucking ellendig kutding */
+}
+
+/* line 83, app/assets/stylesheets/app.scss */
+#app #app_login_container input {
+  color: #3f3f3f !important;
+}
+
+/* line 89, app/assets/stylesheets/app.scss */
+#app #app_login_container input:-webkit-autofill,
+#app #app_login_container input:-webkit-autofill:hover,
+#app #app_login_container input:-webkit-autofill:focus,
+#app #app_login_container input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  -webkit-text-fill-color: #5f5f5f !important;
+  color: #5f5f5f !important;
+}
+
+/* line 100, app/assets/stylesheets/app.scss */
+#app #introduction img {
+  max-height: 80vh;
+}
+
+/* line 105, app/assets/stylesheets/app.scss */
+#app .main-content {
+  grid-area: main;
+  padding: 0px 24px;
+}
+
+/* line 109, app/assets/stylesheets/app.scss */
+#app .main-content .fancy_header {
+  font-family: 'babasneue_light', sans-serif;
+  font-size: 42px;
+  line-height: 42px;
+  text-align: center;
+  width: 100%;
+  margin: 24px auto 6px auto;
+  letter-spacing: 6.3px;
+}
+
+/* line 120, app/assets/stylesheets/app.scss */
+#app .main-content .fancy_sub_header {
+  font-family: babasneue;
+  letter-spacing: 1.1px;
+  font-weight: 700;
+  font-size: 32px;
+  margin-bottom: 18px;
+  color: var(--baseturq);
+  text-align: center;
+}
+
+/* line 130, app/assets/stylesheets/app.scss */
+#app .main-content .gradient-edge {
+  background: rgba(12, 65, 79, 0);
+  background: linear-gradient(180deg, #0c414f 0%, rgba(12, 65, 79, 0) 100%);
+  position: absolute;
+  width: 100%;
+  position: absolute;
+  top: 72px;
+  height: 24px;
+}
+
+/* line 140, app/assets/stylesheets/app.scss */
+#app .main-content .oefeningen_container {
+  padding-top: 18px;
+  overflow-y: scroll;
+  height: calc( 100vh - 128px);
+}
+
+/* line 147, app/assets/stylesheets/app.scss */
+#app .menu {
+  grid-area: menu;
+}
+
+/* line 151, app/assets/stylesheets/app.scss */
+#app #bottom_menu {
+  background-color: var(--baseblue);
+  height: 100%;
+}
+
+/* line 156, app/assets/stylesheets/app.scss */
+#app #bottom_menu .btn-group {
+  display: flex;
+  height: 100%;
+}
+
+/* line 160, app/assets/stylesheets/app.scss */
+#app #bottom_menu .btn-group .app_btn {
+  width: 25%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: auto 42px;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition-duration: 0.2s;
+}
+
+/* line 172, app/assets/stylesheets/app.scss */
+#app #bottom_menu .btn-group .app_btn:hover {
+  background-color: var(--baseturq);
+  transition-duration: 0.3s;
+}
+
+/* line 178, app/assets/stylesheets/app.scss */
+#app #bottom_menu .btn-group #oefeningen {
+  background-image: url("button_beige_oefeningen");
+}
+
+/* line 180, app/assets/stylesheets/app.scss */
+#app #bottom_menu .btn-group #oefeningen:hover {
+  background-image: url("button_green_oefeningen");
+}
+
+/* line 183, app/assets/stylesheets/app.scss */
+#app #bottom_menu .btn-group #info {
+  background-image: url("button_beige_info");
+}
+
+/* line 185, app/assets/stylesheets/app.scss */
+#app #bottom_menu .btn-group #info:hover {
+  background-image: url("button_green_info");
+}
+
+/* line 187, app/assets/stylesheets/app.scss */
+#app #bottom_menu .btn-group #awards {
+  background-image: url("button_beige_awards");
+}
+
+/* line 189, app/assets/stylesheets/app.scss */
+#app #bottom_menu .btn-group #awards:hover {
+  background-image: url("button_green_awards");
+}
+
+/* line 191, app/assets/stylesheets/app.scss */
+#app #bottom_menu .btn-group #profile {
+  background-image: url("button_beige_personalia");
+}
+
+/* line 193, app/assets/stylesheets/app.scss */
+#app #bottom_menu .btn-group #profile:hover {
+  background-image: url("button_green_personalia");
+}
+
+/* line 198, app/assets/stylesheets/app.scss */
+#app .oefening_list_item {
+  background-color: #f5f5f5;
+  color: #5f5f5f;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  text-decoration: none;
+  width: calc( 100% - 18px);
+  padding: 9px;
+}
+
+/* line 211, app/assets/stylesheets/app.scss */
+#app .oefening_list_item:hover {
+  background-color: #f5f5f5;
+  color: #5f5f5f;
+}
+
+/* line 216, app/assets/stylesheets/app.scss */
+#app .oefening_list_item .thumbnail {
+  width: 36%;
+}
+
+/* line 219, app/assets/stylesheets/app.scss */
+#app .oefening_list_item .thumbnail img {
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* line 225, app/assets/stylesheets/app.scss */
+#app .oefening_list_item .preset {
+  width: 0%;
+}
+
+/* line 229, app/assets/stylesheets/app.scss */
+#app .oefening_list_item .content {
+  width: calc( 64% - 12px);
+  padding: 6px;
+}
+
+/* line 233, app/assets/stylesheets/app.scss */
+#app .oefening_list_item .content .title {
+  width: 100%;
+  color: var(--baseturq);
+  font-family: babasneue;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 32px;
+  margin-bottom: 12px;
+}
+
+/* line 243, app/assets/stylesheets/app.scss */
+#app .oefening_list_item .content .description {
+  width: 100%;
+}
+
+/* line 248, app/assets/stylesheets/app.scss */
+#app .oefening_list_item .arrow_right {
+  display: none !important;
+  width: 25%;
+  transform: rotate(45deg);
+  width: 0;
+  height: 0;
+  border: 7px solid transparent;
+  border-top: 7px solid;
+  border-right: 7px solid;
+  margin: 15px;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  color: var(--basebeig);
+  box-sizing: border-box;
+}
+
+/* line 267, app/assets/stylesheets/app.scss */
+#app .oefening .back_btn {
+  font-family: 'bradley_hand', sans-serif;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  top: 0px;
+  left: 0px;
+  font-size: 12px;
+  line-height: 40px;
+  text-align: center;
+  margin: 18px;
+}
+
+/* line 279, app/assets/stylesheets/app.scss */
+#app .oefening .back_btn:hover {
+  background-color: #00000000;
+}
+
+/* line 283, app/assets/stylesheets/app.scss */
+#app .oefening .back_btn .arrow_left {
+  width: 25%;
+  transform: rotate(226deg);
+  width: 0;
+  height: 0;
+  border: 11px solid transparent;
+  border-top: 7px solid;
+  border-right: 7px solid;
+  margin: 15px;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  color: var(--basebeig);
+  box-sizing: border-box;
+}
+
+/* line 300, app/assets/stylesheets/app.scss */
+#app .oefening video {
+  width: 100%;
+  min-height: 425px;
+}
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;400&display=swap");
+/* line 6, app/assets/stylesheets/main.scss */
+:root {
+  --baseblue: #0c414f;
+  --baseturq: #5f9985;
+  --basebeig: #b5a88d;
+  --white: #F5F5F5;
+  --black: #111111;
+}
+
+@font-face {
+  font-family: babasneue;
+  src: url("/fonts/BebasNeue.otf");
+}
+
+@font-face {
+  font-family: bradley_hand;
+  src: url("/fonts/bradley_hand_itc_tt_bold.ttf");
+}
+
+@font-face {
+  font-family: babasneue_light;
+  src: url("/fonts/BebasNeue Light.otf");
+}
+
+/* line 41, app/assets/stylesheets/main.scss */
+html, body {
+  font-family: Helvetica, Arial, Verdana, sans-serif;
+  letter-spacing: 0.1px;
+  margin: 0 !important;
+  padding: 0 !important;
+  /*background-color: green;*/
+  color: #121212;
+  background-color: var(--baseblue);
+}
+
+/* line 51, app/assets/stylesheets/main.scss */
+p {
+  line-height: 24px;
+}
+
+/* line 55, app/assets/stylesheets/main.scss */
+h1, h2 {
+  font-family: babasneue;
+  letter-spacing: 1.3px;
+  font-size: 2em;
+  font-weight: 500;
+}
+
+/* line 62, app/assets/stylesheets/main.scss */
+h3, h4, h5, h6 {
+  font-family: 'Oswald', sans-serif;
+}
+
+/* line 68, app/assets/stylesheets/main.scss */
+blockquote {
+  font-family: 'bradley_hand', sans-serif;
+}
+
+/* line 73, app/assets/stylesheets/main.scss */
+handwriting, .handwriting {
+  font-family: 'babasneue_light', sans-serif;
+  letter-spacing: 2px;
+}
+
+/* line 77, app/assets/stylesheets/main.scss */
+handwriting.md, .handwriting.md {
+  font-size: 18px;
+}
+
+/* line 81, app/assets/stylesheets/main.scss */
+handwriting.lg, .handwriting.lg {
+  font-size: 24px;
+}
+
+/* line 86, app/assets/stylesheets/main.scss */
+code {
+  font-family: monospace;
+}
+
+/* line 90, app/assets/stylesheets/main.scss */
+pre {
+  color: black;
+}
+
+/* line 94, app/assets/stylesheets/main.scss */
+.hidden {
+  display: none;
+}
+
+/* line 98, app/assets/stylesheets/main.scss */
+input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="date"], select {
+  display: block;
+  width: 100%;
+  height: 34px;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #555555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.08);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+/* line 116, app/assets/stylesheets/main.scss */
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="number"]:focus, input[type="date"]:focus, select:focus {
+  border-color: #5f9985;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px #5f998508, 0 0 8px #5f998560;
+  box-shadow: inset 0 1px 1px #5f998508, 0 0 8px #5f998560;
+}
+
+/* line 127, app/assets/stylesheets/main.scss */
+.btn, input[type="submit"], button {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #222222;
+  background-color: #f5f5f5;
+  border-color: #0c414f40;
+  text-decoration: none;
+}
+
+/* line 151, app/assets/stylesheets/main.scss */
+.btn.btn-blue, input.btn-blue[type="submit"], button.btn-blue {
+  color: #fff;
+  background-color: var(--baseblue);
+  border-color: #0c414f40;
+}
+
+/* line 157, app/assets/stylesheets/main.scss */
+.btn.btn-turq, input.btn-turq[type="submit"], button.btn-turq {
+  color: #fff;
+  background-color: var(--baseturq);
+  border-color: #5f998540;
+}
+
+/* line 164, app/assets/stylesheets/main.scss */
+input[type="checkbox"] {
+  display: inline-block;
+  width: 40px;
+}
+
+/* line 169, app/assets/stylesheets/main.scss */
+.multiple_select {
+  height: 84px;
+}
+
+/* line 173, app/assets/stylesheets/main.scss */
+.pull-right {
+  float: right;
+}
+
+/* line 177, app/assets/stylesheets/main.scss */
+.pull-left {
+  float: left;
+}
+
+/* line 181, app/assets/stylesheets/main.scss */
+.text-center {
+  text-align: center;
+}
+
+/* line 185, app/assets/stylesheets/main.scss */
+.text-left {
+  text-align: left;
+}
+
+/* line 189, app/assets/stylesheets/main.scss */
+.text-right {
+  text-align: right;
+}
+/* line 1, app/assets/stylesheets/scaffolds.scss */
+body {
+  background-color: #fff;
+  color: #333;
+  margin: 33px;
+}
+
+/* line 6, app/assets/stylesheets/scaffolds.scss */
+body, p, ol, ul, td {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+/* line 11, app/assets/stylesheets/scaffolds.scss */
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+
+/* line 16, app/assets/stylesheets/scaffolds.scss */
+a {
+  color: #000;
+}
+
+/* line 19, app/assets/stylesheets/scaffolds.scss */
+a:visited {
+  color: #666;
+}
+
+/* line 22, app/assets/stylesheets/scaffolds.scss */
+a:hover {
+  color: #fff;
+  background-color: #000;
+}
+
+/* line 26, app/assets/stylesheets/scaffolds.scss */
+th {
+  padding-bottom: 5px;
+}
+
+/* line 29, app/assets/stylesheets/scaffolds.scss */
+td {
+  padding: 0 5px 7px;
+}
+
+/* line 32, app/assets/stylesheets/scaffolds.scss */
+div.field,
+div.actions {
+  margin-bottom: 10px;
+}
+
+/* line 36, app/assets/stylesheets/scaffolds.scss */
+#notice {
+  color: green;
+}
+
+/* line 39, app/assets/stylesheets/scaffolds.scss */
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+/* line 44, app/assets/stylesheets/scaffolds.scss */
+#error_explanation {
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px 7px 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+/* line 51, app/assets/stylesheets/scaffolds.scss */
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px -7px 0;
+  background-color: #c00;
+  color: #fff;
+}
+
+/* line 60, app/assets/stylesheets/scaffolds.scss */
+#error_explanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+/* line 64, app/assets/stylesheets/scaffolds.scss */
+label {
+  display: block;
+}
+
+/* line 67, app/assets/stylesheets/scaffolds.scss */
+table {
+  width: 100%;
+}
+/* line 3, app/assets/stylesheets/site.scss */
+#site .notice {
+  background-color: var(--basebeig);
+  padding: 12px;
+  margin: 24px 0px 0px 40px;
+  border-radius: 4px;
+  color: #f5f5f5;
+  font-weight: bold;
+  opacity: 0.74;
+  display: inline-block;
+}
+
+/* line 14, app/assets/stylesheets/site.scss */
+#site .grid-container {
+  display: grid;
+  grid-template-areas: "head head head" "main main main" "footer footer footer";
+  grid-template-rows: 50px auto 50px;
+  grid-template-columns: auto;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+/* line 24, app/assets/stylesheets/site.scss */
+#site .header {
+  grid-area: head;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--baseturq);
+  color: #f5f5f5;
+}
+
+/* line 32, app/assets/stylesheets/site.scss */
+#site .header .logo {
+  width: 80px;
+}
+
+/* line 36, app/assets/stylesheets/site.scss */
+#site .header .logo .imagelink:hover {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+/* line 41, app/assets/stylesheets/site.scss */
+#site .header .logo img {
+  height: 40px;
+  margin: 5px 12px;
+  width: auto;
+}
+
+/* line 48, app/assets/stylesheets/site.scss */
+#site .header .title {
+  width: calc( 80% - 80px);
+}
+
+/* line 52, app/assets/stylesheets/site.scss */
+#site .header .user-actions {
+  width: 20%;
+  text-align: right;
+}
+
+/* line 58, app/assets/stylesheets/site.scss */
+#site .main-content {
+  grid-area: main;
+  padding: 0;
+  background-color: #e5e5e5;
+}
+
+/* line 64, app/assets/stylesheets/site.scss */
+#site .footer {
+  grid-area: footer;
+  width: 100%;
+  background-color: var(--baseblue);
+  color: #f5f5f5;
+}
+
+/* line 72, app/assets/stylesheets/site.scss */
+#site #index {
+  padding: 42px;
+}
+
+/* line 78, app/assets/stylesheets/site.scss */
+#site #login_form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* line 85, app/assets/stylesheets/site.scss */
+#site #login_form .form_container {
+  background-color: var(--baseturq);
+  max-width: 700px;
+  color: white;
+  padding: 42px;
+  text-align: center;
+}
+
+/* line 93, app/assets/stylesheets/site.scss */
+#site #login_form .form_container .field label {
+  margin: 12px;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+/* line 100, app/assets/stylesheets/site.scss */
+#site #login_form .form_container a {
+  display: inline;
+  color: var(--baseblue);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* line 106, app/assets/stylesheets/site.scss */
+#site #login_form .form_container a:hover {
+  background: rgba(0, 0, 0, 0);
+  text-decoration: underline;
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+
+
+ */

@@ -1,8 +1,31 @@
-%li
+%li{:style=>"display:inline-block;width:100%"}
+
   %h3= exercise["naam"]
 
-  .category= exercise["category"]
-  .tags= exercise["tags"]
-  .description= exercise["doel"]
+  .thumbnail{:style=>"float:left;margin-right:12px"}
+    %image{:src=>exercise["thumbnail"], :width=>"200px"}
+
+
+  .category
+    categorie:
+    %em= exercise["category"]
+    \:
+  .tags
+    tags:
+    %small= exercise["tags"].to_sentence(last_word_connector: 'en') unless exercise["tags"].blank?
   %br
-  Voeg oefening toe
+  .description{:width=>"100%"}= exercise["doel"].strip() unless exercise["doel"].blank?
+  %br
+
+
+
+  %br
+  %small Bekijk Oefening:
+  %br
+  = link_to "Bekijk video", exercise["videobestand"], :class=>"btn", :target=>"_blank"
+  &nbsp;
+  |
+  &nbsp;
+  = link_to " + voeg toe", "add_exercise/#{exercise["id"]}", :class=>"btn"
+
+  %hr

@@ -17,8 +17,10 @@
         = render partial: '/site/header'
 
       .main-content
-        - flash.each do |type, msg|
-          .alert.alert-info= msg
+        /- flash.each do |type, msg|
+        /  .alert.alert-info= msg
+        - unless notice.blank?
+          %p#id.notice= notice
 
         = yield
 

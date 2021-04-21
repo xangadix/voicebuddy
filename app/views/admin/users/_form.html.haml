@@ -30,20 +30,24 @@
       %label confirm password
       = form.password_field :password
 
-    - if @user.persisted?
+    - if @user.persisted? && @user.has_role?(:client)
       %hr
-      %h3 Huidige oefeningen
+      %h3#assigned_exercises
+        Toegewezen oefeningen
+        %i.fa.fa-arrow-down
+        
       %ul.huidige_oefeningen
         - @user.exercises.each do |ex|
           = render partial: '/admin/oefening_item', :locals => {:exercise => ex}
 
-      %h3 Voeg oefening toe
+      %h3#available_exersises
+        Beschikbare oefeningen
+        %i.fa.fa-arrow-down
+
       = form.select :preset, EXERCISES.map{|e| [e["naam"],e["id"]] }, {}, {class:'test'}
       %ul.beschikbare_oefeningen
         - EXERCISES.each do |ex|
-          %li
-            = render partial: '/admin/oefening_new', :locals => {:exercise => ex}
-            = link_to "+ #{ex["naam"]}", "add_exercise/#{ex["id"]}", :class=>"btn"
+          = render partial: '/admin/oefening_new', :locals => {:exercise => ex}
 
     %hr
 
@@ -56,3 +60,22 @@
 %br
 %hr
 %br
+
+:javascript
+  document.getElementById('assigned_exercises').onclick = function() {
+    console.log("kilikker")
+    if ( document.querySelector('.huidige_oefeningen').style.display != "none" ) {
+      document.querySelector('.huidige_oefeningen').style.display = "none"
+    }else{
+     document.querySelector('.huidige_oefeningen').style.display = "block"
+     }
+  }
+
+  document.getElementById('available_exersises').onclick = function() {
+    console.log("kilikker")
+    if ( document.querySelector('.beschikbare_oefeningen').style.display != "none" ) {
+      document.querySelector('.beschikbare_oefeningen').style.display = "none"
+    }else{
+     document.querySelector('.beschikbare_oefeningen').style.display = "block"
+     }
+  }

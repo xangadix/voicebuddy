@@ -17,6 +17,80 @@
   </div>
 
   <div class="field">
+    <%= form.label :preset %>
+    <%= form.select :preset, EXERCISES.map{|e| [e["naam"],e["id"]] }, {}, {class:'test'} %>
+  </div>
+
+  <hr/>
+
+  <div class="field">
+    <%= form.label :completed %>
+    <%= form.text_field :completed %>
+  </div>
+
+  <div class="field">
+    <%= form.label :target %>
+    <%= form.text_field :target %>
+  </div>
+
+  <div class="field">
+    <%= form.label :achieved %>
+    <%= form.text_field :achieved %>
+  </div>
+
+  <div class="field">
+    <%= form.label :frequency %>
+    <%= form.text_field :frequency %>
+  </div>
+
+  <hr>
+
+  <div class="field">
+    <%= form.label :streak %>
+    <%= form.text_field :streak %>
+  </div>
+
+  <div class="field">
+    <%= form.label :streak_expire %>
+    <%= form.datetime_field :streak_expire %>
+  </div>
+
+  <div class="field">
+    <%= form.label :frequency %>
+    <%= form.text_field :frequency %>
+  </div>
+
+  <div class="field">
+    <%= form.label :streak %>
+    <%= form.text_field :streak %>
+  </div>
+
+
+  <div class="field">
+    <%= form.label :streak_expire %>
+    <%= form.text_field :streak_expire %>
+  </div>
+
+  <div class="field">
+    <%= form.label :streak_target %>
+    <%= form.text_field :streak_target %>
+  </div>
+
+  <div class="field">
+    <%= form.label :achieved_in_streak %>
+    <%= form.text_field :achieved_in_streak %>
+  </div>
+
+  <div class="field">
+    <%= form.label :complete_streak %>
+    <%= form.text_field :complete_streak %>
+  </div>
+
+
+  <hr/>
+
+  <!--
+  <div class="field">
     <%= form.label :afgerond %>
     <%= form.text_field :afgerond %>
   </div>
@@ -35,7 +109,7 @@
     <%= form.label :description %>
     <%= form.text_field :description %>
   </div>
-
+  -->
   <div class="actions">
     <%= form.submit %>
   </div>

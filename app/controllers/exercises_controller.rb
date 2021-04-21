@@ -62,6 +62,23 @@ class ExercisesController < ApplicationController
     end
   end
 
+  # ----------------------------------------------------------------------------
+  def update_exercise
+    user = User.where(:authorisation_token => params[:token]).first()
+    exercise = Exercise.find( params[:id] )
+
+    if exercise.user_id == user.id
+      if exercise.update_progress
+        render html: "Oefning afgerond!"
+      else
+        render html: "Oefning kon niet worden opgeslagen!"
+      end
+    else
+      render plain: "Gebruiker en oefening komen niet overeen"
+    end
+  end
+
+  # ----------------------------------------------------------------------------
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_exercise

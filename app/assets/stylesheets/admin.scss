@@ -98,20 +98,27 @@
 
 
      .notice {
-       background-color: var(--baseturq);
+       background-color: var(--basebeig);
        padding: 12px;
-       margin: 6px 12px;
+       margin: 0 0 12px 0;
        border-radius: 4px;
-       color: white;
-       opacity: 0.64;
+       color: black;
+       font-weight: bold;
+       opacity: 0.74;
+       display: inline-block;
      }
 
      .vakje {
-       width: 80%;
-       margin: 0px 0px;
-       padding: 8px 16px;
+       width: 90%;
+       margin: 0;
+       padding: 24px;
+       //padding: 8px 16px;
        background-color: #ededed;
        border-radius: 8px;
+
+       > * {
+          width: calc( 100% );
+      }
      }
   }
 
@@ -141,6 +148,20 @@
 
     li {
       margin-bottom: 6px;
+    }
+  }
+
+  table {
+    .action-buttons {
+      text-decoration: none;
+      transition-duration: 0.5s;
+      color: #101010;
+
+      &:hover, &:visited, &:focus {
+        text-decoration: none;
+        background: none;
+        color: #333333;
+      }
     }
   }
 }

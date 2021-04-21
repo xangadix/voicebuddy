@@ -1,5 +1,10 @@
-.fancy_header profile
-
-
-
-= link_to "uitloggen", destroy_user_session_path, :method => :delete
+.fancy_header Jouw profiel
+.gradient-edge
+.paper
+  %br
+  %br
+  %br
+  %input{:value=>current_user.email}
+  %pre=current_user.to_yaml
+  %hr
+  = link_to "uitloggen", destroy_user_session_path, :method => :delete

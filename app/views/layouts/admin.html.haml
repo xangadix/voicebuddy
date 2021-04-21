@@ -20,7 +20,7 @@
         = render partial: '/admin/menu'
 
       .main-content
-        /- flash.each do |type, msg|
-        /  .alert.alert-info= msg
+        - unless notice.blank?
+          %p#id.notice= notice
 
         = yield

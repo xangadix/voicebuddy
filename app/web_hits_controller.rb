@@ -1,3 +1,4 @@
+# this was an attempt at routing OPTIONS requests
 # controllers/web_hits_controller.rb
   class WebHitsController < ApplicationController
     def create

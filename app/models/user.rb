@@ -47,7 +47,6 @@ class User
 
   # ----------------------------------------------------------------------------
   # I'll write my own role system with booze and hookers
-
   field :name, type: String, default: ""
 
   # there must be a way to do it better
@@ -64,6 +63,9 @@ class User
   field :gender, type: String, default: ""
   field :date_of_birth, type: String, default: ""
   field :notes, type: String, default: ""
+  field :authorisation_token, type: String, default: ""
+
+  field :has_seen_intro, type: Boolean, default: false
 
   def full_name
     unless name.blank?
@@ -77,4 +79,12 @@ class User
   #def before_add_method(role)
     # do something before it gets added
   #end
+
+  def set_authorisation_token
+    token = SecureRandom.urlsafe_base64(nil, false)
+    self.authorisation_token = token
+    self.save
+    return token
+  end
+
 end

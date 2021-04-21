@@ -1,16 +1,58 @@
+- current_exercise = EXERCISES[@exercise.preset-1]
+
+.fancy_header
+  /= link_to "/app/oefeningen/#{@token}", :class => "back_btn" do
+  /  .arrow_left
+  .fancy_header= current_exercise["naam"]
+.gradient-edge
+
 .oefening
-  = link_to "/app/oefeningen", :class => "back_btn" do
-    .arrow_left
 
-  .fancy_header= @exercise.name
-  %br
-  %br
-  %video{:src=>"/videos/720p_5000kbps_h264_1.mp4", 'webkit-playsinline': "true", :playsinline=> "true", :controls => "true"}
+  // if @
+  .video-container#videocontainer
+    %video{:src=>current_exercise["content"], 'webkit-playsinline': "true", :playsinline=> "true", :controls => false, :id=>"video_oefening"}
+    #play-button.far.fa-lg.fa-play-circle
 
   %br
-  %br
+    %button#end_video_now to end now
   %br
 
-  .fancy_sub_header= EXERCISES[@exercise.preset][:video] unless @exercise.preset.nil?
+  %h4{:style=>"text-align:center;"}= current_exercise["doel"]
+  .push-down
 
-  %code= @exercise.inspect
+:javascript
+  var vid = document.getElementById('video_oefening')
+
+  vid.onclick = function() {
+    if ( vid.paused ) {
+      vid.play()
+    } else {
+      vid.pause()
+    }
+  }
+
+  vid.onloadedmetadata = function(e) {
+    console.log("== VIDEO got metatada", vid.duration, e)
+    document.getElementById('end_video_now').onclick = function(e) {
+      vid.currentTime = vid.duration - 2
+    }
+
+    vid.play()
+  }
+
+  vid.onended = function(e) {
+    console.log("== VIDEO on Ended")
+    // post to the api that the client has completed a run
+    // @exercise
+    // https://app.voicebuddy.nl/app/update_exercise/606cbdfea19ea6812d2be46c
+    fetch("/app/update_exercise/#{@exercise.id}/#{@token}")
+      .then( function(resp) {
+        console.log("response:", resp)}
+      )
+      .then( function(data) {
+        console.log("got data", data)
+        var results_location = document.getElementById("videocontainer")
+        results_location.innerHTML = ""
+        results_location.innerHTML = "<br><br>U hebt gewonnen!"
+    });
+  }

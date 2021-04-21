@@ -3,48 +3,86 @@
 %center
   = image_tag "logo_medium"
 
-%br
-  #login_message
-%br
-%h1 LOGIN
-
-= form_with( url: "/app/new_login" ) do |form|
-  = form.hidden_field :token, :value => @token
-  = form.hidden_field :time, :value => @time
-
-  %hr
-  .form-group
-    %label Email
-    = form.text_field :email
+#app_login_container
   %br
-  .form-group
-    %label Wachtwoord
-    = form.password_field :password
-  %br
-  %br
-  %hr
-  .actions
-    = link_to 'wachtwoord vergeten', 'https://app.voicebuddy.nl/app/forgot_password', :class => "pull-left"
-  = form.submit "Log in", :class => "pull-right"
+    #login_message
+      = @login_failed || ""
 
-  %br
-  %br
+  %h1 LOGIN
 
 
-  %br
-  %br
-  %br
+  = form_with( url: "/app/new_login" ) do |form|
+    = form.hidden_field :token, :value => @token
+    = form.hidden_field :time, :value => @time
+
+    %hr
+    .form-group
+      %label Email
+      = form.text_field :email
+    %br
+    .form-group
+      %label Wachtwoord
+      = form.password_field :password
+    %br
+    %br
+    %hr
+    .actions
+      = link_to 'wachtwoord vergeten', 'https://app.voicebuddy.nl/app/forgot_password', :class => "pull-left"
+
+    %br
+    %br
+    = form.submit "Log in", :class => "pull-right"
+
+    %br
+    %br
 
 
-:javascript
+    %br
+    %br
+    %br
 
-  fetch('/app/test_api')
-  .then( response => response.json())
-  .then( function(data) {
-    console.log(data)
-    //document.getElementById('test').innerHTML = ' has data ' + data.var1
-  });
-
-  if (window.location.hash.indexOf('login_failed') != -1) {
-    document.getElementById('login_message').innerHTML = 'Login Failed!'
+:css
+  .menu {
+    display: none;
   }
+:javascript
+  //if (window.location.hash.indexOf('login_failed') != -1) {
+  //  document.getElementById('login_message').innerHTML = 'Login Failed!'
+  //}
+
+  //document.getElementById('localtoken_display').innerHTML = "456"
+  //localtoken = window.parent.token()
+  //document.getElementById('localtoken_display').innerHTML = localtoken
+
+  // TEST API
+  //fetch('/app/test_api')
+  //.then( function(resp) { console.log("response:", resp)} )
+  //.then( function(data) {
+  //  console.log("API got data: ", data)
+    //document.getElementById('test').innerHTML = ' has data ' + data.var1
+  //});
+
+  // LOGIN failed message
+  // window.location.hash, login_failed
+
+
+  //function receiver(event) {
+  //  console.log("iframe got an event from app:", event.origin, event.data)
+    //if (event.origin == 'null') {
+    //    if (event.data == 'Hello B') {
+    //        event.source.postMessage('Hello, a message from iframe!', '*');
+    //    }
+    //    else {
+    //        alert(event.data);
+    //    }
+    //}
+  //}
+
+  //window.addEventListener('message', receiver, false);
+
+  //console.log("post message from iframe")
+
+  //setInterval( function() {
+  //  window.parent.postMessage("message from iframe", "*")
+  //}, 2500 )
+  // post message tests

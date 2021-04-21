@@ -1,4 +1,16 @@
 #site {
+
+  .notice {
+    background-color: var(--basebeig);
+    padding: 12px;
+    margin: 24px 0px 0px 40px;
+    border-radius: 4px;
+    color: #f5f5f5;
+    font-weight: bold;
+    opacity: 0.74;
+    display: inline-block;
+  }
+
   .grid-container {
     display: grid;
     grid-template-areas: "head head head" "main main main" "footer footer footer";

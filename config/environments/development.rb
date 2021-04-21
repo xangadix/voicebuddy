@@ -6,7 +6,7 @@ Rails.application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 
-  # fuck yarn
+  # fuck yarn -- this CRASHES the app?!
   config.webpacker.check_yarn_integrity = false
 
   # Do not eager load code on boot.
@@ -36,12 +36,12 @@ Rails.application.configure do
   # config.action_mailer.perform_caching = false
 
   # default_url_options[:host]
-  config.action_mailer.default_url_options = { :host => "http://voicebuddy.sense-studios.com", port: 80 }
+  config.action_mailer.default_url_options = { :host => "https://app.voicebuddy.nl", port: 80 }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :address                => "smtp.quickhost.nl",
-    :domain                 => "http://voicebuddy.sense-studios.com"
+    :domain                 => "https://app.voicebuddy.nl"
   }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
@@ -62,10 +62,13 @@ Rails.application.configure do
   config.assets.debug = true
 
   # Suppress logger output for asset requests.
-  config.assets.quiet = true
+  config.assets.quiet = false
 
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
+  # config.assets.compress = false
+  # config.assets.debug = false
+  # config.assets.compile = false
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
