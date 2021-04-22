@@ -3,19 +3,20 @@
 .fancy_header
   /= link_to "/app/oefeningen/#{@token}", :class => "back_btn" do
   /  .arrow_left
-  .fancy_header= current_exercise["naam"]
+  = current_exercise["naam"]
 .gradient-edge
 
 .oefening
 
   // if @
-  .video-container#videocontainer
+  .video-container
     %video{:src=>current_exercise["content"], 'webkit-playsinline': "true", :playsinline=> "true", :controls => false, :id=>"video_oefening"}
     #play-button.far.fa-lg.fa-play-circle
+    #end-container
 
-  %br
-    %button#end_video_now to end now
-  %br
+
+    /%button#end_video_now to end now
+
 
   %h4{:style=>"text-align:center;"}= current_exercise["doel"]
   .push-down
@@ -30,6 +31,11 @@
       vid.pause()
     }
   }
+
+  vid.onplay = function() {
+    document.getElementById('play-button').style.display = "none"
+  }
+
 
   vid.onloadedmetadata = function(e) {
     console.log("== VIDEO got metatada", vid.duration, e)
@@ -51,8 +57,9 @@
       )
       .then( function(data) {
         console.log("got data", data)
-        var results_location = document.getElementById("videocontainer")
-        results_location.innerHTML = ""
-        results_location.innerHTML = "<br><br>U hebt gewonnen!"
+        var results_location = document.getElementById("end-container")
+        results_location.innerHTML = `#{render 'app/win_screen'}`
+        //results_location.innerHTML = ""
+        vid.src = ""
     });
   }

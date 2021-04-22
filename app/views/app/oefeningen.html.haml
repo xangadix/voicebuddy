@@ -1,4 +1,4 @@
-.fancy_header Jouw Oefeningen
+.fancy_header#hidden_button Jouw Oefeningen
 .gradient-edge
 
 .oefeningen_container
@@ -21,3 +21,11 @@
   %br
   %br
   %br
+
+  :javascript
+    document.querySelectorAll(".debug_info").forEach(function(elm) { elm.style.display = "none" })
+    var hidden_debug = true
+
+    document.getElementById('hidden_button').onclick = function() {
+      document.querySelectorAll(".debug_info").forEach(function(elm) { elm.style.display = "block" })
+    }

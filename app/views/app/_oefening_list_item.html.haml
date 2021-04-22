@@ -3,7 +3,15 @@
   .content
     .title= exercise.name
     .description= exercise.description
-    %pre
+    .preset.hidden= EXERCISES[exercise.preset.to_i][:name]
+
+  .thumbnail
+    =# image_tag "ilse_screen"
+    %image{:src=>exercise["thumb"], :width=>"200px"}
+
+  // so this is a work in progress
+  .stats
+    %pre.debug_info
       = exercise.completed
       \
       = exercise.target
@@ -26,39 +34,32 @@
       %b
       \
 
-
-
-    .preset.hidden= EXERCISES[exercise.preset.to_i][:name]
-
-  .thumbnail
-    =# image_tag "ilse_screen"
-    %image{:src=>exercise["thumb"], :width=>"200px"}
-
-  .stats
     .score
-      - Array.new(exercise.target).each_with_index do |i, index|
-        - if exercise.completed
-          Helemaal klaar voor vandaag :)
-          - break
-        - if exercise.achieved > index
-          %i.fas.fa-lg.fa-circle{:style=>"color: green;"}
+      - if exercise.completed
+        Helemaal klaar voor vandaag :)
 
-        - elsif exercise.achieved + exercise.achieved_in_streak > index
-          // here will be yellow, lets check frequency and streak
-          %i.far.fa-lg.fa-circle{:style=>"color: green;"}
+      -else
+      - width = 100.0
+      .progress-bar
+        - Array.new(exercise.target).each_with_index do |i, index|
+          - if exercise.achieved > index
+            .progress-tic.green{:style=>"width:#{ width / exercise.target }%;"}
 
-        - elsif exercise.achieved + exercise.streak_target > index
-          // here will be yellow, lets check frequency and streak
-          %i.fas.fa-lg.fa-circle{:style=>"color: orange;"}
+          - elsif exercise.achieved + exercise.achieved_in_streak > index
+            /.progress-tic.green{:style=>"width:#{ width / exercise.target }%;"}
 
-        - elsif exercise.achieved + exercise.frequency > index
-          %i.fas.fa-lg.fa-circle{:style=>"color: orange;"}
+          - elsif exercise.achieved + exercise.streak_target > index
+            .progress-tic.orange{:style=>"width:#{ width / exercise.target }%;"}
 
-        - else
-          %i.far.fa-lg.fa-circle{:style=>"color: light-grey;"}
+          - elsif exercise.achieved + exercise.frequency > index
+            .progress-tic.orange{:style=>"width:#{ width / exercise.target }%;"}
 
-      //.streak
-      //  = exercise.streak_status
+          - else
+            .progress-tic.hollow{:style=>"width:#{ width / exercise.target }%;"}
+
+
+      .moving_total{:style=>"margin-left: calc( #{ exercise.achieved * ( width / exercise.target )}% - 4px );"}
+        = exercise.achieved
 
       //.streak
       //  = exercise.achieved
