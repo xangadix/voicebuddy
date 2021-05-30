@@ -1,0 +1,55 @@
+- preset = lookup_exercies(@exercise.preset)
+.fancy_header HAAL JE PRIJS OP
+.gradient-edge
+
+#awards.main-content
+
+  %center
+    %br
+    %br
+    %h1= preset[I18n.locale.to_s]["naam"]
+    %h3
+    / %pre= @exercise.to_yaml
+    %h4
+      Je deed
+      = @exercise.achieved_array.sum
+      van de
+      = @exercise.target
+      oefeningen
+
+    - num_stars = 5
+    - score_in_stars = (@exercise.achieved_array.sum.to_f / @exercise.achieved_array.count.to_f * num_stars).round(0)
+
+
+    - Array.new(num_stars).each_with_index do |star, index|
+      - if index < score_in_stars
+        %i.fas.fa-lg.fa-star
+      - else
+        %i.far.fa-lg.fa-star
+
+
+    %br
+    %br
+    %br
+
+    %h5
+      Dat is een score van
+      = (@exercise.achieved_array.sum.to_f / @exercise.achieved_array.count.to_f * 100).round(1)
+      \%
+      %br
+      Je bent
+      = time_ago_in_words( @exercise.created_at )
+      geleden, begonnen met deze oefening
+
+    /%pre= @exercise.claimed_award
+
+
+
+    .actions
+      = link_to "« oefeningen", "/app/oefeningen/#{@token}", :style=>"color:white;"
+      &nbsp;
+      &nbsp;
+      |
+      &nbsp;
+      &nbsp;
+      = link_to " prijzen! » ", "/app/awards/#{@token}", :style=>"color:white;"

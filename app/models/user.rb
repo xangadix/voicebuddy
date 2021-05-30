@@ -5,7 +5,12 @@ class User
   # includes roles
   include UserRolable
   field :roles, :type => Array, default: []
-  belongs_to :resource, polymorphic: true, optional: true
+
+  # a logopedist can have many clients
+  # a client has one logopedists
+  # both are users
+  has_many :clients, :class_name => 'User', :foreign_key => :client_id
+  belongs_to :logopedist, :class_name => 'User', optional: true
 
   # can have exercises
   has_many :exercises
@@ -25,7 +30,6 @@ class User
 
   ## Rememberable
   field :remember_created_at, type: Time
-
 
   ## Trackable
   field :sign_in_count,      type: Integer, default: 0
@@ -48,13 +52,7 @@ class User
   # ----------------------------------------------------------------------------
   # I'll write my own role system with booze and hookers
   field :name, type: String, default: ""
-
-  # there must be a way to do it better
-  # but for now lets save user ids
-  field :clients, type: Array, default: []
-
-  # as a client, a user has many excercises
-  has_many :exercises
+  field :client_id, type: String, default: ""
 
   # just for the heck of it
   field :first_name, type: String, default: ""
@@ -62,10 +60,19 @@ class User
   field :last_name, type: String, default: ""
   field :gender, type: String, default: ""
   field :date_of_birth, type: String, default: ""
+
   field :notes, type: String, default: ""
   field :authorisation_token, type: String, default: ""
+  field :language, type: String, default: "nl"
 
   field :has_seen_intro, type: Boolean, default: false
+
+  field :last_streak_update, type: DateTime, default: DateTime.now
+  field :next_streak_update, type: DateTime, default: DateTime.now + 1.day
+  field :streak_target, type: Integer, default: 7
+  field :claimed_streaks, type: Integer, default: 0
+  field :streak, type: Integer, default: 0
+  field :streak_lock, type: Boolean, default: false #locks the streak untill reset
 
   def full_name
     unless name.blank?
@@ -74,11 +81,6 @@ class User
       "#{self.first_name} #{self.suffix} #{self.last_name}"
     end
   end
-  # optionsl callback, after_add, before_remove, after_remove
-
-  #def before_add_method(role)
-    # do something before it gets added
-  #end
 
   def set_authorisation_token
     token = SecureRandom.urlsafe_base64(nil, false)

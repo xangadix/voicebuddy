@@ -1,6 +1,55 @@
-.fancy_header awards
+#awards
+  .fancy_header prijzenkast
 
-%p
-  awards for
-  %em= current_user.name
-  %b= current_user.email
+  .main-content
+    .center-text
+      %p
+        alle prijzen voor:
+      %h2= current_user.full_name
+
+  - if current_user.claimed_streaks > 0 || 1 == 1
+
+    .streaks-list
+
+
+
+
+      /= image_tag "awards/strotten/TROFEE BRONS 2.gif", :width => "33%"
+      /= image_tag "awards/strotten/TROFEE SILVER 2.gif", :width => "33%"
+      /= image_tag "awards/strotten/TROFEE GOUD 2.gif", :width => "33%"
+
+      - if current_user.claimed_streaks >= 1
+        = image_tag "awards/strotten/BRONS_STILL"
+
+      - if current_user.claimed_streaks >= 2
+        = image_tag "awards/strotten/ZILVER_STILL"
+
+      - if current_user.claimed_streaks >= 3
+        = image_tag "awards/strotten/GOUD_STILL"
+
+
+
+  .award-list
+    - @exercises.reverse.each do |exercise|
+      = render "award_item", :locals => {:exercise => exercise}
+
+    %br
+    %br
+    %br
+    %br
+    %br
+    %br
+    %br
+    %br
+    %br
+    %br
+    %br
+    %br
+    %br
+    %br
+    %br
+    %br
+    %br
+    %br
+    %br
+    %br

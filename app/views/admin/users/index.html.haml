@@ -1,25 +1,39 @@
-- unless notice.blank?
-  %p#id.notice= notice
-
-%h1 Gebruikersbeheer
+%h1= t('admin.users.title')
 
 .vakje
   %table
     %thead
       %tr
-        %th{:colspan=>"3"}
+        %th= t('common.name')
+        %th= t('comomn.email')
+        %th= t('common.roles')
+        %th= t('common.language')
+        %th{:colspan=>"4"}
     %tbody>
       - @users.each do |user|
         %tr
           %td= user.name
           %td= user.email
+          %td= user.language
           %td= user.roles.to_sentence
-          %td= link_to 'Show', "/admin/users/#{user.id.to_s}"
-          %td= link_to 'Impersonate', "/admin/impersonate/#{user.id.to_s}"
-          %td= link_to 'Edit', edit_admin_user_path(user)
-          %td= link_to 'Destroy', "/admin/users/#{user.id.to_s}", method: :delete, data: { confirm: 'Are you sure?' }
+          %td= link_to t('common.show'), "/admin/users/#{user.id.to_s}"
+          %td= link_to t('common.impersonate'), "/admin/impersonate/#{user.id.to_s}"
+          %td= link_to t('common.edit'), edit_admin_user_path(user)
+          %td= link_to t('common.destroy'), "/admin/users/#{user.id.to_s}", method: :delete, data: { confirm: 'Are you sure?' }
 
-
+  %br
+  .pagination
+    .pull-right
+      / # move to a pagination partial
+      - unless @page == 0
+        = link_to t('common.previous'), "/admin/users/?page=#{@page - 1}"
+      - else
+        = t('common.previous')
+      \|
+      - unless @page > @total/(PER_PAGE-1)
+        = link_to t('common.next'), "/admin/users/?page=#{@page + 1}"
+      - else
+        = t('common.next')
   %br
 
 %br

@@ -2,6 +2,7 @@ class AdminController < ApplicationController
   before_action :authenticate_user!
   before_action :verify_user_role
   layout "admin"
+  @@per_page = 4
 
   def index
   end
@@ -11,6 +12,10 @@ class AdminController < ApplicationController
   end
 
   def logopedisten
+    @page = ( params[:page]).to_i || 0
+    @resource = User.all
+    @total = @resource.count
+    @users = @resource.skip( @page * PER_PAGE ).limit( PER_PAGE)
   end
 
   def clients

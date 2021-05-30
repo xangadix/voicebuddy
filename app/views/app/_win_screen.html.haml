@@ -1,6 +1,9 @@
-= image_tag "sealapproval"
+- preset = lookup_exercies(@exercise.preset)
+- ploatjes = ["geweldig.png","goed gedaan-02.png","hartstikkegoed-02.png","lekker bezig-02.png","lekker gewerkt-02.png","mooi-02.png","prachtig-02.png","super-02.png","top-02.png","trots op je-02.png","yes-02.png"]
+/= preset[I18n.locale.to_s]["naam"]
+= image_tag "stempels2/#{ploatjes.sample}"
 %h2
   Oefening
-  %em= @exercise.name
-  is afgerond! -- Ga zo door
+  /%em= @exercise.name
+  gedaan
 = link_to "« terug naar oefeningen", "/app/oefeningen/#{@token}"

@@ -35,8 +35,6 @@
 
     %br
     %br
-
-
     %br
     %br
     %br
@@ -45,7 +43,10 @@
   .menu {
     display: none;
   }
+
 :javascript
+  // window.parent.postMessage("WEB_READY||WEB||message from web app", "*")
+
   //if (window.location.hash.indexOf('login_failed') != -1) {
   //  document.getElementById('login_message').innerHTML = 'Login Failed!'
   //}
@@ -64,25 +65,40 @@
 
   // LOGIN failed message
   // window.location.hash, login_failed
+  function receiver(event) {
+    console.log("iframe got an event from app:", event.origin, event.data)
+    var command = event.data.split("||")[0]
+    var source = event.data.split("||")[1]
+    var msg = event.data.split("||")[2]
+    console.log("command: ", command)
+    console.log("source: ", source)
+    console.log("message: ", msg)
+
+    if (source == "WEB") {
+      console.log("nevermind, its only me.")
+      return
+
+    } else {
+
+      console.log("message from APP!")
+      // source is APP
+      // token_removed_ok?
+      // token_set_ok?
+      // clientTokenWasFound
+      if (command == "SET_TOKEN") {
+        console.log("got local token! ", msg)
+        // document.getElementById('localtoken_display').innerHTML = msg
+      }
+    }
+  }
 
 
-  //function receiver(event) {
-  //  console.log("iframe got an event from app:", event.origin, event.data)
-    //if (event.origin == 'null') {
-    //    if (event.data == 'Hello B') {
-    //        event.source.postMessage('Hello, a message from iframe!', '*');
-    //    }
-    //    else {
-    //        alert(event.data);
-    //    }
-    //}
-  //}
-
-  //window.addEventListener('message', receiver, false);
-
-  //console.log("post message from iframe")
-
-  //setInterval( function() {
-  //  window.parent.postMessage("message from iframe", "*")
-  //}, 2500 )
-  // post message tests
+  // init
+  window.addEventListener('message', receiver, false);
+  window.onload = function() {
+    console.log("onload!")
+    window.parent.postMessage("WEB_READY||WEB||message from web", "*")
+    // window.parent.postMessage("SET_TOKEN||WEB||@{client_token}", "")
+    // window.parent.postMessage("SET_REMINDER||WEB||datatime, exercise", "")
+    // window.parent.postMessage("REMOVE_REMINDER||WEB||reminder_id", "")
+  }

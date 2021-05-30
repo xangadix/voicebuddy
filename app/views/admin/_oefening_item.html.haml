@@ -1,20 +1,53 @@
-%li
-  %h3= exercise.name
+- preset = lookup_exercies(exercise.preset)
+- if exercise.claimed_award
+  %li
 
-  .description= exercise.description
-  %br
-  = link_to "verwijder oefening", "remove_exercise/#{exercise.id}", :class => "btn btn-danger pull-right"
-  &nbsp;
-  = link_to "bewerk oefening", "/exercises/#{exercise.id}/edit", :class => "btn btn-turq pull-right"
-  &nbsp;
-  = link_to "bekijk oefening", "/view_exercise/#{exercise.id}", :class => "btn btn-danger pull-right"
+    .btn-group{:style=>"float:right"}
+      =# link_to 'Destroy', exercise, method: :delete, data: { confirm: 'Are you sure?' }
+      = link_to "/remove_exercise/#{exercise.id}", method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger pull-right" do
+        %i.fa.fas.fa-trash
+      &nbsp;
+      = link_to "/exercises/#{exercise.id}/edit", :class => "btn btn pull-right" do
+        %i.fa.fas.fa-edit
 
-  %br
-  = link_to "zet herinnering", "/view_exercise/#{exercise.id}", :class => "btn btn-danger"
-  = datetime_field_tag "reminder_date", (DateTime.now() + 36.hours).strftime("%Y-%d-%mT%H:%M")
+      &nbsp;
+      = link_to "/app/oefening/#{exercise.id}", :target=>"_blank", :class => "btn btn pull-right" do
+        %i.fa.fas.fa-eye
 
-  %br
-  %br
-  %br
-  8 van
-  = number_field_tag "oefening_herhalingen", 12
+
+    %b= preset[I18n.locale.to_s]["naam"]
+    (
+    = t('common.completed')
+    )
+- else
+  %li
+
+    .btn-group{:style=>"float:right"}
+      = link_to "/remove_exercise/#{exercise.id}", method: :delete, data: { confirm: t('common.are_you_sure') }, :class => "btn btn-danger pull-right" do
+        %i.fa.fas.fa-trash
+      &nbsp;
+      = link_to "/exercises/#{exercise.id}/edit", :class => "btn btn pull-right" do
+        %i.fa.fas.fa-edit
+
+      &nbsp;
+      = link_to "/app/oefening/#{exercise.id}", :target=>"_blank", :class => "btn btn pull-right" do
+        %i.fa.fas.fa-eye
+
+
+    .content{:style=>"min-height: 200px;"}
+      .thumbnail{:style=>"float:left;display:inline-block;"}
+        %image{:src=> preset[I18n.locale.to_s]["thumbnail"], :width=>"200px"}
+
+      .tekst{:style=>"float:left;display:inline-block;width:60%;margin-left:20px;"}
+        %h3= preset[I18n.locale.to_s]["naam"]
+        .description= preset[I18n.locale.to_s]["doel"]
+
+    /%br
+    /= link_to "zet herinnering", "/view_exercise/#{exercise.id}", :class => "btn btn-danger"
+    /= datetime_field_tag "reminder_date", (DateTime.now() + 36.hours).strftime("%Y-%d-%mT%H:%M")
+
+    /%br
+    /%br
+    /%br
+    /8 van
+    /= number_field_tag "oefening_herhalingen", 12

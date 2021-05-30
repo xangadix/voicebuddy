@@ -1,6 +1,7 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   layout 'admin'
+  include ApplicationHelper
 
   # https://github.com/bogdan/datagrid ?
   # https://github.com/bogdan/datagrid/wiki/Frontend
@@ -8,7 +9,13 @@ class Admin::UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    unless current_user.has_role?(:admin )
+      redirect_to "/admin/clients"
+    end
+    @page = ( params[:page]).to_i || 0
+    @resource = User.all
+    @total = @resource.count
+    @users = @resource.skip( @page * PER_PAGE ).limit( PER_PAGE)
   end
 
 
@@ -31,12 +38,24 @@ class Admin::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
+    # back
+    back = request.env["HTTP_REFERER"].split('https://app.voicebuddy.nl')[1]
+    # logger.debug "checking referrer"
+    # logger.debug ref
+
+    # save ownership
+    if current_user.has_role?(:logopedist)
+      @user.logopedist = current_user
+      @user.roles = [:client]
+    end
+
     respond_to do |format|
       if @user.save
         format.html { redirect_to '/admin/users', notice: 'Alle wijzigingen zijn opgeslagen.' }
         format.json { render :show, status: :created, location: @user }
       else
-        format.html { render :new }
+        format.html { render back }
+        #format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -45,6 +64,7 @@ class Admin::UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+    logger.debug " -------------------------- UPDATE : #{@user} #{user_params}"
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to '/admin/users', notice: 'Alle wijzigingen zijn opgeslagen.' }
@@ -60,8 +80,9 @@ class Admin::UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     @user.destroy
+    back = request.env["HTTP_REFERER"].split('https://app.voicebuddy.nl')[1]
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'Alle wijzigingen zijn opgeslagen.' }
+      format.html { redirect_to back, notice: "gebruiker #{@user.full_name} is verwijderd." }
       format.json { head :no_content }
     end
   end
@@ -86,30 +107,33 @@ class Admin::UsersController < ApplicationController
     #  :beschrijving => "Lorem Ipsum solet dormit"
     #},
 
-    @user = User.find(params[:id])
-    @preset = EXERCISES[params[:ex_id].to_i-1]
 
+    # geen dubbele exercises
+    # if user has exercis preset --> refuse
+
+    @user = User.find(params[:id])
+
+    @user.exercises.each do |ex|
+      if ex.preset == params[:ex_id] # $$ ex.preset.claim_reward
+        flash[:alert] = "User already has this preset."
+        redirect_to "/admin/users/#{params[:id]}"
+        return
+      end
+    end
+
+    preset = lookup_exercies( params[:ex_id] )
     @exercise = Exercise.new()
     @exercise.user = @user
-    @exercise.preset = @preset["id"]
-    @exercise.name = @preset["naam"]
-    @exercise.description = @preset["doel"]
-    @exercise.video = @preset["videobestand"]
-    @exercise.thumb = @preset["thumbnail"]
-
-    # BUT... BUT... shouldn't we only save the preset id
-
-    # @exercise.video = @preset["thumbnail"]
-    # frequentie
-    # @exercise.thumb = @preset[:thumbnail]
-    # @exercise.percent_done = 0
-
+    @exercise.preset = params[:ex_id]
+    @exercise.name = preset["oefening"]
+    @exercise.frequency = preset["frequentie"]
+    @exercise.material = preset["materiaal"]
     @exercise.save()
 
     @user.exercises << @exercise
     @user.save
 
-    redirect_to "/admin/users/#{params[:id]}/edit"
+    redirect_to "/admin/users/#{params[:id]}/edit#just_added"
   end
 
   def remove_exercise
@@ -130,6 +154,6 @@ class Admin::UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       #params.fetch(:user, {:name, :email})
-      params.require(:user).permit(:name, :email, :password, :roles => [])
+      params.require(:user).permit(:name, :email, :password, :language, :logopedist, :roles => [])
     end
 end

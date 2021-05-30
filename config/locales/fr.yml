@@ -1,0 +1,73 @@
+fr:
+  bonjour: "Bonjour tout le monde"
+
+  common:
+    user: "Utilisateur"
+    users: "Utilisateurs"
+    exercice: "exercice"
+    exercices: "des exercices"
+    client: "client"
+    clients: "clients"
+    speech_therapist: "Orthophoniste"
+    speech_therapists: "Orthophonistes"
+    name: "nom"
+    email: "email"
+    language: "language"
+    roles: "rôles"
+    password: "mot de passe"
+    confirm_password: "confirmer le mot de passe"
+    actions: "actions"
+    current_token: ""
+    edit: "modifier"
+    show: "montre"
+    impersonate: "usurper l'identité"
+    destroy: "détruire"
+    next: "Suivant"
+    previous: "précédent"
+
+    # pas si comon?
+    first_name: ""
+    last_name: ""
+    suffix: ""
+    gender: ""
+    date_of_birth: ""
+    created_at: ""
+
+  admin:
+    top_menu:
+      payoff: "Application de pratique d'orthophonie Voicebuddy"
+      my_profile: "Mes profils"
+      logout: "déconnexion"
+      language: "language"
+
+    side_menu:
+      dashboard: "tableau de bord"
+      all_users: "tous les utilisateurs"
+      logs: "journaux"
+
+    scaffold:
+      show: "montre"
+      back: "retour"
+      edit: "modifier"
+      delete: "supprimer"
+      edit_user: "Modifier l'utilisateur"
+
+    clients:
+      edit_client: "Modifier le client"
+      assign_exercises: "Exercices assignés"
+      available_exercises: "Exercices disponibles"
+      filter: "filtre"
+      preview: "aperçu"
+      add_exercise: "+ ajouter"
+
+    exercises:
+      edit_exercise: "Modifier l'exercice"
+      new_exercise: "Nouvel exercice"
+
+  app:
+    your_exercises: "Vos exercices"
+    streak: "Streak"
+    colofon: "colofon"
+    awards: "Récompenses"
+    awards_sub: "Tous les prix pour"
+    your_profile: "Votre profil"

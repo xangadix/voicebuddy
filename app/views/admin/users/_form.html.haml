@@ -3,49 +3,68 @@
     - if user.errors.any?
       #error_explanation
         %h2
-          = pluralize(user.errors.count, "error")
-          prohibited this user from being saved:
+          = t('activerecord.errors.template.header', :model => User.model_name.human, :count => @user.errors.count)
 
         %ul
           - user.errors.full_messages.each do |message|
             %li= message
 
-    %label name
+    %label= t('common.name')
     = form.text_field :name
     %br
 
-    %label email
+    %label= t('common.email')
     = form.text_field :email
     %br
 
-    %label roles
-    = form.select :roles, [["beheerder", :admin],["logopedist", :logopedist],["client", :client],["demo", :demo]], {}, {:multiple => true, :class=>"multiple_select"}
+    %label= t('common.language')
+    = form.select :language, ["nl", "vls", "en", "fr"], {}, {:class=>""}
     %br
 
+    - if current_user.has_role?(:admin)
+      %label= t('common.roles')
+      = form.select :roles, [["beheerder", :admin],["logopedist", :logopedist],["client", :client],["demo", :demo]], {}, {:multiple => true, :class=>"multiple_select"}
+      %br
+    - elsif current_user.has_role?(:logopedist)
+      =# form.select :roles, [["client", :client]], {}, {:multiple => true, :class=>"multiple_select"}
+    - else
+      = form.hidden_field :roles, :multiple => true, :value=>"client"
+
+    / add to current user
+    = form.hidden_field :logopedist, :value => current_user.id.to_s
+
     - unless @user.persisted?
-      %label password
+      %label= t('common.password')
       = form.password_field :password
       %br
 
-      %label confirm password
+      %label= t('common.confirm_password')
       = form.password_field :password
 
     - if @user.persisted? && @user.has_role?(:client)
       %hr
       %h3#assigned_exercises
-        Toegewezen oefeningen
+        = t('admin.clients.assigned_exercises')
+        = "(#{user.exercises.where(:claimed_award => true).count}/"
+        = "#{user.exercises.count})"
         %i.fa.fa-arrow-down
-        
+
       %ul.huidige_oefeningen
-        - @user.exercises.each do |ex|
+        - @user.exercises.all.sort_by{|k| k[:claimed_award].to_s }.each do |ex|
           = render partial: '/admin/oefening_item', :locals => {:exercise => ex}
 
+      %hr
+
       %h3#available_exersises
-        Beschikbare oefeningen
+        = t('admin.clients.available_exercises')
+        = "(#{EXERCISES.count})"
         %i.fa.fa-arrow-down
 
-      = form.select :preset, EXERCISES.map{|e| [e["naam"],e["id"]] }, {}, {class:'test'}
       %ul.beschikbare_oefeningen
+        .filter-form{}
+          %label= t('admin.clients.filter')
+          %input#filter-input{:type=>"text", :style=>"width:400px;display:inline;"}
+        %hr
         - EXERCISES.each do |ex|
           = render partial: '/admin/oefening_new', :locals => {:exercise => ex}
 
@@ -54,28 +73,81 @@
     %br
     %br
     %br.actions
-      = form.submit
+      = form.submit :value => t('common.save')
 
 
 %br
 %hr
 %br
 
+#text_modal
+  .background
+  .modal
+    .modal-header
+      .close_button.btn.btn-default x
+      .title
+    .modal-content
+      .text
+    .footer
+
 :javascript
-  document.getElementById('assigned_exercises').onclick = function() {
-    console.log("kilikker")
-    if ( document.querySelector('.huidige_oefeningen').style.display != "none" ) {
-      document.querySelector('.huidige_oefeningen').style.display = "none"
-    }else{
-     document.querySelector('.huidige_oefeningen').style.display = "block"
-     }
+  function init_exercises() {
+
+    // dropdowns
+    document.getElementById('assigned_exercises').onclick = function() {
+      if ( document.querySelector('.huidige_oefeningen').style.display != "none" ) {
+        document.querySelector('.huidige_oefeningen').style.display = "none"
+      }else{
+       document.querySelector('.huidige_oefeningen').style.display = "block"
+       }
+    }
+    //document.querySelector('.huidige_oefeningen').style.display = "none"
+
+    document.getElementById('available_exersises').onclick = function() {
+      if ( document.querySelector('.beschikbare_oefeningen').style.display != "none" ) {
+        document.querySelector('.beschikbare_oefeningen').style.display = "none"
+      }else{
+       document.querySelector('.beschikbare_oefeningen').style.display = "block"
+       }
+    }
+    document.querySelector('.beschikbare_oefeningen').style.display = "none"
+
+    // filters
+    document.getElementById('filter-input').oninput = function(evt) {
+      document.querySelectorAll('.new_exercise').forEach( function(_elm) {
+        _elm.style.display = "block"
+        currentInput = evt.target.value.toLowerCase()
+        if (currentInput.length > 3) {
+          _elm.style.display = "none"
+
+          console.log( _elm.querySelector('.title').innerText )
+
+          if ( _elm.querySelector('.title').innerText.toLowerCase().indexOf(currentInput) != -1 ) {
+            _elm.style.display = "block"
+          }
+
+          if ( _elm.querySelector('.category').innerText.toLowerCase().indexOf(currentInput) != -1 ) {
+            _elm.style.display = "block"
+          }
+
+          if ( _elm.querySelector('.tags').innerText.toLowerCase().indexOf(currentInput) != -1 ) {
+            _elm.style.display = "block"
+          }
+        }
+      })
+    }
+
   }
 
-  document.getElementById('available_exersises').onclick = function() {
-    console.log("kilikker")
-    if ( document.querySelector('.beschikbare_oefeningen').style.display != "none" ) {
-      document.querySelector('.beschikbare_oefeningen').style.display = "none"
-    }else{
-     document.querySelector('.beschikbare_oefeningen').style.display = "block"
-     }
+  function show_text( _title, _text ) {
+    var modal = document.getElementById('text_modal')
+    modal.querySelector(".title").innerHTML = _title
+    modal.querySelector(".text").innerHTML = _text
+    modal.querySelector(".close_button").onclick = function() {
+      modal.style.display = "none"
+    }
+    modal.style.display = "block"
   }
+
+  // main
+  init_exercises();

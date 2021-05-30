@@ -1,0 +1,24 @@
+%h1
+  Overzicht voor
+  = @user.full_name
+%hr
+
+- if @user.exercises.blank?
+  Geen oefeningen gevonden
+
+- @user.exercises.reverse.each do |exercise|
+  - preset = lookup_exercies(exercise.preset)
+  .award-item
+    .score
+      = (exercise.score * 0.1).round(1)
+      %span.small %
+    %h4 Score voor
+    %h3
+      = preset[current_user.language]["naam"]
+    %small= exercise.updated_at
+
+%br
+%br
+%hr
+.actions
+  = link_to t('common.back'), "/admin/clients"

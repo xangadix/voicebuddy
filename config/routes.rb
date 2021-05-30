@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
+
   resources :exercises
+  delete 'remove_exercise/:id' => 'exercises#remove_exercise'
+
   devise_for :users, controllers: {sessions: "sessions"}
 
 
@@ -20,17 +23,18 @@ Rails.application.routes.draw do
     get 'users/:id/add_exercise/:ex_id', to: 'users#add_exercise'
     get 'users/:id/remove_exercise/:ex_id', to: 'users#remove_exercise'
     get 'clients', to: 'clients#index'
+    get 'clients/new', to: 'clients#new'
+    get 'clients/:id', to: 'clients#show'
     get 'impersonate/(:id)' => 'users#impersonate', as: :impersonate
     get 'stop_impersonating' => 'users#stop_impersonating', as: :stop_impersonate
   end
-
 
   # for everyone
   get '/users/my_profile', to: 'users#my_profile'
 
   # scope?
   # get '/app/test_api', to: 'app#test_api'
-  get '/app/login', to: 'app#login'
+  get '/app/login(/:login)', to: 'app#login'
   post '/app/new_login', to: 'app#new_login'
   get '/app/login_failed', to: 'app#login_failed'
   get '/app/forgot_password', to: 'app#forgot_password'
@@ -38,6 +42,9 @@ Rails.application.routes.draw do
   get '/app/introductie(/:token)', to: 'app#introductie'
   get '/app/info(/:token)', to: 'app#info'
   get '/app/awards(/:token)', to: 'app#awards'
+  get '/app/awards/claim/:id(/:token)', to: 'app#claim_reward'
+  get '/app/claim_reward/:id(/:token)', to: 'app#claim_reward'
+  get '/app/claim_streak/(:token)', to: 'app#claim_streak'  
   get '/app/oefening/:id(/:token)', to: 'app#oefening'
   get '/app/oefeningen(/:token)', to: 'app#oefeningen'
   get '/app/my_profile(/:token)', to: 'app#my_profile'

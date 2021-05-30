@@ -1,31 +1,45 @@
-- unless notice.blank?
-  %p#id.notice= notice
 
-%h1 Exercises
+%h1= t('common.exercises')
 
 .vlakje
   %table
     %thead
       %tr
-        %th Name
-        %th Afgerond
-        %th Video
-        %th Description
-        %th Preset
+        %th Id
+        %th naam
+        %th toegewezen aan?
+        %th afgerond?
+        %th content
+        %th doel
+        %th preset
         %th{:colspan=>"3"}
 
     %tbody
       - @exercises.each do |exercise|
         %tr
-          %td= exercise.name
-          %td= exercise.afgerond
-          %td= exercise.video
-          %td= exercise.description
           %td= exercise.preset
-          %td= link_to 'Show', exercise
-          %td= link_to 'Edit', edit_exercise_path(exercise)
-          %td= link_to 'Destroy', exercise, method: :delete, data: { confirm: 'Are you sure?' }
+          %td= lookup_exercies(exercise.preset)["nl"]["naam"]
+          %td= exercise.user.full_name unless exercise.user.nil?
+          %td= exercise.completed
+          %td= lookup_exercies(exercise.preset)["nl"]["content"]
+          %td
+            = lookup_exercies(exercise.preset)["nl"]["doel"][0..40].gsub(/\s\w+$/,'')
+            \...
+
+          %td= exercise.preset
+          %td
+            = link_to exercise do
+              %i.fas.fa-eye
+
+          %td
+            =link_to edit_exercise_path(exercise)  do
+              %i.fas.fa-edit
+
+          %td
+            = link_to exercise, method: :delete, data: { confirm: 'Are you sure?' } do
+              %i.fas.fa-trash-alt
+
 
   %br
 
-  = link_to 'New Exercise', new_exercise_path
+  =# link_to t('exercies.new'), new_exercise_path

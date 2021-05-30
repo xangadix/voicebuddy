@@ -2,9 +2,44 @@
 .gradient-edge
 
 .oefeningen_container
+  .streak-info
+    - if @streak_complete
+      .streak-display
+        streak afgerond!
+        %br
+          %b
+            = link_to "haal je prijs op!", "/app/claim_streak/#{@token}"
+        %br
+
+    - elsif current_user.streak < 7
+      .streak-display
+        streak
+        &nbsp;
+        - $i = 0
+        - while $i < 7  do
+          - if $i < current_user.streak
+            %i.streak-ball.fas.fa-circle
+          - else
+            %i.streak-ball.grey.far.fa-circle
+
+          - $i +=1
+
+        &nbsp;
+        = "#{current_user.streak}/7"
+
+
+    - else
+      .claim-reward
+        .streak-display
+          streak
+          = current_user.streak
+          \/7
+      // filled when we reach 7/7
+  %br
+  %br
   -# Exercise.each do |ex|
     =# render partial: 'app/oefening_list_item', :locals => {:exercise => ex}
-  - current_user.exercises.each do |exercise|
+  - @exercises.each do |exercise|
     = render partial: 'app/oefening_list_item', :locals => {:exercise => exercise}
 
   %br
@@ -22,10 +57,59 @@
   %br
   %br
 
-  :javascript
-    document.querySelectorAll(".debug_info").forEach(function(elm) { elm.style.display = "none" })
-    var hidden_debug = true
+- if @streak_update
+  .streak_modal#streak_update_modal
+    .background#streak_update_modal_background
+    .modal
+      .modal-header
+        .close_button#streak_update_modal_close_button ×
+        .title Streak geüpdatet
+      .modal-content
+        %center
+          Je hebt alle oefeningen voor vandaag gedaan!
+          %br
+          %br
+          Ga zo door!
 
-    document.getElementById('hidden_button').onclick = function() {
-      document.querySelectorAll(".debug_info").forEach(function(elm) { elm.style.display = "block" })
+  :javascript
+    function close_modal() {
+      document.getElementById('streak_update_modal').style.display = "none"
     }
+    document.getElementById('streak_update_modal').style.display = "block"
+    document.getElementById('streak_update_modal_background').onclick = close_modal
+    document.getElementById('streak_update_modal_close_button').onclick = close_modal
+
+- if @streak_complete
+  .streak_modal#streak_complete_modal
+    .background#streak_complete_modal_background
+    .modal
+      .modal-header
+        .close_button#streak_complete_modal_close_button ×
+        .title Streak afgerond
+      .modal-content
+        %center
+          Je hebt alle oefeningen de afgelopen 7 dagen gedaan!
+          %br
+          %br
+          = link_to "haal je prijs op!", "/app/claim_streak/#{@token}"
+
+  :javascript
+    function close_modal() {
+      document.getElementById('streak_complete_modal').style.display = "none"
+    }
+    document.getElementById('streak_complete_modal').style.display = "block"
+    document.getElementById('streak_complete_modal_background').onclick = close_modal
+    document.getElementById('streak_complete_modal_close_button').onclick = close_modal
+
+
+:javascript
+  document.querySelectorAll(".debug_info").forEach(function(elm) { elm.style.display = "none" })
+  var hidden_debug = true
+
+  document.getElementById('hidden_button').onclick = function() {
+    document.querySelectorAll(".debug_info").forEach(function(elm) { elm.style.display = "block" })
+  }
+
+  // have token?
+  console.log("I got the token ? #{@token}")
+  window.parent.postMessage("SET_TOKEN||WEB||#{@token}", "*")

@@ -1,0 +1,10 @@
+%h1
+  = @user.full_name
+  %small
+    %br
+    %small= @user.email
+
+= render 'form', user: @user
+= link_to t('common.show'), "/admin/users/#{@user.id.to_s}"
+|
+\#{link_to t('common.back'), admin_users_path}

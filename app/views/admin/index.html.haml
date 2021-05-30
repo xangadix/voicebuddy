@@ -1,9 +1,14 @@
+%h1 Voicebuddy dashboard
 .welcome
-  Welcome to the admin index
-  %pre= current_user.email
+  Welkom #{current_user.email} #{current_user.id} #{current_user.roles}
 
-.current_users
-  %h3 Current Users
-  - User.each do |u|
-    = "#{u.email}, <small> #{u.roles.to_sentence} </small>".html_safe
-    %br
+.clients
+  %h3
+    Uw clienten
+    %small (laatste 10)
+
+  - User.where(:logopedist => current_user).to_a[0..10].each do |client|
+    *
+    = client.full_name
+    = client.email
+    = client.exercises.count

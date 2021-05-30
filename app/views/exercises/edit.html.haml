@@ -1,0 +1,12 @@
+.vakje
+  %h1 Wijzig oefening
+  oefning hoor bij
+  = link_to edit_admin_user_path(@exercise.user) do
+    = @exercise.user.full_name
+    = @exercise.user.email
+  %br
+
+  #{render 'form', exercise: @exercise}
+
+#{link_to 'Show', @exercise} |
+#{link_to 'Back', exercises_path}

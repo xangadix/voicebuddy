@@ -12,6 +12,15 @@
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     = favicon_link_tag asset_path('favicon')
 
+    / Google analytics
+    = javascript_include_tag 'https://www.googletagmanager.com/gtag/js?id=G-TZQGK0HWC1'
+    :javascript
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TZQGK0HWC1');
+
     %link{:rel=>"apple-touch-icon", :sizes=>"128x128", :href=>"logo_128_touch_icon.png"}
     %meta{:name=>"format-detection", :content=>"telephone=yes"}
     %meta{:name=>"viewport", :content=>"width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"}

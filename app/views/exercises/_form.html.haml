@@ -1,0 +1,122 @@
+- preset = lookup_exercies(@exercise.preset)
+= form_with(model: exercise, local: true) do |form|
+  - if exercise.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(exercise.errors.count, "error")
+        prohibited this exercise from being saved:
+      %ul
+        - exercise.errors.full_messages.each do |message|
+          %li= message
+  /.field
+  /  = form.label :name
+  /  = form.text_field :name
+
+  /%pre= EXERCISES
+  %br
+  %br
+  %hr
+  %br
+  .field
+    = form.label :preset
+    = form.select :preset, EXERCISES.map{|e| e['id'] }, {class:'test', :disabled=>true}
+
+  .field
+    = form.label :naam
+    %p= preset[I18n.locale.to_s]["content"]
+
+  .field
+    = form.label :doel
+    %p= preset[I18n.locale.to_s]["doel"]
+
+  .field
+    = form.label :inhoud
+    %p= preset[I18n.locale.to_s]["content"]
+
+
+  %hr/
+  .field
+    = form.label :completed_for_the_day
+    = form.select :completed_for_the_day, [true, false], {class:'test', :disabled=>true}
+
+  .field
+    = form.label :completed
+    = form.select :completed, [true, false], {class:'test'}
+
+  .field
+    = form.label :claimed_award
+    = form.select :claimed_award, [true, false], {class:'test'}
+  %hr/
+  .field
+    = form.label "doel (aantal dagen)"
+    = form.number_field :target
+
+  .field
+    = form.label "frequentie (aantal keer per dag)"
+    = form.number_field :frequency
+
+
+  .field
+    %p#exercise_info ...
+
+  %hr
+  .field
+    = form.label "tot nu toe gehaald, totaal"
+    //  = form.text_field :achieved
+    %pre= @exercise.achieved_array
+
+  .field
+    = form.label "tot nu toe gehaald, vandaag"
+    //  = form.text_field :achieved
+    %pre= @exercise.achieved_array_today
+
+  /.field
+  /  = form.label :streak
+  /  = form.text_field :streak
+  /.field
+  /  = form.label :streak_expire
+  /  = form.datetime_field :streak_expire
+  /.field
+  /  = form.label :frequency
+  /  = form.text_field :frequency
+  /.field
+  /  = form.label :streak
+  /  = form.text_field :streak
+  /.field
+  /  = form.label :streak_expire
+  /  = form.text_field :streak_expire
+  /.field
+  /  = form.label :streak_target
+  /  = form.text_field :streak_target
+  /.field
+  /  = form.label :achieved_in_streak
+  /  = form.text_field :achieved_in_streak
+  /.field
+  /  = form.label :complete_streak
+  /  = form.text_field :complete_streak
+
+
+  /.field
+  /  = form.label :afgerond
+  /  = form.text_field :afgerond
+
+  /.field
+  /  = form.label :preset
+  /  = form.select :preset, EXERCISES.map{|e| [e["naam"],e["id"]] }, {}, {class:'test'}
+  /.field
+  /  = form.label :description
+  /  = form.text_field :description
+  %hr
+  .actions
+    = form.submit :value => t('common.save')
+
+:javascript
+  function update_total() {
+    target = document.getElementById('exercise_target').value
+    freq = document.getElementById('exercise_frequency').value
+    total = target * freq
+    document.getElementById('exercise_info').innerHTML = `<strong>${freq}</strong> oefeningen per dag, <strong>${target}</strong> dagen lang, dat zijn in totaal <large><strong>${total}</strong></large> oefeningen.`
+  }
+
+  document.getElementById('exercise_target').onchange = document.getElementById('exercise_frequency').onchange = update_total
+  update_total()

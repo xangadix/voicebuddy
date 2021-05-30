@@ -1,0 +1,20 @@
+- preset = lookup_exercies(locals[:exercise].preset)
+.award-item
+  .score
+    - score = (locals[:exercise].score * 0.1).round(1)
+    = (locals[:exercise].score * 0.1).round(1)
+    %span.small %
+
+  .award-icon{:style=>"float:left;"}
+    = image_tag "awards/awards VB-01", :width=>"42px" if score >= 55 && score < 75
+    = image_tag "awards/awards VB-02", :width=>"48px" if score >= 75 && score < 85
+    = image_tag "awards/awards VB-03", :width=>"54px" if score >= 85
+    /= image_tag "awards/awards VB-04", :width=>"83px"
+    /= image_tag "awards/awards VB-05", :width=>"83px"
+    /= image_tag "awards/awards VB-06", :width=>"83px"
+
+  %h3 Score voor
+  %h1
+    = preset[current_user.language]["naam"]
+  %br
+  %small= l(locals[:exercise].updated_at, :format => :short)

@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :allow_iframe
   before_action :allow_all_cors
   before_action :cors_set_access_control_headers
+  before_action :check_locale
   # before_action :sign_in_user
 
   def index
@@ -85,5 +86,19 @@ class ApplicationController < ActionController::Base
     response.headers['Access-Control-Request-Method'] = '*'
     response.headers['Access-Control-Allow-Headers'] = '*'
   end
+
+  def check_locale
+    logger.debug "checking locale ... #{cookies[:locale]} #{params[:locale]}"
+
+    unless cookies[:locale].nil?
+      I18n.locale = cookies[:locale]
+    end
+
+    unless params[:locale].nil?
+      I18n.locale = params[:locale]
+      cookies[:locale] = params[:locale]
+    end
+  end
+
 
 end

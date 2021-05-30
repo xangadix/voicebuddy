@@ -62,14 +62,47 @@ class ExercisesController < ApplicationController
     end
   end
 
+  # DELETE /admin/remove_exercise/1
+  def remove_exercise
+    if params[:id].nil?
+      render plain: "Error no exercide id found"
+    end
+
+    @exercise = Exercise.find(params[:id])
+    if @exercise.nil?
+      render plain: "Error no exercise found for id #{params[:id]}"
+    end
+
+    user_id = @exercise.user.id.to_s
+
+    if @exercise.destroy
+      flash.alert = "Exercise was destroyed."
+      flash.notice = "Exercise was destroyed."
+    else
+      flash.alert = "alles is kapot."
+      flash.notice = "alles is kapot."
+    end
+
+    redirect_to "/admin/users/#{user_id}/edit"
+    #render plain: "We've gathered here to remove exercise #{params[:id]}"
+  end
+
   # ----------------------------------------------------------------------------
+  # Fot tha app
   def update_exercise
     user = User.where(:authorisation_token => params[:token]).first()
     exercise = Exercise.find( params[:id] )
 
+    if user.blank?
+      logger.debug "# # # # # # # #"
+      logger.debug "# USER COULD NOT BE VERIFIED"
+      logger.debug "# # # # # # # #"
+      render html:" # # # # # # # #  User could not be verified"
+    end
+
     if exercise.user_id == user.id
       if exercise.update_progress
-        render html: "Oefning afgerond!"
+        render html: "Oefening afgerond!"
       else
         render html: "Oefning kon niet worden opgeslagen!"
       end
@@ -87,6 +120,6 @@ class ExercisesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def exercise_params
-      params.require(:exercise).permit(:name, :afgerond, :video, :description, :preset)
+      params.require(:exercise).permit(:name, :afgerond, :video, :description, :preset, :claimed_award, :completed, :target, :achieved, :frequency, :completed_for_the_day)
     end
 end

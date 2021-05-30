@@ -158,6 +158,12 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
     background-color: var(--baseturq);
     border-color: #5f998540;
   }
+
+  &.btn-danger {
+    color: #fff;
+    background-color: #bb2222;
+    border-color: #88111140;
+  }
 }
 
 input[type="checkbox"] {
@@ -187,4 +193,39 @@ input[type="checkbox"] {
 
 .text-right {
   text-align: right;
+}
+
+.shared_links {
+  .devider:last-child {
+    display: none;
+  }
+}
+
+.field_with_errors {
+  display: flex !important;
+}
+
+//-----------------------------------------
+
+#login_form {
+  .field_with_errors {
+    margin: auto;
+  }
+
+  #error_explanation {
+    width: auto;
+    color: black;
+    width: 161px;
+
+    h2 {
+      color: #dadada;
+      text-shadow: 2px 0px 2px rgba(0.24, 0.24, 0.24, 0.5);
+      text-align:center;
+    }
+
+    ul, ul li{
+      list-style: none !important;
+      padding: 0;
+    }
+  }
 }

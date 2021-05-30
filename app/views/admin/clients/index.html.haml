@@ -4,34 +4,39 @@
   %table
     %thead
       %tr
-        %th name
-        %th email
-        %th rollen
-        %th oefeningen #
-        %th actions
+        %th startdatum
+        %th logopedist
+        %th= t('common.name')
+        %th= t('common.email')
+        //%th= t('common.roles')
+        %th
+          = t('common.exercices')
+          \#
+        %th{:colspan => "3",:style=>"min-width:90px;"}= t('common.actions')
     %tbody
-      - @users.each do |user|
+      - @clients.each do |user|
         %tr
+          %td{:style=>"text-align:center"}= l(user.created_at, :format => :short)
+          %td= user.logopedist.full_name unless user.logopedist.nil?
           %td= user.name
           %td= user.email
-          %td= user.roles.to_sentence
-          %td= user.exercises.count
-          %td{:style=>"text-align:right"}
-            = link_to "/admin/users/#{user.id.to_s}", :class=>"action-buttons" do
+          /%td= user.roles.to_sentence
+          %td{:style=>"text-align:center"}= user.exercises.count
+          %td{:style=>"text-align:center"}
+            = link_to "/admin/clients/#{user.id.to_s}", :class=>"action-buttons", :alt=>"bekijk client", :title=>"bekijk client" do
               %i.fas.fa-eye
+            /&nbsp;
+            /= link_to "/admin/impersonate/#{user.id.to_s}", :class=>"action-buttons" do
+            /    %i.fas.fa-user-secret
             &nbsp;
-            = link_to "/admin/impersonate/#{user.id.to_s}", :class=>"action-buttons" do
-              %i.fas.fa-user-secret
-            &nbsp
-            = link_to edit_admin_user_path(user), :class=>"action-buttons" do
+            = link_to edit_admin_user_path(user), :class=>"action-buttons", :alt=>"bewerk client", :title=>"bewerk client" do
               %i.fas.fa-edit
-            &nbsp
-            = link_to "/admin/users/#{user.id.to_s}", :class=>"action-buttons", method: :delete, data: { confirm: 'Are you sure?' } do
+            &nbsp;
+            = link_to "/admin/users/#{user.id.to_s}", :class=>"action-buttons", :alt=>"verwijder client", :title=>"verwijder client", method: :delete, data: { confirm: t('common.are_you_sure') } do
               %i.fas.fa-trash-alt
-
   %br
 
 %br
 %hr
 %br
-= link_to ' + Maak nieuwe gebruiker', new_admin_user_path, :class => "btn btn-turq"
+= link_to t('admin.clients.add_new_client'), '/admin/clients/new', :class => "btn btn-turq"

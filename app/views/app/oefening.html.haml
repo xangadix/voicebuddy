@@ -1,65 +1,139 @@
-- current_exercise = EXERCISES[@exercise.preset-1]
+- preset = lookup_exercies(@exercise.preset)
 
 .fancy_header
   /= link_to "/app/oefeningen/#{@token}", :class => "back_btn" do
   /  .arrow_left
-  = current_exercise["naam"]
+  = preset[current_user.language]["naam"]
 .gradient-edge
 
 .oefening
 
-  // if @
-  .video-container
-    %video{:src=>current_exercise["content"], 'webkit-playsinline': "true", :playsinline=> "true", :controls => false, :id=>"video_oefening"}
+  - if @exercise.material == "tekst"
+    .paper
+
+      .oefening_tekst
+        = preset[current_user.language]["content"].html_safe
+
+      .progress_bar
+        %progress#progress_bar{:value=>"32", :max=>"100", :width=>"100%"} 32%
+
+      %br
+      %button#end_text_now end this now
+      #play-button.far.fa-lg.fa-play
+      #end-container
+
+  - elsif @exercise.material == "audio"
+    %pre Audio not implemented
+    %button#end_audio_now end audio now
     #play-button.far.fa-lg.fa-play-circle
     #end-container
 
+  - else
+    .video-container
+      %video{:src=>preset[current_user.language]["content"], 'webkit-playsinline': "true", :playsinline=> "true", :controls => false, :id=>"video_oefening"}
+      #play-button.far.fa-lg.fa-play-circle
+      #end-container
 
-    /%button#end_video_now to end now
+    %button#end_video_now end this now
 
 
-  %h4{:style=>"text-align:center;"}= current_exercise["doel"]
+  %h4{:style=>"text-align:center;"}= preset[current_user.language]["doel"]
   .push-down
 
 :javascript
-  var vid = document.getElementById('video_oefening')
+  vid = null
+  if ("#{@exercise.material}" == "video") {
+    // Voor Video
+    var vid = document.getElementById('video_oefening')
 
-  vid.onclick = function() {
-    if ( vid.paused ) {
+    vid.onclick = function() {
+      if ( vid.paused ) {
+        vid.play()
+      } else {
+        vid.pause()
+      }
+    }
+
+    vid.onplay = function() {
+      document.getElementById('play-button').style.display = "none"
+    }
+
+
+    vid.onloadedmetadata = function(e) {
+      console.log("== VIDEO got metatada", vid.duration, e)
+      document.getElementById('end_video_now').onclick = function(e) {
+        vid.currentTime = vid.duration - 0.3
+      }
+
       vid.play()
-    } else {
-      vid.pause()
+    }
+
+    vid.onended = function(e) {
+      endExercize(e)
     }
   }
 
-  vid.onplay = function() {
-    document.getElementById('play-button').style.display = "none"
+  if ("#{@exercise.material}" == "audio") {
+    console.log("had audio, dont know what to do")
   }
 
+  if ("#{@exercise.material}" == "tekst") {
+    // Voor Text
+    var duration = 60
+    var n = 0
+    updateInterval = setInterval( function() {
+      // update
+      var progress_bar = document.getElementById('progress_bar')
+      n += 0.01
+      try {
+        progress_bar.value = n * 1.6666
+      } catch(e) {
+        clearInterval(updateInterval)
+        return
+      }
 
-  vid.onloadedmetadata = function(e) {
-    console.log("== VIDEO got metatada", vid.duration, e)
-    document.getElementById('end_video_now').onclick = function(e) {
-      vid.currentTime = vid.duration - 2
+      if ( n > duration ) {
+        clearInterval(updateInterval)
+        endExercize()
+      }
+    }, 10 )
+
+    document.getElementById('end_text_now').onclick = function(e) {
+      document.querySelectorAll(".paper")[0].style.opacity= 0.2
+      document.querySelectorAll(".paper")[0].style.filter = "blur(3px)"
+      document.body.appendChild( document.getElementById('end-container') )
+      endExercize()
     }
-
-    vid.play()
   }
 
-  vid.onended = function(e) {
+
+  // voor alles
+  function endExercize(e) {
     console.log("== VIDEO on Ended")
     // post to the api that the client has completed a run
     // @exercise
     // https://app.voicebuddy.nl/app/update_exercise/606cbdfea19ea6812d2be46c
     fetch("/app/update_exercise/#{@exercise.id}/#{@token}")
-      .then( function(resp) {
-        console.log("response:", resp)}
-      )
-      .then( function(data) {
-        console.log("got data", data)
-        var results_location = document.getElementById("end-container")
-        results_location.innerHTML = `#{render 'app/win_screen'}`
-        //results_location.innerHTML = ""
-        vid.src = ""
-    });
+    .then( function(resp) {
+      console.log("response:", resp)}
+    )
+    .then( function(data) {
+      console.log("got data", data)
+      var results_location = document.getElementById("end-container")
+      results_location.style.display = "block"
+      results_location.style.opacity = "block"
+      results_location.innerHTML = `#{render 'app/win_screen'}`
+
+
+      //results_location.innerHTML = ""
+      // video
+      if (vid != null) {
+        vid.style.webkitFilter = "blur(10px)"
+        vid.style.filter = "blur(7px)"
+        vid.style.opacity = "0.63"
+        }
+      //vid.src = ""
+
+      // text
+    })
   }

@@ -1,0 +1,799 @@
+/* line 1, app/assets/stylesheets/app.scss */
+#app {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  background-color: var(--baseblue);
+  color: #f5f5f5;
+  /* Optional: show position indicator in red */
+}
+
+/* line 7, app/assets/stylesheets/app.scss */
+#app ::-webkit-scrollbar {
+  width: 0;
+  /* Remove scrollbar space */
+  background: transparent;
+  /* Optional: just make scrollbar invisible */
+}
+
+/* line 12, app/assets/stylesheets/app.scss */
+#app ::-webkit-scrollbar-thumb {
+  background: #FF000000;
+}
+
+/* line 16, app/assets/stylesheets/app.scss */
+#app h1, #app h3, #app h4 {
+  letter-spacing: 1.1px;
+}
+
+/* line 20, app/assets/stylesheets/app.scss */
+#app h2 {
+  letter-spacing: 1.1px;
+  line-height: 25px;
+}
+
+/* line 26, app/assets/stylesheets/app.scss */
+#app .actions a, #app .actions a:hover {
+  color: #f5f5f5;
+}
+
+/* line 32, app/assets/stylesheets/app.scss */
+#app .main-content {
+  grid-area: main;
+  padding: 0px 0px;
+}
+
+/* line 38, app/assets/stylesheets/app.scss */
+#app .paper {
+  color: #2a2a2a;
+  background-color: #d5d5d5;
+  height: 100vh;
+  width: calc( 100% -48px);
+  overflow-y: scroll;
+  padding: 24px;
+  padding-top: 42px;
+}
+
+/* line 49, app/assets/stylesheets/app.scss */
+#app .fancy_header {
+  font-family: 'babasneue_light', sans-serif;
+  font-size: 42px;
+  line-height: 42px;
+  text-align: center;
+  width: 100%;
+  margin: 36px auto 0px auto;
+  letter-spacing: 6.3px;
+}
+
+/* line 59, app/assets/stylesheets/app.scss */
+#app .fancy_header .back_btn {
+  font-family: 'bradley_hand', sans-serif;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  top: 0px;
+  left: 0px;
+  font-size: 12px;
+  line-height: 40px;
+  text-align: center;
+  margin: 18px;
+}
+
+/* line 71, app/assets/stylesheets/app.scss */
+#app .fancy_header .back_btn:hover {
+  background-color: #00000000;
+}
+
+/* line 75, app/assets/stylesheets/app.scss */
+#app .fancy_header .back_btn .arrow_left {
+  width: 25%;
+  transform: rotate(226deg);
+  width: 0;
+  height: 0;
+  border: 11px solid transparent;
+  border-top: 7px solid;
+  border-right: 7px solid;
+  margin: 15px;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  color: var(--basebeig);
+  box-sizing: border-box;
+}
+
+/* line 93, app/assets/stylesheets/app.scss */
+#app .fancy_sub_header {
+  font-family: babasneue;
+  letter-spacing: 1.1px;
+  font-weight: 700;
+  font-size: 32px;
+  margin-bottom: 18px;
+  color: var(--baseturq);
+  text-align: center;
+}
+
+/* line 103, app/assets/stylesheets/app.scss */
+#app .gradient-edge {
+  background: rgba(12, 65, 79, 0);
+  background: linear-gradient(180deg, #0c414f 0%, rgba(12, 65, 79, 0) 100%);
+  position: absolute;
+  width: 100%;
+  /* position: relative; */
+  /* top: 24px; */
+  height: 24px;
+  z-index: 2;
+  /* z-index: 100; */
+  /* display: none; */
+}
+
+/* line 118, app/assets/stylesheets/app.scss */
+#app .push-down {
+  height: 200px;
+}
+
+/* line 123, app/assets/stylesheets/app.scss */
+#app .menu {
+  position: fixed;
+  bottom: 0;
+  z-index: 2;
+  height: 64px;
+  width: 100vw;
+  box-shadow: 0px -4px 12px rgba(42, 42, 42, 0.52);
+}
+
+/* line 132, app/assets/stylesheets/app.scss */
+#app .menu #bottom_menu {
+  background-color: var(--baseblue);
+  height: 100%;
+}
+
+/* line 137, app/assets/stylesheets/app.scss */
+#app .menu #bottom_menu .btn-group {
+  display: flex;
+  height: 100%;
+}
+
+/* line 141, app/assets/stylesheets/app.scss */
+#app .menu #bottom_menu .btn-group .app_btn {
+  width: 25%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: auto 42px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* line 153, app/assets/stylesheets/app.scss */
+#app .menu #bottom_menu .btn-group .app_btn:hover {
+  background-color: var(--baseturq);
+}
+
+/* line 159, app/assets/stylesheets/app.scss */
+#app .menu #bottom_menu .btn-group #oefeningen {
+  background-image: url("button_beige_oefeningen");
+}
+
+/* line 161, app/assets/stylesheets/app.scss */
+#app .menu #bottom_menu .btn-group #oefeningen:hover {
+  background-image: url("button_green_oefeningen");
+}
+
+/* line 164, app/assets/stylesheets/app.scss */
+#app .menu #bottom_menu .btn-group #info {
+  background-image: url("button_beige_info");
+}
+
+/* line 166, app/assets/stylesheets/app.scss */
+#app .menu #bottom_menu .btn-group #info:hover {
+  background-image: url("button_green_info");
+}
+
+/* line 168, app/assets/stylesheets/app.scss */
+#app .menu #bottom_menu .btn-group #awards {
+  background-image: url("button_beige_awards");
+}
+
+/* line 170, app/assets/stylesheets/app.scss */
+#app .menu #bottom_menu .btn-group #awards:hover {
+  background-image: url("button_green_awards");
+}
+
+/* line 172, app/assets/stylesheets/app.scss */
+#app .menu #bottom_menu .btn-group #profile {
+  background-image: url("button_beige_personalia");
+}
+
+/* line 174, app/assets/stylesheets/app.scss */
+#app .menu #bottom_menu .btn-group #profile:hover {
+  background-image: url("button_green_personalia");
+}
+
+/* line 182, app/assets/stylesheets/app.scss */
+#app #app_login_container {
+  max-width: 250px;
+  margin: auto;
+  /* Change the white to any color */
+  /* fucking ellendig kutding */
+}
+
+/* line 183, app/assets/stylesheets/app.scss */
+#app #app_login_container .header {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--baseturq);
+  color: #f5f5f5;
+}
+
+/* line 192, app/assets/stylesheets/app.scss */
+#app #app_login_container .header .logo {
+  width: 80px;
+}
+
+/* line 196, app/assets/stylesheets/app.scss */
+#app #app_login_container .header .logo .imagelink:hover {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+/* line 201, app/assets/stylesheets/app.scss */
+#app #app_login_container .header .logo img {
+  height: 40px;
+  margin: 5px 12px;
+  width: auto;
+}
+
+/* line 208, app/assets/stylesheets/app.scss */
+#app #app_login_container .header .title {
+  width: calc( 80% - 80px);
+}
+
+/* line 212, app/assets/stylesheets/app.scss */
+#app #app_login_container .header .user-actions {
+  width: 20%;
+  color: #f5f5f5;
+  font-size: 11px;
+  text-align: right;
+  padding-right: 12px;
+}
+
+/* line 218, app/assets/stylesheets/app.scss */
+#app #app_login_container .header .user-actions a, #app #app_login_container .header .user-actions a:hover {
+  text-decoration: none;
+  color: #f5f5f5;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+/* line 229, app/assets/stylesheets/app.scss */
+#app #app_login_container input {
+  color: #3f3f3f !important;
+}
+
+/* line 235, app/assets/stylesheets/app.scss */
+#app #app_login_container input:-webkit-autofill,
+#app #app_login_container input:-webkit-autofill:hover,
+#app #app_login_container input:-webkit-autofill:focus,
+#app #app_login_container input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  -webkit-text-fill-color: #5f5f5f !important;
+  color: #5f5f5f !important;
+}
+
+/* line 246, app/assets/stylesheets/app.scss */
+#app #introduction img {
+  max-height: 80vh;
+}
+
+/* line 252, app/assets/stylesheets/app.scss */
+#app dl.user_profile {
+  width: 100%;
+}
+
+/* line 255, app/assets/stylesheets/app.scss */
+#app dl.user_profile dt {
+  display: inline-block;
+  width: 33%;
+  font-weight: bolder;
+  margin-bottom: 12px;
+}
+
+/* line 262, app/assets/stylesheets/app.scss */
+#app dl.user_profile dd {
+  display: inline-block;
+  width: 66%;
+  margin-inline-start: 0px;
+}
+
+/* line 271, app/assets/stylesheets/app.scss */
+#app .oefeningen_container {
+  padding-top: 36px;
+  padding-left: 24px;
+  padding-right: 24px;
+  overflow-y: scroll;
+  height: calc( 100vh - 128px);
+}
+
+/* line 278, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .streak-info {
+  text-align: center;
+  font-variant: small-caps;
+}
+
+/* line 282, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .streak-info .streak-display {
+  background-color: var(--basebeig);
+  color: var(--baseblue);
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  box-shadow: inset 0px 3px 7px rgba(14, 14, 14, 0.48);
+}
+
+/* line 291, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .streak-info .streak-display .streak-ball.grey {
+  color: #8f8f8f;
+}
+
+/* line 306, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item {
+  position: relative;
+  background-color: #f5f5f5;
+  color: #5f5f5f;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  text-decoration: none;
+  width: calc( 100% - 18px);
+  padding: 9px;
+  box-shadow: 0px 5px 11px rgba(40, 40, 40, 0.57);
+  /* and wipe in */
+}
+
+/* line 322, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item.no-click {
+  pointer-events: none;
+  cursor: default;
+}
+
+/* line 325, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item.no-click img {
+  filter: grayscale(80%);
+}
+
+/* line 329, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item.no-click .content .title {
+  color: #95a2a2;
+}
+
+/* line 335, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item:hover {
+  background-color: #f5f5f5;
+  color: #5f5f5f;
+}
+
+/* line 340, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .thumbnail {
+  width: 36%;
+}
+
+/* line 343, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .thumbnail img {
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* line 349, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item.no-click .thumbnail {
+  display: none;
+}
+
+/* line 350, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item.no-click .description {
+  display: none;
+}
+
+/* line 352, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .claim_reward {
+  display: none;
+}
+
+/* line 356, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item.is_completed .claim_reward {
+  display: block;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  z-index: 2;
+  border-radius: 12px;
+  left: 0;
+  background-color: var(--baseturq);
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+  overflow: hidden;
+  /* animated */
+  width: 0%;
+  height: 70%;
+  opacity: 0.9;
+  border-bottom-right-radius: 200px;
+  border-bottom-left-radius: 50px;
+  /*
+        height: 100%;
+        width: 100%;
+        opacity: 0.9;
+        border-bottom-right-radius: 12px;
+        border-bottom-left-radius: 12px;
+        */
+  transition-duration: 0.2s;
+  transition-delay: 0.3s;
+}
+
+/* line 358, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item.is_completed .claim_reward p {
+  margin-top: 50px;
+}
+
+/* line 362, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item.is_completed .claim_reward h4 {
+  text-decoration: underline;
+}
+
+/* line 397, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item.is_completed .claim_reward.disabled {
+  height: 0;
+  width: 70%;
+  opacity: 0.4;
+  border-bottom-right-radius: 200px;
+  border-bottom-left-radius: 50px;
+}
+
+/* line 407, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .preset {
+  width: 0%;
+}
+
+/* line 411, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .content {
+  width: calc( 64% - 12px);
+  padding: 6px;
+}
+
+/* line 415, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .content .title {
+  width: 100%;
+  color: var(--baseturq);
+  font-family: babasneue;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 32px;
+  margin-bottom: 12px;
+}
+
+/* line 425, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .content .description {
+  width: 100%;
+}
+
+/* line 431, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .arrow_right {
+  display: none !important;
+  width: 25%;
+  transform: rotate(45deg);
+  width: 0;
+  height: 0;
+  border: 7px solid transparent;
+  border-top: 7px solid;
+  border-right: 7px solid;
+  margin: 15px;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  color: var(--basebeig);
+  box-sizing: border-box;
+}
+
+/* line 448, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .stats {
+  width: 100%;
+  padding-top: 8px;
+  border-top: solid 1px #d5d5d5;
+  font-size: 10px;
+}
+
+/* line 454, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .stats dl.debug_info {
+  width: 100%;
+}
+
+/* line 456, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .stats dl.debug_info dt {
+  display: inline-block;
+  width: 33%;
+}
+
+/* line 461, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .stats dl.debug_info dd {
+  display: inline-block;
+  width: 66%;
+  margin-inline-start: 0px;
+}
+
+/* line 468, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .stats .score {
+  position: relative;
+  display: inline-block;
+  left: 0;
+  width: 100%;
+}
+
+/* line 475, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .stats .streak {
+  float: right;
+  display: inline-block;
+  right: 42px;
+}
+
+/* line 481, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .stats .progress-bar {
+  display: block;
+  width: 100%;
+  height: 20px;
+}
+
+/* line 486, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .stats .progress-bar .progress-tic {
+  padding: 0px;
+  margin: -1px;
+  height: 13px;
+  width: 0%;
+  float: left;
+  box-shadow: inset 1px 2px 10px rgba(92, 92, 92, 0.28);
+}
+
+/* line 494, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .stats .progress-bar .progress-tic.green {
+  background-color: var(--baseblue);
+  border: solid 1px #b0c7b0;
+}
+
+/* line 499, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .stats .progress-bar .progress-tic.greendark {
+  background-color: #062027;
+  border: solid 1px var(--baseblue);
+}
+
+/* line 504, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .stats .progress-bar .progress-tic.lightgreen {
+  background-color: var(--baseturq);
+  border: solid 1px #b0c7b0;
+}
+
+/* line 509, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .stats .progress-bar .progress-tic.orange {
+  /*background-color: #ff9800;*/
+  background-color: var(--basebeig);
+  border: solid 1px #b19c7e;
+}
+
+/* line 515, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .stats .progress-bar .progress-tic.yellow {
+  background-color: #ffeb3b;
+  border: solid 1px #e6e1b2;
+}
+
+/* line 520, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .stats .progress-bar .progress-tic.hollow {
+  background-color: #e5e5e5;
+  border: solid 1px #8a8a8a;
+}
+
+/* line 525, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .stats .progress-bar .progress-tic:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+/* line 530, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .stats .progress-bar .progress-tic:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+/* line 537, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item .stats .moving_total {
+  margin-top: 0px;
+  font-family: 'babasneue';
+  color: #252525;
+  font-size: 16px;
+  font-weight: 100;
+}
+
+/* line 551, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item:nth-child(4) .claim_reward {
+  animation: wipe-in 0.27s ease-out 0s 1;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  -ms-animation-fill-mode: forwards;
+  -o-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+/* line 561, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item:nth-child(5) .claim_reward {
+  animation: wipe-in 0.27s ease-out 0.3s 1;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  -ms-animation-fill-mode: forwards;
+  -o-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+/* line 571, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item:nth-child(6) .claim_reward {
+  animation: wipe-in 0.27s ease-out 0.6s 1;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  -ms-animation-fill-mode: forwards;
+  -o-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+/* line 581, app/assets/stylesheets/app.scss */
+#app .oefeningen_container .oefening_list_item:nth-child(7) .claim_reward {
+  animation: wipe-in 0.27s ease-out 0.8s 1;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  -ms-animation-fill-mode: forwards;
+  -o-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+@keyframes wipe-in {
+  0% {
+    height: 0%;
+    width: 60%;
+    opacity: 0.4;
+    border-bottom-right-radius: 1000px;
+    border-bottom-left-radius: 400px;
+  }
+  100% {
+    height: 100%;
+    width: 100%;
+    opacity: 0.9;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+  }
+}
+
+/* line 612, app/assets/stylesheets/app.scss */
+#app #oefening, #app .oefening {
+  padding-top: 0;
+  padding-left: 24px;
+  padding-right: 24px;
+  overflow-y: scroll;
+  height: calc( 100vh - 128px);
+}
+
+/* line 620, app/assets/stylesheets/app.scss */
+#app #oefening progress, #app .oefening progress {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: 18px;
+  width: 100%;
+  height: 12px;
+}
+
+/* line 628, app/assets/stylesheets/app.scss */
+#app #oefening progress::-webkit-progress-bar, #app .oefening progress::-webkit-progress-bar {
+  border-radius: 12px;
+  background-color: #eaeaea;
+  border: solid 1px #8a8a8a;
+  box-shadow: inset 1px 2px 10px rgba(92, 92, 92, 0.28);
+}
+
+/* line 638, app/assets/stylesheets/app.scss */
+#app #oefening progress::-webkit-progress-value, #app .oefening progress::-webkit-progress-value {
+  /*
+        background-image:
+      	   -webkit-linear-gradient(-45deg,
+      	                           transparent 33%, rgba(0, 0, 0, .1) 33%,
+      	                           rgba(0,0, 0, .1) 66%, transparent 66%),
+      	   -webkit-linear-gradient(top,
+      	                           rgba(255, 255, 255, .25),
+      	                           rgba(0, 0, 0, .25)),
+      	   -webkit-linear-gradient(left, #09c, #f44);
+        */
+  background-color: var(--baseturq);
+  border-radius: 12px;
+  background-size: 35px 20px, 100% 100%, 100% 100%;
+}
+
+/* line 655, app/assets/stylesheets/app.scss */
+#app #oefening .video-container, #app .oefening .video-container {
+  position: relative;
+}
+
+/* line 658, app/assets/stylesheets/app.scss */
+#app #oefening .video-container #play-button, #app .oefening .video-container #play-button {
+  z-index: 1;
+  position: absolute;
+  top: calc( 50% - 18px);
+  left: calc( 50% - 18px);
+  display: block;
+  filter: drop-shadow(0px 4px 3px var(--baseblue));
+  font-size: 36px;
+  pointer-events: none;
+}
+
+/* line 669, app/assets/stylesheets/app.scss */
+#app #oefening .video-container #end-container, #app .oefening .video-container #end-container {
+  z-index: 1;
+  position: absolute;
+  top: 10%;
+  left: 20%;
+  width: 60%;
+  display: none;
+  min-height: 375px;
+  text-align: center;
+}
+
+/* line 679, app/assets/stylesheets/app.scss */
+#app #oefening .video-container #end-container img, #app .oefening .video-container #end-container img {
+  width: auto;
+  max-width: 100%;
+  max-height: 158px;
+}
+
+/* line 685, app/assets/stylesheets/app.scss */
+#app #oefening .video-container #end-container a, #app .oefening .video-container #end-container a {
+  color: white;
+  background-color: unset;
+}
+
+/* line 688, app/assets/stylesheets/app.scss */
+#app #oefening .video-container #end-container a:hover, #app .oefening .video-container #end-container a:hover {
+  background-color: unset;
+}
+
+/* line 692, app/assets/stylesheets/app.scss */
+#app #oefening .video-container video, #app .oefening .video-container video {
+  cursor: pointer;
+  width: 100%;
+  min-height: 375px;
+  max-height: 63vh;
+  cursor: pointer;
+}
+
+/* line 699, app/assets/stylesheets/app.scss */
+#app #oefening .video-container video:focus, #app .oefening .video-container video:focus {
+  outline: none;
+}
+
+/* line 715, app/assets/stylesheets/app.scss */
+#app #awards .main-content {
+  margin: 24px 12px;
+}
+
+/* line 718, app/assets/stylesheets/app.scss */
+#app #awards .main-content .center-text {
+  text-align: center;
+}
+
+/* line 724, app/assets/stylesheets/app.scss */
+#app #awards .award-list .award-item {
+  margin: 24px 24px;
+  padding: 12px 16px;
+  background-color: #f5f5f5;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  color: #151515;
+  box-shadow: 0px 5px 11px rgba(40, 40, 40, 0.57);
+}
+
+/* line 734, app/assets/stylesheets/app.scss */
+#app #awards .award-list h2 {
+  margin: 0;
+}

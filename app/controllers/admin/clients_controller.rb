@@ -5,7 +5,7 @@ class Admin::ClientsController < Admin::UsersController
   def index
     # current_user.clients.each lookup
     #     flash[:notice] = "I has a notice."
-    @users = User.where(:roles.in => [:client])
+    @clients = User.where(:logopedist => current_user, :roles.in => [:client])
   end
 
   def datatables

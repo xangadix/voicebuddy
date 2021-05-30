@@ -1,28 +1,39 @@
-%li{:style=>"display:inline-block;width:100%"}
+%li.new_exercise{:style=>"display:inline-block;width:100%"}
 
-  %h3= exercise["naam"]
+  %pre=# exercise.to_yaml
+  %h3.title= exercise[ I18n.locale.to_s ]["naam"]
 
   .thumbnail{:style=>"float:left;margin-right:12px"}
-    %image{:src=>exercise["thumbnail"], :width=>"200px"}
+    %image{:src=>exercise[ I18n.locale.to_s ]["thumbnail"], :width=>"200px"}
 
 
   .category
     categorie:
-    %em= exercise["category"]
+    %em= exercise[ I18n.locale.to_s ]["category"]
     \:
   .tags
     tags:
-    %small= exercise["tags"].to_sentence(last_word_connector: 'en') unless exercise["tags"].blank?
-  %br
-  .description{:width=>"100%"}= exercise["doel"].strip() unless exercise["doel"].blank?
-  %br
+    %small= exercise[ I18n.locale.to_s ]["tags"].to_sentence(last_word_connector: 'en') unless exercise[ I18n.locale.to_s ]["tags"].blank?
 
-
+  .materiaal
+    Materiaal:
+    %em= exercise[ I18n.locale.to_s ]["materiaal"]
+  %br
+  .description{:width=>"100%"}= exercise[ I18n.locale.to_s ]["doel"].strip() unless exercise[ I18n.locale.to_s ]["doel"].blank?
+  %br
 
   %br
   %small Bekijk Oefening:
   %br
-  = link_to "Bekijk video", exercise["videobestand"], :class=>"btn", :target=>"_blank"
+  - if exercise["materiaal"] == "video"
+    = link_to "Bekijk video", exercise[ I18n.locale.to_s ]["content"], :class=>"btn", :target=>"_blank"
+  - elsif exercise["materiaal"] == "audio"
+    = link_to "Beluister audio", exercise[ I18n.locale.to_s ]["content"], :class=>"btn", :target=>"_blank"
+  - elsif exercise["materiaal"] == "tekst"
+    = link_to "Lees text", "javascript:void(0)", :onclick => "javascript:show_text('#{exercise[ I18n.locale.to_s ]["naam"]}', '#{exercise[ I18n.locale.to_s ]["content"]}');", :class=>"btn"
+  - else
+    = link_to "Bekijk #{exercise["materiaal"]}", exercise[ I18n.locale.to_s ]["content"], :class=>"btn", :target=>"_blank"
+
   &nbsp;
   |
   &nbsp;

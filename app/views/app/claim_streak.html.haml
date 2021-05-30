@@ -1,0 +1,89 @@
+.fancy_header STREAK GEHAALD
+.gradient-edge
+
+#awards.claim-streak
+  .main-content
+    .scroll-pane
+      %center
+        %h1 Perfect!
+        / %pre= @exercise.to_yaml
+        %h4
+          Je hebt 7 dagen achter elkaar
+          %br
+          al je oefeningen gedaan
+
+        - if current_user.claimed_streaks == 1
+          .video-container
+            %video#strot{:src=>"/videos/TROFEE BRONS 2_1.mp4", :height=>"500px", :autoplay=>true, :loop => true}
+            #play-button.far.fa-lg.fa-play-circle
+
+          %h4
+            Je wint de bronzen strot
+
+        - if current_user.claimed_streaks == 2
+          .video-container
+            %video#strot{:src=>"/videos/TROFEE BRONS 2_1.mp4", :height=>"500px", :autoplay=>true, :loop => true}
+            #play-button.far.fa-lg.fa-play-circle
+          %h4
+            Je wint de zilveren strot
+
+        - if current_user.claimed_streaks == 3
+          .video-container
+            %video#strot{:src=>"/videos/TROFEE BRONS 2_1.mp4", :height=>"500px", :autoplay=>true, :loop => true}
+            #play-button.far.fa-lg.fa-play-circle
+          %h3
+            Je wint de gouden strot
+
+        %br
+        %br
+        %br
+
+        .actions
+          = link_to "« oefeningen", "/app/oefeningen/#{@token}", :style=>"color:white;"
+          &nbsp;
+          &nbsp;
+          |
+          &nbsp;
+          &nbsp;
+          = link_to " prijzen! » ", "/app/awards/#{@token}", :style=>"color:white;"
+
+      %br
+      %br
+      %br
+      %br
+      %br
+      %br
+      %br
+      %br
+      %br
+      %br
+      %br
+      %br
+      %br
+      %br
+      %br
+      %br
+      %br
+      %br
+      %br
+      %br
+
+:javascript
+  var video = document.getElementById('strot')
+  var play_button = document.getElementById('play-button')
+
+  video.onclick = function() {
+    console.log("sadsd")
+    if (video.paused) {
+      video.play()
+      play_button.style.display = "none"
+    }else {
+      video.pause()
+      play_button.style.display = "block"
+    }
+  }
+
+  video.onloadedmetadata = function() {
+    video.play();
+    play_button.style.display = "none"
+  }

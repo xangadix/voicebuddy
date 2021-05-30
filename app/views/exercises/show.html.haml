@@ -1,0 +1,50 @@
+%p#notice= notice
+- preset = lookup_exercies(@exercise.preset)
+
+%p
+  %strong Oefening Name:
+  = preset[I18n.locale.to_s]["naam"]
+
+%p
+  %strong Toegewezen aan:
+  = @exercise.user.full_name unless @exercise.user.nil?
+
+%p
+  %strong
+    Afgerond:
+  = @exercise.completed
+
+%p
+  %strong
+    Status:
+  %pre
+    = @exercise.achieved_array
+    (totaal)
+
+    = @exercise.achieved_array_today
+    (vandaag)
+  .score
+    = (@exercise.score * 0.1).round(1)
+    \%
+
+%p
+  %strong
+    materiaal type:
+  = @exercise.material
+
+%p
+  %strong inhoud:
+  %br
+  %pre= preset[I18n.locale.to_s]["content"]
+
+%p
+  %strong beschrijving:
+  %br
+  = preset[I18n.locale.to_s]["doel"]
+
+%br
+%br
+%hr
+= link_to 'Edit', edit_exercise_path(@exercise)
+|
+\#{link_to 'Back', exercises_path}

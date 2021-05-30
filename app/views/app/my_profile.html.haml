@@ -1,10 +1,138 @@
-.fancy_header Jouw profiel
+.fancy_header= t("app.your_profile")
 .gradient-edge
+
 .paper
   %br
   %br
   %br
-  %input{:value=>current_user.email}
-  %pre=current_user.to_yaml
-  %hr
+
+  %dl.user_profile
+    %dt Naam
+    %dd= current_user.full_name
+    %dt Email
+    %dd= current_user.email
+    %dt Current Token
+    %dd
+      = current_user.authorisation_token
+      = link_to "back", "/app/oefeningen/#{current_user.authorisation_token}"
+    %dt Current ID
+    %dd
+      = current_user.id
+    %dt Taal
+    %dd= current_user.language
+
+    %hr
+    %dt Voornaam
+    %dd= current_user.first_name
+    %dt Tussenvoegsel
+    %dd= current_user.suffix
+    %dt Achternaam
+    %dd= current_user.last_name
+    %dt geslacht
+    %dd= current_user.gender
+    %dt geboortedatum
+    %dd= current_user.date_of_birth
+    %dt # oefeningen
+    %dd= current_user.exercises.count
+    %dt lid sinds
+    %dd= current_user.created_at
+
+
+  = link_to "verwijder mijn account", "/"
+  %br
   = link_to "uitloggen", destroy_user_session_path, :method => :delete
+
+  %br
+  %hr
+  %br
+
+  .list
+    .list-item
+      .list-header
+        %i.arrow.fa.fa-fas.fa-caret-down.pull-right
+        Colofon
+      .list-content
+        %p
+          <b>Voice Buddy</b> is ontwikkeld en geproduceerd door Ilse Heus Producties en technisch
+          gerealiseerd door Sense Studios. Het is mogelijk gemaakt door het Stimuleringsprogramma
+          innovatie logopedie van de NVLF en subsidie van het Damsté-Terpstrafonds
+          %br
+          %br
+          %center
+            = image_tag "nvlf_logo", :width => "80%"
+            %br
+            = image_tag "damste-terpstra-logo", :width => "80%"
+
+        %p
+          Daarnaast was deze app er in deze vorm niet geweest zonder de tomeloze inzet van:
+          %dl.colofon
+            %dt Sense Studios
+            %dd Daan Nolen
+            %br
+            %dt Veejays.com
+            %dd Hidde Kros, Lars Berg, VJFlirt en Dominic (van Buul)
+            %br
+            %dt BROUWSELS
+            %dd Robin Schoemaker
+            %br
+            %dt OORbit
+            %dd Huub Krom
+          %p
+            Hanneke Bax, Tim Bosselaar, Niels Croiset en Jente Jong.
+
+          %p
+            Ook een speciale dank aan: Bruno.Auzet, Hydronos, RobertMThomas en
+            SoundsExciting voor het beschikbaar stellen van hun audio via freesounds.org.
+            En Loek Peters, Nienke SInnema en Anouk Brack voor hun adviezen en oplossingen.
+
+          %small
+            We hebben ons uiterste best gedaan om bronnen en de rechthebbende(n) van het
+            beeldmateriaal te achterhalen. Wanneer desondanks beeldmateriaal wordt getoond
+            waarvan je (mede-)rechthebbende bent, verzoeken je een mail te sturen aan
+            <u>info@voicebuddy.nl</u>
+
+    .list-item
+      .list-header
+        %i.arrow.fa.fa-fas.fa-caret-down.pull-right
+        Over de App
+      .list-content
+        Op het gebruik van deze app zijn onze algemene voorwaarden en privacy policy van toepassing
+        Bekijk de algemene voorwaarden https://www.voicebuddy.nl/algemene-voorwaarden/
+        Bekijk de privacy policy https://www.voicebuddy.nl/privacybeleid/
+
+
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br
+  %br
+
+
+  :javascript
+    document.querySelectorAll(".list-item").forEach(function(elm) {
+      elm.onclick = function() {
+        if ( elm.classList.contains('active') ) {
+          elm.classList.remove('active')
+        } else {
+          document.querySelectorAll(".list-item").forEach(function(elm2) {
+            elm2.classList.remove('active')
+          })
+          elm.classList.add('active')
+        }
+      }
+    })

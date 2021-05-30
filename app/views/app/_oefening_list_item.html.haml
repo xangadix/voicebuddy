@@ -1,73 +1,93 @@
-= link_to "/app/oefening/#{exercise.id}/#{@token}", :class => "oefening_list_item" do
+- preset = lookup_exercies(exercise.preset)
+
+- if exercise.completed
+  - url = "/app/awards/claim/#{exercise.id}/#{@token}"
+  - klasses = "oefening_list_item is_completed"
+- elsif exercise.completed_for_the_day == "true" || exercise.completed_for_the_day == true
+  - url = "#"
+  - klasses = "oefening_list_item no-click"
+- else
+  - url = "/app/oefening/#{exercise.id}/#{@token}"
+  - klasses = "oefening_list_item"
+
+= link_to url, :class => klasses, "data-id": exercise.id.to_s do
+
+  // enable this, when the exercise is completed
+  .claim_reward
+
+    %h2= preset[current_user.language]["naam"]
+    %p
+      Je hebt deze oefening afgerond.
+      %h4 Haal je prijs op!
+
+
+  // if completed_for_the_day
+  //  dont click
+
+  // if completed
+  //  show 'claim reward'
+
+  // else
 
   .content
-    .title= exercise.name
-    .description= exercise.description
-    .preset.hidden= EXERCISES[exercise.preset.to_i][:name]
+    .title
+      = preset[current_user.language]["naam"]
+      =# exercise.name
+
+    .description= preset[current_user.language]["doel"]
+    .preset.hidden= exercise.preset.to_i
 
   .thumbnail
-    =# image_tag "ilse_screen"
-    %image{:src=>exercise["thumb"], :width=>"200px"}
+    - unless preset[current_user.language]["thumbnail"].blank? || preset[current_user.language]["thumbnail"] == "-"
+      %pre
+        /= current_user.language
+      %image{:src=>preset[current_user.language]["thumbnail"], :width=>"200px"}
 
   // so this is a work in progress
   .stats
-    %pre.debug_info
-      = exercise.completed
-      \
-      = exercise.target
-      \
-      = exercise.achieved
-      \
-      = exercise.frequency
-      \
-      \
-      %b STREAK
-      = exercise.streak
-      \
-      = exercise.complete_streak
-      \
-      = exercise.streak_expire
-      \
-      = exercise.streak_target
-      \
-      = exercise.achieved_in_streak
-      %b
-      \
+    %dl.debug_info
+      %dt Target
+      %dd= exercise.target
+      %dt Achieved
+      %dd= exercise.achieved_array
+      %dt Completed?
+      %dd= exercise.completed
+      %dt Frequency
+      %dd= exercise.frequency
+      %dt Achieved Today
+      %dd= exercise.achieved_array_today
+      %dt Completed today
+      %dd= exercise.completed_for_the_day
+      %dt Last progress update
+      %dd= exercise.last_progress_update
+      %dt Days Ago
+      %dd= ( DateTime.now - exercise.last_progress_update.beginning_of_day ).to_i
+      %dt Now
+      %dd= DateTime.now
 
     .score
-      - if exercise.completed
-        Helemaal klaar voor vandaag :)
-
-      -else
       - width = 100.0
+
       .progress-bar
+        - addToday = exercise.frequency - exercise.achieved_array_today.sum
         - Array.new(exercise.target).each_with_index do |i, index|
-          - if exercise.achieved > index
+
+          - if exercise.achieved_array[index] == 0
             .progress-tic.green{:style=>"width:#{ width / exercise.target }%;"}
 
-          - elsif exercise.achieved + exercise.achieved_in_streak > index
-            /.progress-tic.green{:style=>"width:#{ width / exercise.target }%;"}
+          - elsif exercise.achieved_array[index] == 1
+            .progress-tic.lightgreen{:style=>"width:#{ width / exercise.target }%;"}
 
-          - elsif exercise.achieved + exercise.streak_target > index
-            .progress-tic.orange{:style=>"width:#{ width / exercise.target }%;"}
-
-          - elsif exercise.achieved + exercise.frequency > index
+          - elsif addToday > 0 && exercise.completed_for_the_day == false
+            -# left_today = exercise.frequency - exercise.achieved_array_today.sum
+            - addToday = addToday - 1
             .progress-tic.orange{:style=>"width:#{ width / exercise.target }%;"}
 
           - else
             .progress-tic.hollow{:style=>"width:#{ width / exercise.target }%;"}
 
+      - unless exercise.completed
+        .moving_total{:style=>"margin-left: calc( #{ exercise.achieved_array.count * ( width / exercise.target )}% - 4px );"}
+          = exercise.achieved_array.sum
 
-      .moving_total{:style=>"margin-left: calc( #{ exercise.achieved * ( width / exercise.target )}% - 4px );"}
-        = exercise.achieved
-
-      //.streak
-      //  = exercise.achieved
-      //  = exercise.target
-      //  = exercise.frequency
-
-    .streak
-      - if exercise.streak
-        eindigd over
-        = time_ago_in_words(DateTime.now.end_of_day)
-  .arrow_right
+  //.arrow_right
