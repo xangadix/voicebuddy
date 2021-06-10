@@ -27,7 +27,7 @@ class AppController < ApplicationController
 
   # GET Login
   def login
-
+    @title = "User Login"
     if params[:token]
       #{@token}
       unless user.blank?
@@ -92,6 +92,8 @@ class AppController < ApplicationController
       return
     end
 
+    @title = "Oefeningen voor #{@current_user.full_name}"
+
     @exercises = Exercise.where(:user_id => current_user.id, :claimed_award => false)
 
     all_completed = true
@@ -113,14 +115,14 @@ class AppController < ApplicationController
 
     end
 
-
+    # this is now handled in claim_streak
     #logger.debug "streak days ago is #{days_ago}"
-    #if  days_ago > 1
+    # if  (DateTime.now.to_i - current_user.last_streak_update.to_i) > 2.day
     #  logger.debug "INVALIDATE streak!"
     #  current_user.streak = 0
     #  current_user.last_streak_update = DateTime.now
-      # were still in the streak if all completed is true
-    #end
+    #  were still in the streak if all completed is true
+    # end
 
     # assigns an extra point to the streak, when all exercises are done for the day
     # (and sets streaks last update is 1 day old!
@@ -132,7 +134,7 @@ class AppController < ApplicationController
       @streak_update = true
       current_user.streak = current_user.streak += 1
       current_user.streak_lock = true
-      # current_user.last_streak_update = DateTime.now # should be LAST streak update?
+      current_user.last_streak_update = DateTime.now # should be LAST streak update?
     elsif !all_completed
       current_user.streak_lock = false
     end
@@ -141,6 +143,7 @@ class AppController < ApplicationController
     if current_user.streak >= current_user.streak_target # && !current_user.streak_lock
       @streak_complete = true
     end
+
 
     # just in case, save current user (and the streak)
     current_user.save()
@@ -166,6 +169,7 @@ class AppController < ApplicationController
     user = find_user_by_token(@token)
     current_user.has_seen_intro = true
     current_user.save
+    @title = "Introductie voor #{@current_user.full_name}"
 
     # ?!
     @user = user
@@ -175,6 +179,7 @@ class AppController < ApplicationController
     @token = params[:token]
     logger.debug "got token: #{params}"
     user = find_user_by_token(@token)
+    @title = "Informatiebalie voor #{@current_user.full_name}"
   end
 
   def awards
@@ -182,6 +187,7 @@ class AppController < ApplicationController
     logger.debug "got token: #{params}"
     user = find_user_by_token(@token)
     @exercises = Exercise.where(:user_id => current_user.id, :claimed_award => true)
+    @title = "Awards voor #{@current_user.full_name}"
   end
 
   def claim_reward
@@ -208,7 +214,7 @@ class AppController < ApplicationController
 
     # reset streak
     current_user.streak = 0
-    current_user.streak_lock = false
+    # current_user.streak_lock = false
 
     #render plain: current_user.to_json
     #redirect_to "app/oefeningen"
@@ -219,6 +225,7 @@ class AppController < ApplicationController
     @token = params[:token]
     logger.debug "got token: #{params}"
     user = find_user_by_token(@token)
+    @title = "Profiel van #{@current_user.full_name}"
   end
 
   # helper

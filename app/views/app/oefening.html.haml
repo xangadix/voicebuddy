@@ -23,10 +23,27 @@
       #end-container
 
   - elsif @exercise.material == "audio"
-    %pre Audio not implemented
-    %button#end_audio_now end audio now
-    #play-button.far.fa-lg.fa-play-circle
-    #end-container
+    .audio_container
+      %br
+      %br
+      %br
+
+      %center
+        #play-button.far.fa-lg.fa-play-circle{:style=>"font-size:48px;"}
+        #pause-button.fas.fa-lg.fa-volume-up{:style=>"font-size:48px;"}
+      %br
+      %br
+      %br
+      %br
+        .progress_bar
+          %progress#progress_bar{:value=>"32", :max=>"100", :width=>"100%"} 32%
+      %br
+      %br
+      %br
+
+      %audio{:src=>preset[current_user.language]["content"], 'webkit-playsinline': "true", :playsinline=> "true", :controls => false, :id=>"audio_oefening"}
+      %button#end_audio_now end audio now
+      #end-container
 
   - else
     .video-container
@@ -35,7 +52,6 @@
       #end-container
 
     %button#end_video_now end this now
-
 
   %h4{:style=>"text-align:center;"}= preset[current_user.language]["doel"]
   .push-down
@@ -75,6 +91,38 @@
 
   if ("#{@exercise.material}" == "audio") {
     console.log("had audio, dont know what to do")
+    var aud = document.getElementById('audio_oefening')
+
+    document.getElementById('pause-button').style.display = "none"
+    document.getElementById('play-button').onclick = function() {
+      aud.play()
+      document.getElementById('pause-button').style.display = "block"
+      document.getElementById('play-button').style.display = "none"
+    }
+
+    aud.onended = function(e) {
+
+      document.querySelectorAll(".audio_container")[0].style.opacity= 0.2
+      document.querySelectorAll(".audio_container")[0].style.filter = "blur(3px)"
+      document.body.appendChild( document.getElementById('end-container') )
+      endExercize(e)
+    }
+
+    updateInterval = setInterval( function() {
+      // update
+      var progress_bar = document.getElementById('progress_bar')
+      try {
+        progress_bar.value = (aud.currentTime / aud.duration)*100
+      } catch(e) {
+        clearInterval(updateInterval)
+        return
+      }
+    }, 100 )
+
+      document.getElementById('end_audio_now').onclick = function(e) {
+        aud.currentTime = aud.duration - 1
+      }
+
   }
 
   if ("#{@exercise.material}" == "tekst") {
@@ -94,16 +142,34 @@
 
       if ( n > duration ) {
         clearInterval(updateInterval)
+
+        document.querySelectorAll(".paper")[0].style.opacity= 0.2
+        document.querySelectorAll(".paper")[0].style.filter = "blur(3px)"
+        document.body.appendChild( document.getElementById('end-container') )
         endExercize()
       }
     }, 10 )
 
+    // test
     document.getElementById('end_text_now').onclick = function(e) {
       document.querySelectorAll(".paper")[0].style.opacity= 0.2
       document.querySelectorAll(".paper")[0].style.filter = "blur(3px)"
       document.body.appendChild( document.getElementById('end-container') )
       endExercize()
     }
+  }
+
+
+  var setReminder = function() {
+
+      document.getElementById('icon_none').classList.add('hidden')
+      document.getElementById('icon_check').classList.remove('hidden')
+
+    // send message
+    var datetimestring = document.getElementById('setReminderDate').value + ":00" // we need to add seconds ourselves
+    var sent = "SET_REMINDER||WEB||" + datetimestring + "||VoiceBuddy reminder||Vergeet niet om #{preset[current_user.language]['naam']} te oefenen vandaag!"
+    console.log(sent)
+    window.parent.postMessage(sent , "*")
   }
 
 
@@ -115,15 +181,22 @@
     // https://app.voicebuddy.nl/app/update_exercise/606cbdfea19ea6812d2be46c
     fetch("/app/update_exercise/#{@exercise.id}/#{@token}")
     .then( function(resp) {
-      console.log("response:", resp)}
-    )
-    .then( function(data) {
+      console.log("response:", resp)
+
+      if (resp.status != 200) {
+        console.log("WARNING 200 status not detected")
+      }
+
+      if (resp.status == 404) {
+        console.log("ERROR 404 detected")
+      }
+
+    }).then( function(data) {
       console.log("got data", data)
       var results_location = document.getElementById("end-container")
       results_location.style.display = "block"
       results_location.style.opacity = "block"
       results_location.innerHTML = `#{render 'app/win_screen'}`
-
 
       //results_location.innerHTML = ""
       // video
@@ -134,6 +207,11 @@
         }
       //vid.src = ""
 
+      // add button
+      document.getElementById('set_reminder').onclick = setReminder
+
       // text
+    }).catch( function(error) {
+      console.log("something went wrong!", error)
     })
   }

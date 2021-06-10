@@ -6,20 +6,22 @@
   = t('admin.top_menu.payoff')
 
 .user-actions
+  = link_to "my app", "/app/oefeningen/#{current_user.authorisation_token}", :target=>"_blank"
+  &nbsp;|&nbsp;
   = link_to "my profile", "/admin/users/#{current_user.id.to_s}/edit"
   &nbsp;|&nbsp;
   = link_to "logout", destroy_user_session_path, :method => :delete
   &nbsp;|&nbsp;
-  %span#language
-    %a#language_select{:href=>"javascript:"}
-      = I18n.locale
-      %i.fa.fas.fa-caret-down
-    %ul#language_dropdown
-      %li.dropdown-item
-        %a{:href=>"?locale=nl"} nl
-      %li.dropdown-item
-        %a{:href=>"?locale=vls"} vls
-      %li.dropdown-item
-        %a{:href=>"?locale=fr"} fr
-      %li.dropdown-item
-        %a{:href=>"?locale=en"} en
+  /%span#language
+  /  %a#language_select{:href=>"javascript:"}
+  /    = I18n.locale
+  /    %i.fa.fas.fa-caret-down
+  /  %ul#language_dropdown
+  /    %li.dropdown-item
+  /      %a{:href=>"?locale=nl"} nl
+  /    %li.dropdown-item
+  /      %a{:href=>"?locale=vls"} vls
+  /    %li.dropdown-item
+  /      %a{:href=>"?locale=fr"} fr
+  /    %li.dropdown-item
+  /      %a{:href=>"?locale=en"} en

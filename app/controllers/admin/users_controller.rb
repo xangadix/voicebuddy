@@ -12,10 +12,22 @@ class Admin::UsersController < ApplicationController
     unless current_user.has_role?(:admin )
       redirect_to "/admin/clients"
     end
+    #@page = ( params[:page]).to_i || 0
+    #@resource = User.all
+    #@total = @resource.count
+    #@users = @resource.skip( @page * PER_PAGE ).limit( PER_PAGE)
+
     @page = ( params[:page]).to_i || 0
-    @resource = User.all
+    if params[:search]
+      @search = params[:search]
+      @resource = User.or([{:name => /#{params[:search]}/i},{:email => /#{params[:search]}/i}] ).sort(:name => 1)
+    else
+      @search = ""
+      @resource = User.all.sort(:name => 1)
+    end
     @total = @resource.count
-    @users = @resource.skip( @page * PER_PAGE ).limit( PER_PAGE)
+    @users = @resource.skip( @page * PER_PAGE ).limit( PER_PAGE )
+
   end
 
 
@@ -39,9 +51,9 @@ class Admin::UsersController < ApplicationController
     @user = User.new(user_params)
 
     # back
-    back = request.env["HTTP_REFERER"].split('https://app.voicebuddy.nl')[1]
-    # logger.debug "checking referrer"
-    # logger.debug ref
+    @back = request.env["HTTP_REFERER"].split('https://app.voicebuddy.nl')[1]
+    logger.debug "checking referrer"
+    logger.debug @back
 
     # save ownership
     if current_user.has_role?(:logopedist)
@@ -54,8 +66,20 @@ class Admin::UsersController < ApplicationController
         format.html { redirect_to '/admin/users', notice: 'Alle wijzigingen zijn opgeslagen.' }
         format.json { render :show, status: :created, location: @user }
       else
-        format.html { render back }
-        #format.html { render :new }
+        #format.html {
+        #  logger.debug " --- "
+        #  logger.debug "ERRORS: #{@user.errors.inspect}"
+        #  logger.debug " --- "
+        #  format.html { redirect_to '/admin/clients', notice: @user.errors.messages }
+        #  redirect_to '/admin/clients'
+        #}
+        format.html {
+          if current_user.has_role?(:logopedist)
+            render 'admin/clients/new'
+          else
+            render :new
+          end
+        }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end

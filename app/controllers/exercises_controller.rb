@@ -5,7 +5,13 @@ class ExercisesController < ApplicationController
   # GET /exercises
   # GET /exercises.json
   def index
-    @exercises = Exercise.all
+    # TODO: move to modal
+    if current_user.has_role?(:admin)
+      @exercises = Exercise.all()
+    else
+      @clients = User.where(:logopedist => current_user, :roles.in => [:client]).map{|u| u.id.to_s }
+      @exercises = Exercise.where(:user_id.in => @clients )
+    end
   end
 
   # GET /exercises/1

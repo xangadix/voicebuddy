@@ -1,13 +1,8 @@
 #login_form
   .form_container
-
-
     = image_tag "logo_medium"
-
     %br
-    %a{:onclick=>"parent.doeshelooklike('een teefje');", :href=>"javascript:"} CLICK ME
     %br
-
     = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
       .field
         = f.label 'E-mail adres'

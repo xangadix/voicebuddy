@@ -41,7 +41,7 @@
       %label= t('common.confirm_password')
       = form.password_field :password
 
-    - if @user.persisted? && @user.has_role?(:client)
+    - if @user.persisted? && ( @user.has_role?(:client) || @user == current_user )
       %hr
       %h3#assigned_exercises
         = t('admin.clients.assigned_exercises')

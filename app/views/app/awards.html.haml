@@ -3,33 +3,37 @@
 
   .main-content
     .center-text
-      %p
-        alle prijzen voor:
+      /%p
+      /  alle prijzen voor:
       %h2= current_user.full_name
-
-  - if current_user.claimed_streaks > 0 || 1 == 1
-
-    .streaks-list
-
-
-
-
-      /= image_tag "awards/strotten/TROFEE BRONS 2.gif", :width => "33%"
-      /= image_tag "awards/strotten/TROFEE SILVER 2.gif", :width => "33%"
-      /= image_tag "awards/strotten/TROFEE GOUD 2.gif", :width => "33%"
-
-      - if current_user.claimed_streaks >= 1
-        = image_tag "awards/strotten/BRONS_STILL"
-
-      - if current_user.claimed_streaks >= 2
-        = image_tag "awards/strotten/ZILVER_STILL"
-
-      - if current_user.claimed_streaks >= 3
-        = image_tag "awards/strotten/GOUD_STILL"
-
-
+  .gradient-edge
 
   .award-list
+
+    - if current_user.claimed_streaks > 0 || 1 == 1
+      %br
+      %br
+      .streaks-list
+
+        /= image_tag "awards/strotten/TROFEE BRONS 2.gif", :width => "33%"
+        /= image_tag "awards/strotten/TROFEE SILVER 2.gif", :width => "33%"
+        /= image_tag "awards/strotten/TROFEE GOUD 2.gif", :width => "33%"
+        #streak_video_modal
+          .video-container
+            %video#streakModalVideo{:src=>"/videos/TROFEE BRONS 2_1.mp4", :height=>"500px", 'webkit-playsinline': "true", :playsinline=> "true", :controls=>false, :autoplay=>true, :loop => true}
+            /#play-button.far.fa-lg.fa-play-circle
+          /%video#strot{:src=>"/videos/TROFEE BRONS 2_1.mp4", :height=>"500px", :autoplay=>true, :loop => true}
+          .background
+
+        - if current_user.claimed_streaks >= 1
+          = image_tag "awards/strotten/BRONS_STILL", {:onclick=>"javascript:openStreakModalVideo('/videos/TROFEE BRONS 2_1.mp4');"}
+
+        - if current_user.claimed_streaks >= 2
+          = image_tag "awards/strotten/ZILVER_STILL", {:onclick=>"javascript:openStreakModalVideo('/videos/TROFEE SILVER 2_1.mp4');"}
+
+        - if current_user.claimed_streaks >= 3
+          = image_tag "awards/strotten/GOUD_STILL", {:onclick=>"javascript:openStreakModalVideo('/videos/TROFEE GOUD 2_1.mp4');"}
+
     - @exercises.reverse.each do |exercise|
       = render "award_item", :locals => {:exercise => exercise}
 
@@ -53,3 +57,28 @@
     %br
     %br
     %br
+
+    :javascript
+      function openStreakModalVideo(_video) {
+        console.log("open modal")
+        //document.getElementById('streak_video_modal').style.display = "block"
+        document.getElementById('streak_video_modal').style.display = "block"
+        document.getElementById('streakModalVideo').src = _video
+      }
+
+      document.getElementById('streak_video_modal').style.display = "none"
+
+      document.getElementById('streak_video_modal').onclick = function() {
+        document.getElementById('streak_video_modal').style.display = "none"
+      }
+
+      document.body.appendChild(document.getElementById('streak_video_modal'))
+
+      /*
+        document.getElementById('streak_video_modal').onclick = function() {
+          document.getElementById('streak_video_modal').style.display == "none"
+        }
+
+        document.getElementById('streakModalVideo').onclick = function() {}
+        document.getElementById('play-button').onclick = function() {}
+      */

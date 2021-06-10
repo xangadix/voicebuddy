@@ -33,8 +33,8 @@ class Exercise
   # frequency = 2 (frequency per day, may be floet)
 
   field :frequency, type: Integer, default: 1             # per day
-  field :target, type: Integer, default: 10
-  #field :achieved, type: Integer, default: 0              # depricated for array
+  field :target, type: Integer, default: 10               # in days
+  #field :achieved, type: Integer, default: 0             # depricated for array
   field :achieved_array, type: Array, default: []         # replaces above
   #field :achieved_today, type: Integer, default: 0       # depricated for array
   field :achieved_array_today, type: Array, default: []   # achieved of frequency (today)
@@ -72,7 +72,7 @@ class Exercise
 
     # overall achievements
     self.achieved_array << 1
-    self.completed if self.achieved_array.count >= self.target
+    self.completed if self.achieved_array.count >= ( self.target * self.frequency )
 
     # daily achievements
     self.achieved_array_today << 1
@@ -135,7 +135,7 @@ class Exercise
     end
 
     # ... and completed entirely
-    if achieved_array.count >= target
+    if achieved_array.count >= ( target * frequency )
       self.completed = true
       Rails.logger.debug "completed!"
     end

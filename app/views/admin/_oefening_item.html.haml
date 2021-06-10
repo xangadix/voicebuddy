@@ -34,14 +34,40 @@
         %i.fa.fas.fa-eye
 
 
-    .content{:style=>"min-height: 200px;"}
-      .thumbnail{:style=>"float:left;display:inline-block;"}
+    .content{:style=>""}
+      .thumbnail{:style=>""}
         %image{:src=> preset[I18n.locale.to_s]["thumbnail"], :width=>"200px"}
 
-      .tekst{:style=>"float:left;display:inline-block;width:60%;margin-left:20px;"}
+      .tekst{:style=>""}
         %h3= preset[I18n.locale.to_s]["naam"]
         .description= preset[I18n.locale.to_s]["doel"]
 
+
+      .score
+        - width = 100.0
+
+        .progress-bar
+          - addToday = exercise.frequency - exercise.achieved_array_today.sum
+          - exercise_total = exercise.target * exercise.frequency
+          - Array.new(exercise_total).each_with_index do |i, index|
+
+            - if exercise.achieved_array[index] == 0
+              .progress-tic.green{:style=>"width:#{ width / exercise_total }%;"}
+
+            - elsif exercise.achieved_array[index] == 1
+              .progress-tic.lightgreen{:style=>"width:#{ width / exercise_total }%;"}
+
+            - elsif addToday > 0 && exercise.completed_for_the_day == false
+              -# left_today = exercise.frequency - exercise.achieved_array_today.sum
+              - addToday = addToday - 1
+              .progress-tic.orange{:style=>"width:#{ width / exercise_total }%;"}
+
+            - else
+              .progress-tic.hollow{:style=>"width:#{ width / exercise_total }%;"}
+
+        - unless exercise.completed
+          .moving_total{:style=>"margin-left: calc( #{ exercise.achieved_array.count * ( width / exercise_total )}% - 4px );"}
+            = exercise.achieved_array.sum
     /%br
     /= link_to "zet herinnering", "/view_exercise/#{exercise.id}", :class => "btn btn-danger"
     /= datetime_field_tag "reminder_date", (DateTime.now() + 36.hours).strftime("%Y-%d-%mT%H:%M")

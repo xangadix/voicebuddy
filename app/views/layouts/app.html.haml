@@ -2,7 +2,10 @@
 %html{lang: I18n.locale}
   %head
     %title
-      VoiceBuddy
+      - unless @exercise.blank?
+        = lookup_exercies(@exercise.preset)[current_user.language]["naam"]
+      - else
+        = @title
 
     = csrf_meta_tags
     = csp_meta_tag
@@ -30,6 +33,10 @@
   %body#app{'data-token' => @token}
 
     .app-container
+
+      - if current_user != true_user
+        You (#{true_user.name}) are signed in as #{current_user.name}#{link_to "Back to admin", admin_stop_impersonate_path, method: :post}
+
 
       .main-content
         = yield

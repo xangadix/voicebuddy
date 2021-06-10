@@ -26,7 +26,8 @@ Rails.application.routes.draw do
     get 'clients/new', to: 'clients#new'
     get 'clients/:id', to: 'clients#show'
     get 'impersonate/(:id)' => 'users#impersonate', as: :impersonate
-    get 'stop_impersonating' => 'users#stop_impersonating', as: :stop_impersonate
+    #get 'stop_impersonating' => 'users#stop_impersonating', as: :stop_impersonate
+    post 'stop_impersonating' => 'users#stop_impersonating', as: :stop_impersonate
   end
 
   # for everyone
@@ -44,7 +45,7 @@ Rails.application.routes.draw do
   get '/app/awards(/:token)', to: 'app#awards'
   get '/app/awards/claim/:id(/:token)', to: 'app#claim_reward'
   get '/app/claim_reward/:id(/:token)', to: 'app#claim_reward'
-  get '/app/claim_streak/(:token)', to: 'app#claim_streak'  
+  get '/app/claim_streak/(:token)', to: 'app#claim_streak'
   get '/app/oefening/:id(/:token)', to: 'app#oefening'
   get '/app/oefeningen(/:token)', to: 'app#oefeningen'
   get '/app/my_profile(/:token)', to: 'app#my_profile'

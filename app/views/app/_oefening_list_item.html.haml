@@ -70,24 +70,25 @@
 
       .progress-bar
         - addToday = exercise.frequency - exercise.achieved_array_today.sum
-        - Array.new(exercise.target).each_with_index do |i, index|
+        - exercise_total = exercise.target * exercise.frequency
+        - Array.new(exercise_total).each_with_index do |i, index|
 
           - if exercise.achieved_array[index] == 0
-            .progress-tic.green{:style=>"width:#{ width / exercise.target }%;"}
+            .progress-tic.green{:style=>"width:#{ width / exercise_total }%;"}
 
           - elsif exercise.achieved_array[index] == 1
-            .progress-tic.lightgreen{:style=>"width:#{ width / exercise.target }%;"}
+            .progress-tic.lightgreen{:style=>"width:#{ width / exercise_total }%;"}
 
           - elsif addToday > 0 && exercise.completed_for_the_day == false
             -# left_today = exercise.frequency - exercise.achieved_array_today.sum
             - addToday = addToday - 1
-            .progress-tic.orange{:style=>"width:#{ width / exercise.target }%;"}
+            .progress-tic.orange{:style=>"width:#{ width / exercise_total }%;"}
 
           - else
-            .progress-tic.hollow{:style=>"width:#{ width / exercise.target }%;"}
+            .progress-tic.hollow{:style=>"width:#{ width / exercise_total }%;"}
 
       - unless exercise.completed
-        .moving_total{:style=>"margin-left: calc( #{ exercise.achieved_array.count * ( width / exercise.target )}% - 4px );"}
+        .moving_total{:style=>"margin-left: calc( #{ exercise.achieved_array.count * ( width / exercise_total )}% - 4px );"}
           = exercise.achieved_array.sum
 
   //.arrow_right

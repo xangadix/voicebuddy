@@ -10,20 +10,17 @@
   .category
     categorie:
     %em= exercise[ I18n.locale.to_s ]["category"]
-    \:
   .tags
     tags:
     %small= exercise[ I18n.locale.to_s ]["tags"].to_sentence(last_word_connector: 'en') unless exercise[ I18n.locale.to_s ]["tags"].blank?
 
   .materiaal
     Materiaal:
-    %em= exercise[ I18n.locale.to_s ]["materiaal"]
+    %em= exercise["materiaal"]
   %br
   .description{:width=>"100%"}= exercise[ I18n.locale.to_s ]["doel"].strip() unless exercise[ I18n.locale.to_s ]["doel"].blank?
   %br
-
-  %br
-  %small Bekijk Oefening:
+    
   %br
   - if exercise["materiaal"] == "video"
     = link_to "Bekijk video", exercise[ I18n.locale.to_s ]["content"], :class=>"btn", :target=>"_blank"

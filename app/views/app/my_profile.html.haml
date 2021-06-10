@@ -11,15 +11,6 @@
     %dd= current_user.full_name
     %dt Email
     %dd= current_user.email
-    %dt Current Token
-    %dd
-      = current_user.authorisation_token
-      = link_to "back", "/app/oefeningen/#{current_user.authorisation_token}"
-    %dt Current ID
-    %dd
-      = current_user.id
-    %dt Taal
-    %dd= current_user.language
 
     %hr
     %dt Voornaam
@@ -32,16 +23,14 @@
     %dd= current_user.gender
     %dt geboortedatum
     %dd= current_user.date_of_birth
-    %dt # oefeningen
-    %dd= current_user.exercises.count
-    %dt lid sinds
-    %dd= current_user.created_at
 
 
-  = link_to "verwijder mijn account", "/"
+  =# link_to "verwijder mijn account", "/"
   %br
-  = link_to "uitloggen", destroy_user_session_path, :method => :delete
-
+  =# link_to "uitloggen", destroy_user_session_path, :method => :delete
+  %button.pull-right#relogin Opnieuw inloggen
+  %br
+  %br
   %br
   %hr
   %br
@@ -101,6 +90,31 @@
         Bekijk de privacy policy https://www.voicebuddy.nl/privacybeleid/
 
 
+    .list-item
+      .list-header
+        %i.arrow.fa.fa-fas.fa-caret-down.pull-right
+        Technische informatie
+      .list-content
+        %p
+          de volgende informatie is alleen ter kennisgeving,
+          het kan zijn dat er naar gevraagd wordt als u problemen ondervind
+          of een bug meldt.
+
+        %dl.user_profile
+          %dt Current Token
+          %dd
+            = current_user.authorisation_token
+            = link_to "back", "/app/oefeningen/#{current_user.authorisation_token}"
+          %dt Current ID
+          %dd
+            = current_user.id
+          %dt Taal
+          %dd= current_user.language
+          %dt # oefeningen
+          %dd= current_user.exercises.count
+          %dt lid sinds
+          %dd= current_user.created_at
+
   %br
   %br
   %br
@@ -136,3 +150,8 @@
         }
       }
     })
+
+    document.getElementById('relogin').onclick = function() {
+      console.log("post message")
+      window.parent.postMessage('REMOVE_TOKEN||WEB||kk','*');
+    }

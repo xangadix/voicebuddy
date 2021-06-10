@@ -27,6 +27,10 @@
       %header.header
         = render partial: '/admin/header'
 
+      - if current_user != true_user
+        You (#{true_user.name}) are signed in as #{current_user.name}#{link_to "Back to admin", admin_stop_impersonate_path, method: :post}
+
+
       .menu
         = render partial: '/admin/menu'
 

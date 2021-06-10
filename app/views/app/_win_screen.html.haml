@@ -1,9 +1,19 @@
 - preset = lookup_exercies(@exercise.preset)
 - ploatjes = ["geweldig.png","goed gedaan-02.png","hartstikkegoed-02.png","lekker bezig-02.png","lekker gewerkt-02.png","mooi-02.png","prachtig-02.png","super-02.png","top-02.png","trots op je-02.png","yes-02.png"]
 /= preset[I18n.locale.to_s]["naam"]
+
+%h2 Oefening afgerond!
 = image_tag "stempels2/#{ploatjes.sample}"
-%h2
-  Oefening
-  /%em= @exercise.name
-  gedaan
-= link_to "« terug naar oefeningen", "/app/oefeningen/#{@token}"
+%br
+Stel een herinnering in:
+%br
+%br
+%center
+  %input#setReminderDate{:type=>"datetime-local", :class=>"datetime", :value=>(DateTime.now+1.day).strftime("%Y-%m-%dT%H:%M"), :style=>""}
+  &nbsp;
+  %button.btn.btn-beige#set_reminder
+    .fas.fa-bell#icon_none
+    .fas.fa-check#icon_check.hidden
+%br
+%hr
+= link_to "« terug naar je oefeningen", "/app/oefeningen/#{@token}"
