@@ -7,8 +7,8 @@
 .gradient-edge
 
 .oefening
-
-  - if @exercise.material == "tekst"
+  / %pre= @exercise.material
+  - if @exercise.material == "tekst" || @exercise.material == "text"
     .paper
 
       .oefening_tekst
@@ -18,9 +18,30 @@
         %progress#progress_bar{:value=>"32", :max=>"100", :width=>"100%"} 32%
 
       %br
-      %button#end_text_now end this now
+      %button#end_text_now.hidden end this now
       #play-button.far.fa-lg.fa-play
       #end-container
+
+  - if @exercise.material == "textvolume" || @exercise.material == "tekstvolume"
+    .paper
+
+      .oefening_tekst
+        = preset[current_user.language]["content"].html_safe
+
+      .progress_bar
+        %progress#progress_bar{:value=>"32", :max=>"100", :width=>"100%"} 32%
+
+      %br
+
+      %button#start_it_all fucking start
+      %button#meter fucking start NU
+      #in_numbers  0
+
+
+      %button#end_text_now.hidden end this now
+      #play-button.far.fa-lg.fa-play
+      #end-container
+
 
   - elsif @exercise.material == "audio"
     .audio_container
@@ -42,7 +63,7 @@
       %br
 
       %audio{:src=>preset[current_user.language]["content"], 'webkit-playsinline': "true", :playsinline=> "true", :controls => false, :id=>"audio_oefening"}
-      %button#end_audio_now end audio now
+      %button#end_audio_now.hidden end audio now
       #end-container
 
   - else
@@ -51,7 +72,7 @@
       #play-button.far.fa-lg.fa-play-circle
       #end-container
 
-    %button#end_video_now end this now
+    %button#end_video_now.hidden end this now
 
   %h4{:style=>"text-align:center;"}= preset[current_user.language]["doel"]
   .push-down
@@ -73,7 +94,6 @@
     vid.onplay = function() {
       document.getElementById('play-button').style.display = "none"
     }
-
 
     vid.onloadedmetadata = function(e) {
       console.log("== VIDEO got metatada", vid.duration, e)
@@ -122,7 +142,6 @@
       document.getElementById('end_audio_now').onclick = function(e) {
         aud.currentTime = aud.duration - 1
       }
-
   }
 
   if ("#{@exercise.material}" == "tekst") {
@@ -159,6 +178,70 @@
     }
   }
 
+  if ("#{@exercise.material}" == "textvolume") {
+  	// Decibel Meter
+
+    document.getElementById("start_it_all").onclick = function() {
+      var script = document.createElement("script");
+      script.addEventListener('load', function() {
+        start_it_all()
+      }, false)
+
+      script.src = "https://app.voicebuddy.nl/javascript/decibel_meter.js";
+      document.head.appendChild(script);
+    }
+
+    function start_it_all() {
+      console.log("creating meter ...")
+      var meterEl = document.getElementById('meter');
+      //var levelEl = document.querySelector('#meter > span');
+
+    	var meter = DecibelMeter.create('meter');
+
+    	// listen for audio sources to be ready
+
+    	meter.on('ready', function (meter, sources) {
+    		var mic = sources[0]; // select first mic
+    		meter.connect(mic); // connect to mic
+    	});
+
+    	// adjust displayed level when audio sampled
+
+    	meter.on('sample', function (dB, percent, level) {
+    		// levelEl.style.height = (percent * 100) + '%';
+
+        document.getElementById('meter_bar').value = (percent * 100)
+        document.getElementById('in_numbers').innerHTML = "dB: " + dB + ", percent: " + percent + " level: " + level
+
+    	});
+
+    	// change element class when meter starts listening
+
+    	meter.on('listen', function (meter) {
+    		meterEl.classList.add('active');
+    	});
+
+    	// change element class when meter stops listening
+
+    	meter.on('stop-listening', function (meter) {
+    		meterEl.classList.remove('active');
+    		levelEl.style.height = 0;
+    	});
+
+    	// clicking the meter element will toggle listening
+
+    	meterEl.addEventListener('click', function (e) {
+        console.log("clcierdedl")
+    		if (meter.listening) {
+    			meter.stopListening();
+          console.log("Stop!")
+    		}else{
+    			meter.listen();
+          console.log("Start!")
+    	  };
+      })
+    }
+  } // end startitall
 
   var setReminder = function() {
 

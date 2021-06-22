@@ -1,14 +1,26 @@
 %h1 Voicebuddy dashboard
 .welcome
-  Welkom #{current_user.email} #{current_user.id} #{current_user.roles}
+  Welkom #{current_user.email}
+  /#{current_user.id} #{current_user.roles}
 
 .clients
   %h3
-    Uw clienten
+    Voortgang van clienten
     %small (laatste 10)
 
-  - User.where(:logopedist => current_user).to_a[0..10].each do |client|
-    *
-    = client.full_name
-    = client.email
-    = client.exercises.count
+  %table
+    %thead
+      %tr
+        %th naam
+        %th email
+        %th # active oefeningen
+        %th # laatste actie
+
+    %tbody
+      - User.where(:logopedist => current_user).order(:updated_at => 1).to_a[0..10].each do |client|
+        %tr
+          %td= client.full_name
+          %td= client.email
+          %td= client.exercises.where(:claimed_award => false).count
+          %td= client.exercises.where(:claimed_award => false).order(:updated_at => 1).first.updated_at unless client.exercises.order(:updated_at => 1).first.nil?
+    %br

@@ -1,0 +1,79 @@
+<html>
+
+
+<body>
+
+  <!--
+  <button id="start_it_all">fucking start</button>
+  <button id="meter">fucking start NU</button>
+  -->
+  <div id="in_numbers">  0 </div>
+
+  <script>
+    document.getElementById("start_it_all").onclick = function() {
+      var script = document.createElement("script");
+      script.addEventListener('load', function() {
+        start_it_all()
+      }, false)
+
+      script.src = "https://app.voicebuddy.nl/javascript/decibel_meter.js";
+      document.head.appendChild(script);
+    }
+
+    function start_it_all() {
+      console.log("creating meter ...")
+      var meterEl = document.getElementById('meter');
+      var levelEl = document.getElementById('startdefuck');
+      var meter = DecibelMeter.create('meter');
+
+      // listen for audio sources to be ready
+
+      meter.on('ready', function (meter, sources) {
+        console.log("ready: ", sources)
+        var mic = sources[0]; // select first mic
+        meter.connect(mic); // connect to mic
+      });
+
+      // adjust displayed level when audio sampled
+
+      meter.on('sample', function (dB, percent, level) {
+        // levelEl.style.height = (percent * 100) + '%';
+
+        //document.getElementById('meter_bar').value = (percent * 100)
+        document.getElementById('in_numbers').innerHTML = "dB: " + dB + ", percent: " + percent + " level: " + level
+
+      });
+
+      // change element class when meter starts listening
+
+      meter.on('listen', function (meter) {
+        meterEl.classList.add('active');
+      });
+
+      // change element class when meter stops listening
+
+      meter.on('stop-listening', function (meter) {
+        meterEl.classList.remove('active');
+        levelEl.style.height = 0;
+      });
+
+      // clicking the meter element will toggle listening
+
+      meterEl.addEventListener('click', function (e) {
+        console.log("click")
+        if (meter.listening) {
+          meter.stopListening();
+          console.log("Stop!")
+        }else{
+          meter.listen();
+          console.log("Start!")
+        };
+      })
+    }
+
+  </script>
+
+</body>
+
+
+</html>
