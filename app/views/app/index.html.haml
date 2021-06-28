@@ -2,9 +2,8 @@ Welcome to the app
 %strong= current_user.full_name
 %br
 %br
+naar het <a class="btn button" href="/app/oefeningen/#{current_user.authorisation_token}">oefeningenscherm</a>
+%br
+%br
 %small
 	laatst update op #{current_user.updated_at}
-
-%br
-%br
-= image_tag "stemhuis_logo"
