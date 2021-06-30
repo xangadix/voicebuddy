@@ -13,7 +13,7 @@ class AdminController < ApplicationController
 
   def logopedisten
     @page = ( params[:page]).to_i || 0
-    @resource = User.all
+    @resource = User.where(:roles.in => ["logopedist"])
     @total = @resource.count
     @users = @resource.skip( @page * PER_PAGE ).limit( PER_PAGE)
   end

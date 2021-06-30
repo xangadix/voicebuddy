@@ -130,7 +130,7 @@ class AppController < ApplicationController
     logger.debug "completed? #{all_completed} last update #{current_user.last_streak_update} > #{DateTime.now.beginning_of_day - 1.day}"
 
     # && (current_user.last_streak_update > DateTime.now.beginning_of_day - 1.day)
-    if all_completed && !current_user.streak_lock
+    if all_completed && !current_user.streak_lock && @exercises.count > 0
       @streak_update = true
       current_user.streak = current_user.streak += 1
       current_user.streak_lock = true

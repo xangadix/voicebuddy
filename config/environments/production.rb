@@ -103,4 +103,8 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+  config.web_console.permissions = '83.87.66.134'
+  config.hosts << "voicebuddy.sense-studios.com"
+  config.hosts << "app.voicebuddy.nl"
+  config.hosts << "dev.voicebuddy.nl"
 end

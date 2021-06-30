@@ -17,6 +17,10 @@ Rails.application.routes.draw do
   get '/admin/logopedisten', to: 'admin#logopedisten'
   get '/admin/logs', to: 'admin#logs'
 
+  authenticated do
+    get 'site/demo', to: 'site#demo'
+  end
+
   # users
   namespace :admin do
     resources :users

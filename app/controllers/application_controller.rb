@@ -33,7 +33,9 @@ class ApplicationController < ActionController::Base
       elsif current_user.has_role? :demo
         redirect_to "/site/demo"
       else
-        render plain: "#{current_user.inspect} ... you have No RoL3, please contact support."
+        current_user.roles << :demo
+        current_user.save
+        redirect_to "/site/demo"
       end
 
     else

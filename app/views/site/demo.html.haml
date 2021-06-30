@@ -1,0 +1,39 @@
+#index
+  .box{:style=>"display:inline-block;max-width:400px;"}
+    %h1
+      Welkom bij Voice Buddy,
+      = current_user.full_name
+    %h5
+      dé app om volwassen stemcliënten te
+      ondersteunen bij het regelmatig doen
+      van hun oefeningen.
+
+    %p
+      Wij nemen zo snel mogelijk contact met u op, via email adres
+      %b= current_user.email
+      \. We streven er naar binnen 24
+      uur een reactie te geven en te zorgen dat u klaar bent om onze app in gebruik
+      te nemen.
+    %p
+      U kunt alvast de app downloaden, zodat u direct aan de slag kunt als we uw
+      account aangesloten hebben.      
+      %br
+      Android gebruikers kunnen de app <a href="https://play.google.com/store/apps/details?id=nl.voicebuddy&hl=nl&gl=US" target="_blank">hier</a> vinden,
+      iOS gebruikers klikken <a href="https://apps.apple.com/us/app/voice-buddy/id1557442052" target="_blank">hier</a>.
+
+    %p
+      Mocht u binnen 2 werkdagen niets van ons horen, of als u andere vragen
+      hebt, dan kunt u altijd mailen naar <a href="mailto:info@voicebuddy.nl">info@voicebuddy.nl</a>.
+
+    %p
+      %br
+      Hartelijke groet namens het Voice Buddy team,
+      %br
+      = image_tag "ilse_handtekening", :width => "120px"
+
+  %hr
+  %br
+
+  %br
+  %br
+  %br
