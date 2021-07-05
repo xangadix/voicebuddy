@@ -34,6 +34,11 @@
             &nbsp;
             = link_to "/admin/users/#{user.id.to_s}", :class=>"action-buttons", :alt=>"verwijder client", :title=>"verwijder client", method: :delete, data: { confirm: t('common.are_you_sure') } do
               %i.fas.fa-trash-alt
+            &nbsp;
+            = link_to "/admin/reset_password_email/#{user.id.to_s}", :class=>"action-buttons", :alt=>"reset wachtwoord", :title=>"reset wachtwoord" do
+              %i.fas.fa-envelope
+            &nbsp;
+
   %br
 
 %br

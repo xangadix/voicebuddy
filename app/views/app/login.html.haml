@@ -10,7 +10,6 @@
 
   %h1 LOGIN
 
-
   = form_with( url: "/app/new_login" ) do |form|
     = form.hidden_field :token, :value => @token
     = form.hidden_field :time, :value => @time
@@ -27,7 +26,7 @@
     %br
     %hr
     .actions
-      = link_to 'wachtwoord vergeten', 'https://app.voicebuddy.nl/app/forgot_password', :class => "pull-left"
+      = link_to 'wachtwoord vergeten', '/app/forgot_password', :class => "pull-left"
 
     %br
     %br

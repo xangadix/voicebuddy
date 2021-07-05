@@ -2,7 +2,6 @@ Rails.application.routes.draw do
 
   resources :exercises
   delete 'remove_exercise/:id' => 'exercises#remove_exercise'
-
   devise_for :users, controllers: {sessions: "sessions"}
 
 
@@ -29,6 +28,7 @@ Rails.application.routes.draw do
     get 'clients', to: 'clients#index'
     get 'clients/new', to: 'clients#new'
     get 'clients/:id', to: 'clients#show'
+    get 'reset_password_email/:id', to: 'clients#reset_password_email'
     get 'impersonate/(:id)' => 'users#impersonate', as: :impersonate
     #get 'stop_impersonating' => 'users#stop_impersonating', as: :stop_impersonate
     post 'stop_impersonating' => 'users#stop_impersonating', as: :stop_impersonate
@@ -56,9 +56,18 @@ Rails.application.routes.draw do
   get '/app/update_exercise/:id/:token', to: 'exercises#update_exercise'
   get '/app(/:token)', to: 'app#index'
 
+  # forgot pass? -- for app users
+  get '/app/password/sent' => 'app#forgot_password_confirm'
+  get '/app/password/new' => 'app#forgot_password'
+  get '/app/password/edit(/:user_id)' => 'app#edit_password', as: :app_password_edit
+  patch '/app/password' => 'app#update_password'
+  put '/app/password' => 'app#update_password'
+  post '/app/password' => 'app#create_password'
+
   # scope site
   get '/site/index', to: 'site#index'
   get '/site/test', to: 'site#test'
+  get '/site/app', to: 'site#app'
 
   # aliasses
   get '/sign_up', to: redirect('/users/sign_up')

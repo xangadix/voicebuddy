@@ -13,7 +13,11 @@ class AdminController < ApplicationController
 
   def logopedisten
     @page = ( params[:page]).to_i || 0
-    @resource = User.where(:roles.in => ["logopedist"])
+    if params[:search].blank?
+      @resource = User.where(:roles.in => ["logopedist"])
+    else
+      @resource = User.where(:roles.in => ["logopedist"]).and( [{:name => /#{params[:search]}/i},{:email => /#{params[:search]}/i}] )
+    end
     @total = @resource.count
     @users = @resource.skip( @page * PER_PAGE ).limit( PER_PAGE)
   end

@@ -3,22 +3,22 @@
     = image_tag "logo_medium"
     %br
     %br
-    %h2 Change your password
+    %h2 Verander uw wachtwoord
     = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
       = render "devise/shared/error_messages", resource: resource
       = f.hidden_field :reset_password_token
       .field
-        = f.label :password, "New password"
+        = f.label :password, "Nieuwe wachtwoord"
         %br/
         - if @minimum_password_length
           %em
-            (#{@minimum_password_length} characters minimum)
+            (minimaal #{@minimum_password_length} karakters)
           %br/
         = f.password_field :password, autofocus: true, autocomplete: "new-password"
       .field
-        = f.label :password_confirmation, "Confirm new password"
+        = f.label :password_confirmation, "Bevestig nieuw wachtwoord"
         %br/
         = f.password_field :password_confirmation, autocomplete: "new-password"
       .actions
-        = f.submit "Change my password"
-    = render "devise/shared/links"
+        = f.submit "Verander mijn wachtwoord"
+    /= render "devise/shared/links"

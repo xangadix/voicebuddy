@@ -11,4 +11,10 @@ class Admin::ClientsController < Admin::UsersController
   def datatables
   end
 
+  def reset_password_email
+    user = User.find(params[:id])
+    user.send_reset_password_instructions
+    redirect_to '/admin/clients', notice: 'wachtwoord instructies zijn verstuurd.'
+  end
+  
 end

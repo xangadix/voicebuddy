@@ -62,6 +62,7 @@ GEM
     bindex (0.8.1)
     bootsnap (1.4.8)
       msgpack (~> 1.0)
+    browser (5.3.1)
     bson (4.11.1)
     bson_ext (1.5.1)
     builder (3.2.4)
@@ -239,6 +240,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap (>= 1.4.2)
+  browser
   bson_ext
   byebug
   cancancan

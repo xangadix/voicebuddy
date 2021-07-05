@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
         # redirect_to "/admin/consultant"
         redirect_to "/admin/index"
       elsif current_user.has_role? :client
-        redirect_to "/app/"
+        redirect_to "/site/app"
       elsif current_user.has_role? :demo
         redirect_to "/site/demo"
       else
