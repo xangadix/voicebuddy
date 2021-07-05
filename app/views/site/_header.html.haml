@@ -6,3 +6,5 @@
   Voicebuddy Logopedie oefen app
 
 .user-actions
+  - if current_user
+    = link_to "logout", destroy_user_session_path, :method => :delete

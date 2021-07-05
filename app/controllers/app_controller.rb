@@ -3,9 +3,11 @@ class AppController < ApplicationController
   layout 'app'
   after_action :allow_iframe   #, only: []
   before_action :allow_all_cors #, only: []
+  before_action :check_device
   # skip_before_action :verify_authenticity_token
   # skip_before_action :verify_authenticity_token
   # before_action except: [:index, :login, :new_login, :forgot_password]
+   respond_to :js, :html
 
   def index
     logger.debug "IN APP has current_user #{current_user.inspect}"
@@ -72,13 +74,81 @@ class AppController < ApplicationController
     render "app/login"
   end
 
+  # forgot and update password
   def forgot_password
     #user.send_reset_password_instructions
+    resource = User.new
   end
 
-  # depricated
-  def test_api
-    render json: {"var1"=>"abcdef", "var2"=>"ghijkl"}
+  # POST /resource/password
+  def create_password
+    @user = User.where(:email=>params[:user][:email]).first
+    @user.send_reset_password_instructions
+    #yield resource if block_given?
+
+    #if successfully_sent?(resource)
+    #  respond_with({}, location: after_sending_reset_password_instructions_path_for(resource_name))
+    #else
+    #  respond_with(resource)
+    #end
+    #render plain: "instructies komen er aan! \n\n #{@user.to_yaml}"
+    redirect_to "/app/password/sent"
+  end
+
+  def edit_password
+    resource = User.find(params[:user_id] || @user_id)
+    @user = User.find(params[:user_id] || @user_id)
+    #set_minimum_password_length
+
+    #@user.reset_password_token = raw(params[:reset_password_token] || @reset_password_token)
+
+    render "forgot_password_edit"
+  end
+
+  # patch, put
+  def update_password
+    resource = User.reset_password_by_token(params[:user]||@user)
+    resource_name = "User"
+    yield resource if block_given?
+
+    if resource.errors.empty?
+      redirect_to "/app/login", notice: "wachtwoord is ingesteld"
+    else
+      #set_flash_message!(:notice, :updated_not_active)
+      #render "forgot_password_edit"
+      logger.debug "---"
+      logger.debug resource.reset_password_token
+      logger.debug "---"
+
+      @user = resource
+      @resource = resource
+      @reset_password_token = params[:reset_password_token]
+      @user_id = resource.id.to_s
+      @errors = resource.errors
+
+      @token1 = resource.reset_password_token
+      @token2 = params[:reset_password_token]
+      @user.reset_password_token = params[:reset_password_token]
+
+      render "forgot_password_edit"
+      #redirect_to "/app/password/edit/60dada11a19ea6d60b30b293?reset_password_token=RUzGDC1UapeF1R6G4bzZ"
+    end
+
+    #if resource.errors.empty?
+    #  resource.unlock_access! if unlockable?(resource)
+    #  if Devise.sign_in_after_reset_password
+    #    flash_message = resource.active_for_authentication? ? :updated : :updated_not_active
+    #    set_flash_message!(:notice, flash_message)
+    #    resource.after_database_authentication
+    #    sign_in(resource_name, resource)
+    #  else
+    #    set_flash_message!(:notice, :updated_not_active)
+    #  end
+    #  respond_with resource, location: after_resetting_password_path_for(resource)
+    #else
+    #  #set_minimum_password_length
+    #  respond_with resource
+    #end
   end
 
   # ----------------------------------------------------------------------------
@@ -130,7 +200,7 @@ class AppController < ApplicationController
     logger.debug "completed? #{all_completed} last update #{current_user.last_streak_update} > #{DateTime.now.beginning_of_day - 1.day}"
 
     # && (current_user.last_streak_update > DateTime.now.beginning_of_day - 1.day)
-    if all_completed && !current_user.streak_lock
+    if all_completed && !current_user.streak_lock && @exercises.count > 0
       @streak_update = true
       current_user.streak = current_user.streak += 1
       current_user.streak_lock = true
@@ -303,6 +373,12 @@ class AppController < ApplicationController
     response.headers['Access-Control-Allow-Methods'] = 'GET, PUT, PATCH, POST, OPTIONS'
     response.headers['Access-Control-Request-Method'] = '*'
     response.headers['Access-Control-Allow-Headers'] = '*'
+  end
+
+  def check_device
+    #unless browser.device.mobile?
+    #  redirect_to "/"
+    #end
   end
 
 end

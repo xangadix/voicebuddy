@@ -76,4 +76,5 @@ Rails.application.configure do
   config.web_console.permissions = '83.87.66.134'
   config.hosts << "voicebuddy.sense-studios.com"
   config.hosts << "app.voicebuddy.nl"
+  config.hosts << "dev.voicebuddy.nl"
 end

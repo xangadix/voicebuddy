@@ -9,8 +9,15 @@ class Admin::UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
+
+    if current_user.nil?
+      redirect_to "/"
+      return
+    end
+
     unless current_user.has_role?(:admin )
       redirect_to "/admin/clients"
+      return
     end
     #@page = ( params[:page]).to_i || 0
     #@resource = User.all
@@ -20,10 +27,10 @@ class Admin::UsersController < ApplicationController
     @page = ( params[:page]).to_i || 0
     if params[:search]
       @search = params[:search]
-      @resource = User.or([{:name => /#{params[:search]}/i},{:email => /#{params[:search]}/i}] ).sort(:name => 1)
+      @resource = User.or([{:name => /#{params[:search]}/i},{:email => /#{params[:search]}/i}] ).sort(:created_at => -1)
     else
       @search = ""
-      @resource = User.all.sort(:name => 1)
+      @resource = User.all.sort(:created_at => -1)
     end
     @total = @resource.count
     @users = @resource.skip( @page * PER_PAGE ).limit( PER_PAGE )
@@ -111,6 +118,7 @@ class Admin::UsersController < ApplicationController
     end
   end
 
+  # IMPERSONATION --------------------------------------------------------------
   def impersonate
     user = User.find(params[:id])
     impersonate_user(user)
@@ -166,8 +174,11 @@ class Admin::UsersController < ApplicationController
     redirect_to "/admin/users/#{params[:id]}/edit"
   end
 
+  # not used
   def update_exercise
   end
+
+  #
 
   private
     # Use callbacks to share common setup or constraints between actions.

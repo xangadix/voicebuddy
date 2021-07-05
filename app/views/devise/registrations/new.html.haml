@@ -1,32 +1,37 @@
 #login_form
   .form_container
 
-
     = image_tag "logo_medium"
 
-    %h2 Sign up
+    %h2 Maak een voicebuddy account
     = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
       = render "devise/shared/error_messages", resource: resource
+
       .field
-        = f.label :email
+        = f.label "naam"
         %br/
-        = f.email_field :email, autofocus: true, autocomplete: "email"
+        = f.text_field :name, autofocus: true
+
       .field
-        = f.label :password
+        = f.label "email"
+        %br/
+        = f.email_field :email, autocomplete: "email"
+      .field
+        = f.label "wachtwoord"
         - if @minimum_password_length
           %em
-            (#{@minimum_password_length} characters minimum)
+            (#{@minimum_password_length} karakters minimum )
           %br/
         %br/
         = f.password_field :password, autocomplete: "new-password"
       .field
-        = f.label :password_confirmation
+        = f.label "bevestig wachtwoord"
         %br/
         = f.password_field :password_confirmation, autocomplete: "new-password"
       %br/
       %br/
       .actions
-        = f.submit "Sign up"
+        = f.submit "Inschrijven"
       %br
     %hr
     = render "devise/shared/links"

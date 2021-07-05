@@ -24,3 +24,29 @@
           %td= client.exercises.where(:claimed_award => false).count
           %td= client.exercises.where(:claimed_award => false).order(:updated_at => 1).first.updated_at unless client.exercises.order(:updated_at => 1).first.nil?
     %br
+
+- if current_user.has_role?(:admin)
+  %br
+  %br
+  .clients
+    %h3
+      Nieuwe aanmeldingen
+
+    %table
+      %thead
+        %tr
+          %th naam
+          %th email
+          %th datum
+          %th
+          %th
+
+      %tbody
+        - User.where(:roles.in => [:demo]).order(:updated_at => 1).each do |demo_user|
+          %tr
+            %td= demo_user.full_name
+            %td= demo_user.email
+            %td{:style=>"text-align:center"}= l(demo_user.created_at, :format => :short)
+            %td= link_to t('common.edit'), edit_admin_user_path(demo_user)
+            %td= link_to t('common.destroy'), "/admin/users/#{demo_user.id.to_s}", method: :delete, data: { confirm: 'Are you sure?' }
+      %br

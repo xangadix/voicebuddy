@@ -7,7 +7,7 @@ class SessionsController < Devise::SessionsController
   #skip_before_action :http_auth, :only => [:create]
 
   def create
-    Rails.logger.debug "CREATE ZWAAI VANUIT DE SESSION CONTROLLER"
+    #Rails.logger.debug "CREATE ZWAAI VANUIT DE SESSION CONTROLLER"
     user_token = params[resource_name][:auth_token].presence
     user = user_token && User.find_by_authentication_token(user_token)
     if user
@@ -32,7 +32,7 @@ class SessionsController < Devise::SessionsController
   #end
 
   def new
-    Rails.logger.debug "NIEUEW ZWAAI VANUIT DE SESSION CONTROLLER"
+    #Rails.logger.debug "NIEUEW ZWAAI VANUIT DE SESSION CONTROLLER"
     self.resource = resource_class.new(sign_in_params)
     clean_up_passwords(resource)
     yield resource if block_given?

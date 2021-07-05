@@ -7,13 +7,7 @@ class SiteController < ApplicationController
     @hello = "nurse"
   end
 
-  def demo_admin
-  end
-
-  def demo_logopedist
-  end
-
-  def demo_app
+  def demo
   end
 
   def my_profile

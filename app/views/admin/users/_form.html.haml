@@ -30,16 +30,20 @@
     - else
       = form.hidden_field :roles, :multiple => true, :value=>"client"
 
-    / add to current user
-    = form.hidden_field :logopedist, :value => current_user.id.to_s
+    / add to current user -- don't do this!
+    / = form.hidden_field :logopedist, :value => current_user.id.to_s
 
-    - unless @user.persisted?
+    - if !@user.persisted? || @user == current_user
+      %p
+        Let op: als u uw wachtwoord veranderd, wordt u gevraagd opnieuw in te loggen
       %label= t('common.password')
       = form.password_field :password
       %br
 
       %label= t('common.confirm_password')
       = form.password_field :password
+      %br
+      %br
 
     - if @user.persisted? && ( @user.has_role?(:client) || @user == current_user )
       %hr
