@@ -18,11 +18,12 @@
 
     %tbody
       - User.where(:logopedist => current_user).order(:updated_at => 1).to_a[0..10].each do |client|
+      - active_exercises = client.exercises.where(:claimed_award => false)
         %tr
           %td= client.full_name
           %td= client.email
-          %td= client.exercises.where(:claimed_award => false).count
-          %td= client.exercises.where(:claimed_award => false).order(:updated_at => 1).first.updated_at unless client.exercises.order(:updated_at => 1).first.nil?
+          %td= active_exercises.count
+          %td= active_exercises.order(:updated_at => 1).first.updated_at unless active_exercises.count == 0
     %br
 
 - if current_user.has_role?(:admin)
