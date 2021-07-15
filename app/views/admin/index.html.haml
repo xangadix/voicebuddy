@@ -14,15 +14,20 @@
         %th naam
         %th email
         %th # active oefeningen
+        %th # afgeronde oef.
         %th # laatste actie
 
     %tbody
-      - User.where(:logopedist => current_user).order(:updated_at => 1).to_a[0..10].each do |client|
+      - index = 0
+      - User.where(:logopedist => current_user).order(:updated_at => 1).to_a.each_with_index do |client|
       - active_exercises = client.exercises.where(:claimed_award => false)
+        - next if active_exercises.count == 0 || index > 10
+        - index = index += 1
         %tr
           %td= client.full_name
           %td= client.email
           %td= active_exercises.count
+          %td= client.exercises.where(:claimed_award => true).count
           %td= active_exercises.order(:updated_at => 1).first.updated_at unless active_exercises.count == 0
     %br
 

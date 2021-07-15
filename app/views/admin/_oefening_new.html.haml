@@ -1,39 +1,57 @@
-%li.new_exercise{:style=>"display:inline-block;width:100%"}
+%li.new_exercise
 
-  %pre=# exercise.to_yaml
   %h3.title= exercise[ I18n.locale.to_s ]["naam"]
+  // %pre= exercise[ I18n.locale.to_s ].to_yaml
 
-  .thumbnail{:style=>"float:left;margin-right:12px"}
-    %image{:src=>exercise[ I18n.locale.to_s ]["thumbnail"], :width=>"200px"}
+  .left_col
+    .thumbnail{:style=>"float:left;margin-right:12px"}
+      %image{:src=>exercise[ I18n.locale.to_s ]["thumbnail"], :width=>"200px"}
 
+  .right_col
+    .category
+      categorie:
+      %em= exercise[ I18n.locale.to_s ]["category"]
+    .tags
+      tags:
+      %small= exercise[ I18n.locale.to_s ]["tags"].to_sentence(last_word_connector: 'en') unless exercise[ I18n.locale.to_s ]["tags"].blank?
 
-  .category
-    categorie:
-    %em= exercise[ I18n.locale.to_s ]["category"]
-  .tags
-    tags:
-    %small= exercise[ I18n.locale.to_s ]["tags"].to_sentence(last_word_connector: 'en') unless exercise[ I18n.locale.to_s ]["tags"].blank?
+    .materiaal
+      Materiaal:
+      %em= exercise["materiaal"]
+    %br
+    .description{:width=>"100%"}= exercise[ I18n.locale.to_s ]["doel"].strip() unless exercise[ I18n.locale.to_s ]["doel"].blank?
+    %br
 
-  .materiaal
-    Materiaal:
-    %em= exercise["materiaal"]
-  %br
-  .description{:width=>"100%"}= exercise[ I18n.locale.to_s ]["doel"].strip() unless exercise[ I18n.locale.to_s ]["doel"].blank?
-  %br
-    
-  %br
-  - if exercise["materiaal"] == "video"
-    = link_to "Bekijk video", exercise[ I18n.locale.to_s ]["content"], :class=>"btn", :target=>"_blank"
-  - elsif exercise["materiaal"] == "audio"
-    = link_to "Beluister audio", exercise[ I18n.locale.to_s ]["content"], :class=>"btn", :target=>"_blank"
-  - elsif exercise["materiaal"] == "tekst"
-    = link_to "Lees text", "javascript:void(0)", :onclick => "javascript:show_text('#{exercise[ I18n.locale.to_s ]["naam"]}', '#{exercise[ I18n.locale.to_s ]["content"]}');", :class=>"btn"
-  - else
-    = link_to "Bekijk #{exercise["materiaal"]}", exercise[ I18n.locale.to_s ]["content"], :class=>"btn", :target=>"_blank"
+    %label doel (dagen):
+    %input{:type=>"number", :value=> "10", :id=>"target_#{exercise['id']}" }
+    %br
+    %label frequentie:
+    %input{:type=>"number", :value=> exercise['frequentie'], :id=>"frequency_#{exercise['id']}" }
+    %br
 
-  &nbsp;
-  |
-  &nbsp;
-  = link_to " + voeg toe", "add_exercise/#{exercise["id"]}", :class=>"btn"
+    %hr
+    - if exercise["materiaal"] == "video"
+      = link_to "Bekijk video", exercise[ I18n.locale.to_s ]["content"], :class=>"btn", :target=>"_blank"
+    - elsif exercise["materiaal"] == "audio"
+      = link_to "Beluister audio", exercise[ I18n.locale.to_s ]["content"], :class=>"btn", :target=>"_blank"
+    - elsif exercise["materiaal"] == "tekst"
+      = link_to "Lees text", "javascript:void(0)", :onclick => "javascript:show_text('#{exercise[ I18n.locale.to_s ]["naam"]}', '#{exercise[ I18n.locale.to_s ]["content"]}');", :class=>"btn"
+    - else
+      = link_to "Bekijk #{exercise["materiaal"]}", exercise[ I18n.locale.to_s ]["content"], :class=>"btn", :target=>"_blank"
+
+    &nbsp;
+    |
+    &nbsp;
+    - ex_id = exercise["id"]
+    = link_to " + voeg toe", "javascript:addExercise(#{ex_id})", :class=>"btn btn-turq"
 
   %hr
+
+:javascript
+  var addExercise = function(_id) {
+    console.log("add exercise ", _id)
+    var freq = document.getElementById("frequency_" + _id).value
+    var target = document.getElementById("target_" + _id).value
+    url = "/admin/users/#{@user.id}/add_exercise/" + _id + "?freqency=" + freq + "&target=" + target
+    window.location.href = url
+  }
