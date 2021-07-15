@@ -158,7 +158,17 @@ class Admin::UsersController < ApplicationController
     @exercise.user = @user
     @exercise.preset = params[:ex_id]
     @exercise.name = preset["oefening"]
-    @exercise.frequency = preset["frequentie"]
+
+    if params[:target]
+      @exercise.target = params[:target].to_i
+    end
+
+    if params[:freqency]
+      @exercise.frequency = params[:freqency].to_i
+    else
+      @exercise.frequency = preset["frequentie"]
+    end
+
     @exercise.material = preset["materiaal"]
     @exercise.save()
 

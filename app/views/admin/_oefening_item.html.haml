@@ -39,7 +39,15 @@
         %image{:src=> preset[I18n.locale.to_s]["thumbnail"], :width=>"200px"}
 
       .tekst{:style=>""}
-        %h3= preset[I18n.locale.to_s]["naam"]
+        %h3
+          = preset[I18n.locale.to_s]["naam"]
+          %br
+          %small
+            sinds
+            = l(exercise.created_at, :format => :short)
+            ,
+            = time_ago_in_words(exercise.created_at)
+            geleden
         .description= preset[I18n.locale.to_s]["doel"]
 
 

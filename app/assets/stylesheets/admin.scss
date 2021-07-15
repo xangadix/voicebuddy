@@ -292,6 +292,18 @@
     }
   }
 
+  ul.huidige_oefeningen {
+    li {
+      h3{
+        small{
+          font-weight: normal;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+
+
   #available_exersises {
     cursor:pointer;
     &:hover {
@@ -305,8 +317,28 @@
     padding: 0;
 
 
-    li {
+    li.new_exercise {
       margin-bottom: 6px;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      .title {
+        width: 100%;
+      }
+
+      .left_col {
+        width: 42%;
+      }
+
+      .right_col {
+        width: 58%;
+      }
+
+      .bottom_buttons {
+        width: 100%;
+      }
     }
   }
 

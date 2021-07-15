@@ -8,5 +8,9 @@
 
   #{render 'form', exercise: @exercise}
 
-#{link_to 'Show', @exercise} |
-#{link_to 'Back', exercises_path}
+%hr
+= link_to 'Bewerk', edit_exercise_path(@exercise)
+|
+= link_to 'Terug naar alle oefeningen', exercises_path
+|
+= link_to 'Terug naar de Client', edit_admin_user_path(@exercise.user)
