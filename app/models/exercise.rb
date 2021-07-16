@@ -117,7 +117,8 @@ class Exercise
 
       # add days 'missed' -- shoudlnt do anything when days_ago = 1 (0 days missed)
       unless completed_for_the_day || completed
-        Array.new(days_ago*self.frequency*days_ago).each do |day|
+        # Array.new( days_ago * self.frequency * days_ago ).each do |day|
+        Array.new( days_ago * self.frequency ).each do |day|
           Rails.logger.debug "DAY!"
           self.achieved_array << 0
         end
