@@ -162,11 +162,16 @@ class AppController < ApplicationController
       return
     end
 
+    # title
     @title = "Oefeningen voor #{@current_user.full_name}"
 
+    # get "ACTIVE" exercises
     @exercises = Exercise.where(:user_id => current_user.id, :claimed_award => false)
 
+    # define all complete
     all_completed = true
+
+    # start check
     @exercises.each do |ex|
 
       # checks if the streak needs resetting
@@ -175,10 +180,10 @@ class AppController < ApplicationController
       # it has been more then a day that the user did this exercise
       # invladiate the streak!
 
-      # validates the exercise
+      # validates the exercise (against todays date)
       ex.validate
 
-      # validates if all are completed for the day
+      # validates if ALL are completed for the day
       unless ex.completed_for_the_day || ex.completed
         all_completed = false
       end
