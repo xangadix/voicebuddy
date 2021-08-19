@@ -40,8 +40,10 @@ data.each_with_index do |entry, index|
   # Rails.logger.debug entryrow
   if temp[ entryrow ].nil?
     temp[ entryrow ] = {}
-    i+=1
+    #i+=1
   end
+
+  # Rails.logger.debug "check #{entry[1]["cell_1"]}"
 
   # preset_id 1
   # oefening  2
@@ -134,9 +136,9 @@ data.each_with_index do |entry, index|
 
 end
 
-temp = temp.slice(1,1000) # remove headers
+#temp = temp.slice(1,1000) # remove headers
 Rails.logger.debug "got #{temp.count} records for exercises!"
-Rails.logger.debug temp[4].inspect
+#Rails.logger.debug temp
 to_delete = []
 temp.each do |t|
   if t["status"] != "1"
