@@ -28,6 +28,7 @@ nl:
     save: "opslaan"
     exercices: "oefeningen"
     exercice: "oefening"
+    are_you_sure: "Weet u het zeker?"
 
     # not so comon?
     first_name: ""

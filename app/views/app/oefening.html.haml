@@ -127,7 +127,7 @@
       document.body.appendChild( document.getElementById('end-container') )
       endExercize(e)
     }
-
+    try {clearInterval(updateInterval)}catch(e){}
     updateInterval = setInterval( function() {
       // update
       var progress_bar = document.getElementById('progress_bar')
@@ -148,10 +148,11 @@
     // Voor Text
     var duration = 60
     var n = 0
+    try {clearInterval(updateInterval)}catch(e){}
     updateInterval = setInterval( function() {
       // update
       var progress_bar = document.getElementById('progress_bar')
-      n += 0.01
+      n += 0.1
       try {
         progress_bar.value = n * 1.6666
       } catch(e) {
@@ -170,7 +171,7 @@
         document.getElementById('end-container').style.top = "14%"
         endExercize()
       }
-    }, 10 )
+    }, 100 )
 
     // test
     document.getElementById('end_text_now').onclick = function(e) {
@@ -261,7 +262,7 @@
 
   // voor alles
   function endExercize(e) {
-    console.log("== VIDEO on Ended")
+    console.log("== Excercize on Ended")
     // post to the api that the client has completed a run
     // @exercise
     // https://app.voicebuddy.nl/app/update_exercise/606cbdfea19ea6812d2be46c
