@@ -22,7 +22,7 @@
       #play-button.far.fa-lg.fa-play
       #end-container
 
-  - if @exercise.material == "textvolume" || @exercise.material == "tekstvolume"
+  - elsif @exercise.material == "textvolume" || @exercise.material == "tekstvolume"
     .paper
 
       .oefening_tekst
@@ -74,7 +74,7 @@
 
     %button#end_video_now.hidden end this now
 
-  %h4{:style=>"text-align:center;"}= preset[current_user.language]["doel"]
+  %h4{:style=>"text-align:center;"}= preset[current_user.language]["doel"] unless preset[current_user.language]["doel"] == "-"
   .push-down
 
 :javascript
@@ -164,7 +164,10 @@
 
         document.querySelectorAll(".paper")[0].style.opacity= 0.2
         document.querySelectorAll(".paper")[0].style.filter = "blur(3px)"
+        // document.querySelectorAll(".paper")[0].style.opacity= 0.2
+        // document.querySelectorAll(".paper")[0].style.filter = "blur(3px)"
         document.body.appendChild( document.getElementById('end-container') )
+        document.getElementById('end-container').style.top = "14%"
         endExercize()
       }
     }, 10 )
