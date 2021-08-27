@@ -118,7 +118,17 @@
           %dd
             = current_user.id
           %dt Taal
-          %dd= current_user.language
+          %dd
+            huidig:
+            %strong= current_user.language
+            %br
+            %br
+            = link_to "nederlands", "?locale=nl"
+            %br
+            %br
+            = link_to "engels", "?locale=en"
+            %br
+            %br
           %dt # oefeningen
           %dd= current_user.exercises.count
           %dt lid sinds
