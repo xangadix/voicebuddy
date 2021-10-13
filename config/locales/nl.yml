@@ -8,8 +8,8 @@ nl:
     exercises: "oefeningen"
     client: "client"
     clients: "clients"
-    speech_therapist: "logepedist"
-    speech_therapists: "logepedisten"
+    speech_therapist: "logopedist"
+    speech_therapists: "logopedisten"
     name: "naam"
     email: "email"
     roles: "rollen"
@@ -43,7 +43,7 @@ nl:
 
   admin:
     top_menu:
-      payoff: "Voicebuddy logepedisten oefen app"
+      payoff: "Voicebuddy logopedisten oefen app"
       my_profile: "My profiles"
       logout: "logout"
       language: "language"
@@ -63,9 +63,8 @@ nl:
     users:
       title: Gebruikers
 
-    logepedisten:
+    logopedisten:
       title: Logopedisten
-
 
     clients:
       title: "Clienten"

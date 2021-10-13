@@ -112,6 +112,10 @@ class Admin::UsersController < ApplicationController
   def destroy
     @user.destroy
     back = request.env["HTTP_REFERER"].split('https://app.voicebuddy.nl')[1]
+    if back.nil?
+      back = request.env["HTTP_REFERER"].split('https://dev.voicebuddy.nl')[1]
+    end
+
     respond_to do |format|
       format.html { redirect_to back, notice: "gebruiker #{@user.full_name} is verwijderd." }
       format.json { head :no_content }

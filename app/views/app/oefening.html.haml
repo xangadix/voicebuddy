@@ -8,7 +8,7 @@
 
 .oefening
   / %pre= @exercise.material
-  - if @exercise.material == "tekst" || @exercise.material == "text"
+  - if @exercise.material == "tekst" || @exercise.material == "text" || @exercise.material == "tekstvolume"
     .paper
 
       .oefening_tekst
@@ -33,8 +33,8 @@
 
       %br
 
-      %button#start_it_all fucking start
-      %button#meter fucking start NU
+      %button#start_it_all start
+      %button#meter start NU
       #in_numbers  0
 
 
@@ -144,7 +144,7 @@
       }
   }
 
-  if ("#{@exercise.material}" == "tekst") {
+  if ("#{@exercise.material}" == "tekst" || "#{@exercise.material}" == "tekstvolume") {
     // Voor Text
     var duration = 60
     var n = 0
@@ -182,7 +182,7 @@
     }
   }
 
-  if ("#{@exercise.material}" == "textvolume") {
+  if ("#{@exercise.material}" == "textvolume_disabled") {
   	// Decibel Meter
 
     document.getElementById("start_it_all").onclick = function() {
