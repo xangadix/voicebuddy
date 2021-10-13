@@ -9,7 +9,7 @@ class User
   # a logopedist can have many clients
   # a client has one logopedists
   # both are users
-  has_many :clients, :class_name => 'User', :foreign_key => :client_id
+  has_many :clients, :class_name => 'User', :foreign_key => :client_id, dependent: :destroy
   belongs_to :logopedist, :class_name => 'User', optional: true
 
   # can have exercises

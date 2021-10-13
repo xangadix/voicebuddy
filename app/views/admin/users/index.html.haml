@@ -20,6 +20,7 @@
         %th= t('common.language')
         %th= t('common.roles')
         %th= t('common.exercises')
+        %th logopodist
         %th{:colspan=>"4"}
     %tbody>
       - @users.each do |user|
@@ -29,6 +30,7 @@
           %td= user.language
           %td= user.roles.to_sentence
           %td= user.exercises.count
+          %td= user.logopedist.email unless user.logopedist.nil?
           //%td= link_to t('common.show'), "/admin/users/#{user.id.to_s}"
           %td{:style=>"text-align:center"}= l(user.created_at, :format => :short)
           %td= link_to t('common.impersonate'), "/admin/impersonate/#{user.id.to_s}"
