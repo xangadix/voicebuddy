@@ -1,3 +1,4 @@
+NONCE = "_X7nKg^7Ktn#br$xU6VjK^u7M24cppMPj%u$a$js!X"
 CLIENT_TOKEN_SALT = "ZJWDr27aHH63c7rvnDYY798ArabPh9E9ucpJ4kwpTs2G932nhQWePUrQFtwPsZzx"
 PER_PAGE = 10 # number of pages per table
 WEETJES = {

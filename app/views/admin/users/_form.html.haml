@@ -26,6 +26,15 @@
       = form.select :roles, [["beheerder", :admin],["logopedist", :logopedist],["client", :client],["demo", :demo]], {}, {:multiple => true, :class=>"multiple_select"}
       %br
     - elsif current_user.has_role?(:logopedist)
+
+      %label externe id
+      = form.text_field :external_id
+      %br
+
+      %label api key
+      %code= @user.api_token
+      %br
+
       =# form.select :roles, [["client", :client]], {}, {:multiple => true, :class=>"multiple_select"}
     - else
       = form.hidden_field :roles, :multiple => true, :value=>"client"
@@ -33,7 +42,7 @@
     / add to current user -- don't do this!
     / = form.hidden_field :logopedist, :value => current_user.id.to_s
 
-    - if !@user.persisted? || @user == current_user
+    - if !@user.persisted? #|| @user == current_user
       %p
         Let op: als u uw wachtwoord veranderd, wordt u gevraagd opnieuw in te loggen
       %label= t('common.password')
@@ -94,6 +103,17 @@
       .text
     .footer
 
+/ depricated, we use a seperate viewer for this
+#video_modal
+  .background
+  .modal
+    .modal-header
+      .close_button.btn.btn-default x
+      .title
+    .modal-content
+      %video.videoplayer{:src=>"", :controls => true}
+    .footer
+
 :javascript
   function init_exercises() {
 
@@ -149,6 +169,18 @@
     modal.querySelector(".text").innerHTML = _text
     modal.querySelector(".close_button").onclick = function() {
       modal.style.display = "none"
+    }
+    modal.style.display = "block"
+  }
+
+  function open_video_modal(_url) {
+
+    var modal = document.getElementById('video_modal')
+    modal.querySelector(".videoplayer").src = _url
+    //modal.querySelector(".text").innerHTML = _text
+    modal.querySelector(".close_button").onclick = function() {
+      modal.style.display = "none"
+      modal.querySelector(".videoplayer").pause()
     }
     modal.style.display = "block"
   }

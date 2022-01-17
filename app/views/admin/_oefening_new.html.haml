@@ -31,7 +31,7 @@
 
     %hr
     - if exercise["materiaal"] == "video"
-      = link_to "Bekijk video", exercise[ I18n.locale.to_s ]["content"], :class=>"btn", :target=>"_blank"
+      = link_to "Bekijk video", "/admin/preview_video/?url=" + CGI.escape(exercise[ I18n.locale.to_s ]["content"]), :class=>"btn", :target=>"_blank"
     - elsif exercise["materiaal"] == "audio"
       = link_to "Beluister audio", exercise[ I18n.locale.to_s ]["content"], :class=>"btn", :target=>"_blank"
     - elsif exercise["materiaal"] == "tekst"

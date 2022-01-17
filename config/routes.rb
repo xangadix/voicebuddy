@@ -16,6 +16,11 @@ Rails.application.routes.draw do
   get '/admin/logopedisten', to: 'admin#logopedisten'
   get '/admin/logs', to: 'admin#logs'
 
+  # api functions
+  get '/api/sso', to: 'api#sso'
+  post '/api/add_client', to: 'api#add_client_for_user'
+  get '/api/client_credentials', to: 'api#get_client_credentials'
+
   authenticated do
     get 'site/demo', to: 'site#demo'
   end
@@ -25,6 +30,7 @@ Rails.application.routes.draw do
     resources :users
     get 'users/:id/add_exercise/:ex_id', to: 'users#add_exercise'
     get 'users/:id/remove_exercise/:ex_id', to: 'users#remove_exercise'
+    get 'preview_video/', to: 'users#preview_video'
     get 'clients', to: 'clients#index'
     get 'clients/new', to: 'clients#new'
     get 'clients/:id', to: 'clients#show'
