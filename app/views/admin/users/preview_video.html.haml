@@ -1,0 +1,16 @@
+%center
+ %video.videoplayer#videoplayer{:src=> params[:url], :controls => true, :autoplay => true}
+
+:javascript
+  document.getElementById('videoplayer').play()
+
+:css
+  body, html, video {
+    margin: 0;
+    with: 100vw;
+    height: 100vh;
+    background-color: black;
+  }
+  video {
+    margin: auto;
+  }

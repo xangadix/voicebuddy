@@ -99,7 +99,7 @@ class AppController < ApplicationController
     resource = User.find(params[:user_id] || @user_id)
     @user = User.find(params[:user_id] || @user_id)
     #set_minimum_password_length
-
+    logger.debug "has user: #{@user.inspect}"
     #@user.reset_password_token = raw(params[:reset_password_token] || @reset_password_token)
 
     render "forgot_password_edit"

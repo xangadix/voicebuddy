@@ -1,5 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+
   layout 'admin'
   include ApplicationHelper
 
@@ -19,10 +20,10 @@ class Admin::UsersController < ApplicationController
       redirect_to "/admin/clients"
       return
     end
-    #@page = ( params[:page]).to_i || 0
-    #@resource = User.all
-    #@total = @resource.count
-    #@users = @resource.skip( @page * PER_PAGE ).limit( PER_PAGE)
+    # @page = ( params[:page]).to_i || 0
+    # @resource = User.all
+    # @total = @resource.count
+    # @users = @resource.skip( @page * PER_PAGE ).limit( PER_PAGE)
 
     @page = ( params[:page]).to_i || 0
     if params[:search]
@@ -189,9 +190,10 @@ class Admin::UsersController < ApplicationController
   end
 
   # not used
-  def update_exercise
+  def preview_video
+    render :layout => false     
+    @test = "123_rood_wit_blauw"
   end
-
   #
 
   private
@@ -203,6 +205,6 @@ class Admin::UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       #params.fetch(:user, {:name, :email})
-      params.require(:user).permit(:name, :email, :password, :language, :logopedist, :roles => [])
+      params.require(:user).permit(:name, :email, :password, :language, :external_id, :logopedist, :roles => [])
     end
 end
