@@ -16,7 +16,8 @@ class AdminController < ApplicationController
     if params[:search].blank?
       @resource = User.where(:roles.in => ["logopedist"])
     else
-      @resource = User.where(:roles.in => ["logopedist"]).and( [{:name => /#{params[:search]}/i},{:email => /#{params[:search]}/i}] )
+      @search = params[:search]
+      @resource = User.where(:roles.in => ["logopedist"]).and( '$or' => [ {:name => /#{@search}/i} ,{:email => /#{@search}/i} ] )
     end
     @total = @resource.count
     @users = @resource.skip( @page * PER_PAGE ).limit( PER_PAGE)
