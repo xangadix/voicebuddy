@@ -36,6 +36,7 @@ class ApiController < ApplicationController
 
     if access_granted
       @user = User.where(:external_id => @user_id).first
+      logger.debug "Signing in user: #{@user_id} => #{@user}"
       sign_in(@user)
       redirect_to "/"
     else
