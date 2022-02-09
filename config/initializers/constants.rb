@@ -1,4 +1,9 @@
-NONCE = "_X7nKg^7Ktn#br$xU6VjK^u7M24cppMPj%u$a$js!X"
+if Rails.env == "development"
+  NONCE = "_X7nKg^7Ktn#br$xU6VjK^u7M24cppMPj%u$a$js!X"
+else
+  NONCE = "ur2pm_u3nb8&qdYgUGM$vEZT*km%*74ATM777JL!Zfv7erPL8Ta3&QC4XZDGxrdv"
+end
+
 CLIENT_TOKEN_SALT = "ZJWDr27aHH63c7rvnDYY798ArabPh9E9ucpJ4kwpTs2G932nhQWePUrQFtwPsZzx"
 PER_PAGE = 10 # number of pages per table
 WEETJES = {

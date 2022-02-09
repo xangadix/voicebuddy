@@ -25,14 +25,21 @@
       %label= t('common.roles')
       = form.select :roles, [["beheerder", :admin],["logopedist", :logopedist],["client", :client],["demo", :demo]], {}, {:multiple => true, :class=>"multiple_select"}
       %br
-    - elsif current_user.has_role?(:logopedist)
+
+    - if current_user.has_role?(:logopedist)
+      %label externe id
+      = form.text_field :external_id
+      %br
+
+    - elsif @user.has_role?(:logopedist)
 
       %label externe id
       = form.text_field :external_id
       %br
 
-      %label api key
-      %code= @user.api_token
+      %label api key (niet te wijzigen)
+      %input.form-control.disabled{:disabled=>true, :type=>"text", :value=>@user.api_token}
+      %br
       %br
 
       =# form.select :roles, [["client", :client]], {}, {:multiple => true, :class=>"multiple_select"}
