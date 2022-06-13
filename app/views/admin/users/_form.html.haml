@@ -31,6 +31,10 @@
       = form.text_field :external_id
       %br
 
+      %label api key (niet te wijzigen)
+      %input.form-control.disabled{:disabled=>true, :type=>"text", :value=>@user.api_token}
+      %br
+
     - elsif @user.has_role?(:logopedist)
 
       %label externe id
