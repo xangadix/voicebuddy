@@ -26,7 +26,8 @@ class ApiController < ApplicationController
 
 
     @given_hash == @hash ? hash_matched = true : hash_matched = false
-    @given_time.to_i > (DateTime.now - 30.seconds).to_i ? time_limit_met = true : time_limit_met = false
+    #@given_time.to_i > (DateTime.now - 30.seconds).to_i ? time_limit_met = true : time_limit_met = false
+    @given_time.to_i > (DateTime.now.utc - 30.seconds).to_i ? time_limit_met = true : time_limit_met = false
     hash_matched && time_limit_met ? access_granted = true : access_granted = false
 
     logger.debug "SSO for user #{@user_id}"

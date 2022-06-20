@@ -5,6 +5,7 @@ else
 end
 
 CLIENT_TOKEN_SALT = "ZJWDr27aHH63c7rvnDYY798ArabPh9E9ucpJ4kwpTs2G932nhQWePUrQFtwPsZzx"
+
 PER_PAGE = 10 # number of pages per table
 WEETJES = {
   "nl":
