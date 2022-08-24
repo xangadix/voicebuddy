@@ -7,7 +7,8 @@
 .gradient-edge
 
 .oefening
-  / %pre= @exercise.material
+  / %pre= @exercise.to_yaml
+  / %pre= preset.to_yaml
   - if @exercise.material == "tekst" || @exercise.material == "text" || @exercise.material == "tekstvolume"
     .paper
 
@@ -17,7 +18,7 @@
       .progress_bar
         %progress#progress_bar{:value=>"32", :max=>"100", :width=>"100%"} 32%
 
-      %br
+      %br      
       %button#end_text_now.hidden end this now
       #play-button.far.fa-lg.fa-play
       #end-container
@@ -71,6 +72,8 @@
       %video{:src=>preset[current_user.language]["content"], 'webkit-playsinline': "true", :autoplay => true, :playsinline=> true, :controls => false, :id=>"video_oefening"}
       #play-button.far.fa-lg.fa-play-circle
       #end-container
+    
+      %button#skip_intro.hidden skip intro
 
     %button#end_video_now.hidden end this now
 
@@ -99,6 +102,7 @@
 
     vid.onplay = function() {
       document.getElementById('play-button').style.display = "none"
+      document.getElementById('skip_intro').classList.remove('hidden')  
     }
 
     vid.onloadedmetadata = function(e) {
@@ -107,6 +111,18 @@
         vid.currentTime = vid.duration - 0.3
       }
 
+      console.log( "#{preset['skip_intro']}" != '' )
+      console.log( !isNaN( "#{preset['skip_intro']}") )
+      console.log( document.getElementById('skip_intro') )
+
+      if ( "#{preset['skip_intro']}" != '' && !isNaN( "#{preset['skip_intro']}") && document.getElementById('skip_intro') ) {        
+        document.getElementById('skip_intro').onclick = function(e) {
+          vid.currentTime = parseFloat("#{preset['skip_intro']}")
+          document.getElementById('skip_intro').classList.add('hidden')
+          vid.play()
+        }
+       
+      }
       vid.play()
     }
 

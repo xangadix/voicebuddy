@@ -93,6 +93,8 @@ data.each_with_index do |entry, index|
   temp[ entryrow ]["frequentie"]           = entry[1]["cell_2"]
   temp[ entryrow ]["materiaal"]            = entry[1]["cell_3"]
   temp[ entryrow ]["status"]               = entry[1]["cell_4"]
+  
+  temp[ entryrow ]["skip_intro"]               = entry[1]["cell_29"]
 
   temp[ entryrow ][ "nl" ] = {} if temp[ entryrow ][ "nl" ].nil?
   temp[ entryrow ][ "nl" ][ "category" ]   = entry[1]["cell_5"]

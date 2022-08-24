@@ -74,7 +74,7 @@
         %i.fa.fa-arrow-down
 
       %ul.huidige_oefeningen
-        - @user.exercises.all.sort_by{|k| k[:claimed_award].to_s }.each do |ex|
+        - @user.exercises.all.order(:created_at=>-1).sort_by{|k| k[:claimed_award].to_s }.each do |ex|
           = render partial: '/admin/oefening_item', :locals => {:exercise => ex}
 
       %hr
