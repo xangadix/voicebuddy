@@ -39,7 +39,7 @@
   %br
   -# Exercise.each do |ex|
     =# render partial: 'app/oefening_list_item', :locals => {:exercise => ex}
-  - @exercises.each do |exercise|
+  - @exercises.order(:created_at => -1).each do |exercise|
     = render partial: 'app/oefening_list_item', :locals => {:exercise => exercise}
 
   %br

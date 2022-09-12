@@ -39,7 +39,20 @@ class ApiController < ApplicationController
       @user = User.where(:external_id => @user_id).first
       logger.debug "Signing in user: #{@user_id} => #{@user}"
       sign_in(@user)
+
+      # if a mail was send and a client was found, go there
+      if params[:email]
+        @client = User.where(:email => params[:email], :logopedist_id => @user.id.to_s ).first
+        logger.debug "has email and client #{params[:email]}, #{@client}"
+        unless @client.nil?
+          redirect_to "/admin/users/#{@client.id.to_s}/edit/"
+          return 
+        end 
+      end
+
       redirect_to "/"
+      return 
+
     else
       if @debug_url
         render plain: "sso completed!\n\naccess: #{access_granted}\ndebug: #{@debug_url}",  status: 403

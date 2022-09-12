@@ -251,6 +251,10 @@ class AppController < ApplicationController
   end
 
   def info
+    if params[:token] == "logo_128_touch_icon"
+      render plain: "No Apple, go away, you are drunk"
+    end 
+
     @token = params[:token]
     logger.debug "got token: #{params}"
     user = find_user_by_token(@token)
