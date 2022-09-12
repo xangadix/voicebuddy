@@ -926,8 +926,10 @@
       display: block;
       filter: drop-shadow(0px 4px 3px var(--baseblue));
       font-size: 12px;
-      border-radius: 0%;
+      /*border-radius: 0%;*/
       pointer-events: all;
+      font-weight: bold;
+      background-color: var(--basebeig);
     }
 
     progress {
