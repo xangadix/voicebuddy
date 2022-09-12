@@ -102,7 +102,14 @@
 
     vid.onplay = function() {
       document.getElementById('play-button').style.display = "none"
-      document.getElementById('skip_intro').classList.remove('hidden')  
+      // document.getElementById('skip_intro').classList.remove('hidden')  
+      console.log("checkem")
+      console.log("#{preset['skip_intro']}")
+      console.log(!isNaN( "#{preset['skip_intro']}"))
+      console.log(document.getElementById('skip_intro'))
+      if ( "#{preset['skip_intro']}" != '' && !isNaN( "#{preset['skip_intro']}") && document.getElementById('skip_intro') ) {                
+         document.getElementById('skip_intro').classList.remove('hidden')  
+      }
     }
 
     vid.onloadedmetadata = function(e) {
