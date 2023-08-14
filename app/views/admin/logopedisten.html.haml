@@ -20,6 +20,7 @@
       %th= t('common.email')
       %th= t('common.roles')
       %th  clients
+      %th  last sign_in
       %th{colspan: "4"}
   %tbody
     - @users.each do |user|
@@ -28,6 +29,7 @@
         %td= user.email
         %td= user.roles.to_sentence
         %td= User.where(:logopedist => user).count
+        %td= user.last_sign_in_at
         %td= link_to t('common.show'), "/admin/users/#{user.id.to_s}"
         %td= link_to t('common.impersonate'), "/admin/impersonate/#{user.id.to_s}"
         %td= link_to t('common.edit'), edit_admin_user_path(user)
