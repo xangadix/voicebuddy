@@ -85,20 +85,41 @@
         %i.fa.fa-arrow-down
 
       %ul.beschikbare_oefeningen
-        .filter-form{}
-          %label= t('admin.clients.filter')
-          %input#filter-input{:type=>"text", :style=>"width:400px;display:inline;"}
+
+        .actions
+
+          .filter-form{}
+            %label= t('admin.clients.filter')
+            %input#filter-input{:type=>"text"}        
+          
+          .filter-form{}
+            %br
+            &nbsp;
+            %input#filter-existing{:type=>"checkbox"}
+            %label{:style=>"display:inline"}= t('admin.clients.alles_tonen')
+
+          .toepassen-form{:style=>"text-align:right;"}
+            %br
+            .pull-right= form.submit :value => t('common.save')
+
+        
         %hr
+        - user_already_has_exercises = @user.exercises.map{|e| e.preset}
+        = form.hidden_field :bulk_selected_new_exercies
         - EXERCISES.each do |ex|
-          = render partial: '/admin/oefening_new', :locals => {:exercise => ex}
+          - if ex['id'].to_i.in?user_already_has_exercises
+            - ex['hidden'] = "hidden was_assigned"
+          - else 
+            - ex['hidden'] = ""
+
+          = render partial: '/admin/oefening_new', :locals => {:exercise => ex, :form => form}
 
     %hr
 
     %br
     %br
     %br.actions
-      = form.submit :value => t('common.save')
-
+      .pull-right= form.submit :value => t('common.save')
 
 %br
 %hr
@@ -195,6 +216,65 @@
     }
     modal.style.display = "block"
   }
+
+  document.getElementById('filter-existing').onchange = function( checkbox ) {         
+    document.querySelectorAll('.was_assigned').forEach( function( oefening ) {
+      if ( checkbox.target.checked ) {
+        oefening.classList.remove('hidden')
+      }else{
+        oefening.classList.add('hidden')
+      }
+    })
+  }
+
+  var bulk_selected_new_exercies = []
+  document.querySelectorAll('.select_new_exercise').forEach( function(checkbox) {
+    console.log("oi", checkbox.checked )
+    console.log("oi", checkbox )
+
+    checkbox.onchange = function( checkbox ) {
+      console.log("oi oi", checkbox.target.checked )
+      console.log(checkbox.target)
+      var _id = checkbox.target.dataset.id
+      if (checkbox.target.checked) {        
+        document.getElementById("new_exercise_"+_id).classList.add('selected')        
+      }else{
+        document.getElementById("new_exercise_"+_id).classList.remove('selected')
+      }
+
+      update_new_exercises()
+    }
+  })
+
+  function update_new_exercises() {
+    bulk_selected_new_exercies = []
+    document.querySelectorAll('.new_exercise.selected').forEach(function(elm) {
+      console.log("got id for selected", elm.dataset.id )
+      ex = {
+        "exercise_id": elm.dataset.id, 
+        "frequency": document.getElementById('frequency_' + elm.dataset.id).value,
+        "target": document.getElementById('target_' + elm.dataset.id).value
+      }
+
+      bulk_selected_new_exercies.push(ex)
+    })
+
+    // updated array
+    console.log(bulk_selected_new_exercies)
+    
+    // update hidden
+    document.getElementById("user_bulk_selected_new_exercies").value = JSON.stringify(bulk_selected_new_exercies)
+    // document.getElementById("user_bulk_selected_new_exercies").value = bulk_selected_new_exercies.join(",")
+  }
+
+  document.querySelectorAll('.new_exercise_input').forEach( function(input_element) {
+    input_element.onchange = function() { update_new_exercises() }
+    input_element.ontext = function() { update_new_exercises() }
+    input_element.oninput = function() { update_new_exercises() }
+  })
+
+  
+  
 
   // main
   init_exercises();

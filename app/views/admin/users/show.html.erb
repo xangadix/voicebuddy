@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <pre>
-  <%= @user.inspect %>
+  <%= @user.to_yaml %>
 </pre>
 
 <%= link_to 'Edit', edit_admin_user_path(@user) %> |

@@ -916,7 +916,7 @@
     overflow-y: scroll;
     height: calc( 100vh - 128px);
 
-    #skip_intro {
+    .skip_button {
       position:relative;      
       z-index: 1;
       position: absolute;

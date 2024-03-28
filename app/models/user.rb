@@ -66,6 +66,9 @@ class User
   field :gender, type: String, default: ""
   field :date_of_birth, type: String, default: ""
 
+  # for bulk selection
+  field :bulk_selected_new_exercies, type: String
+  
   # settings
   field :notes, type: String, default: ""
   field :authorisation_token, type: String, default: ""
@@ -86,7 +89,6 @@ class User
   field :claimed_streaks, type: Integer, default: 0
   field :streak, type: Integer, default: 0
   field :streak_lock, type: Boolean, default: false #locks the streak untill reset
-
 
   def full_name
     unless name.blank?

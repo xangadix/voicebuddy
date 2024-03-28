@@ -73,7 +73,8 @@
       #play-button.far.fa-lg.fa-play-circle
       #end-container
     
-      %button#skip_intro.hidden skip intro
+      %button#skip_intro.skip_button.hidden skip intro
+      %button#skip_twee.skip_button.hidden volgende
 
     %button#end_video_now.hidden end this now
 
@@ -85,6 +86,7 @@
   if ("#{@exercise.material}" == "video") {
     // Voor Video
     var vid = document.getElementById('video_oefening')
+    var video_was_skipped 
 
     vid.addEventListener('canplay', (event) => {
       //alert("can play!")
@@ -114,10 +116,12 @@
 
     vid.onloadedmetadata = function(e) {
       console.log("== VIDEO got metatada", vid.duration, e)
+
       document.getElementById('end_video_now').onclick = function(e) {
         vid.currentTime = vid.duration - 0.3
       }
 
+      // add skip intro button
       console.log( "#{preset['skip_intro']}" != '' )
       console.log( !isNaN( "#{preset['skip_intro']}") )
       console.log( document.getElementById('skip_intro') )
@@ -127,9 +131,22 @@
           vid.currentTime = parseFloat("#{preset['skip_intro']}")
           document.getElementById('skip_intro').classList.add('hidden')
           vid.play()
+
+          if ( "#{preset['skip_twee']}" != '' && !isNaN( "#{preset['skip_twee']}") && document.getElementById('skip_twee') ) {     
+            document.getElementById('skip_twee').classList.remove('hidden')
+          }
         }
-       
       }
+
+      // skip twee button
+      if ( "#{preset['skip_twee']}" != '' && !isNaN( "#{preset['skip_twee']}") && document.getElementById('skip_twee') ) {        
+        document.getElementById('skip_twee').onclick = function(e) {
+          vid.currentTime = parseFloat("#{preset['skip_twee']}")
+          document.getElementById('skip_twee').classList.add('hidden')
+          vid.play()
+        }
+      }
+
       vid.play()
     }
 

@@ -96,10 +96,25 @@ class Admin::UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    logger.debug " -------------------------- UPDATE : #{@user} #{user_params}"
+    #logger.debug " -------------------------- UPDATE : #{@user} #{user_params}"
+    logger.debug " -------------------------- UPDATE : #{user_params[:bulk_selected_new_exercies]}"
+    
+    add_exercises = JSON.parse( user_params[:bulk_selected_new_exercies] )
+    user_params.delete(:bulk_selected_new_exercies)
+    
+    logger.debug "parsed values:" + add_exercises.inspect 
+
+    add_exercises.each do |ex|
+      #add_new_exercise
+      logger.debug "add: #{ex}"
+      add_new_exercise( @user.id.to_s, ex["exercise_id"], ex["frequency"], ex["target"],  )
+    end
+    
+
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to '/admin/users', notice: 'Alle wijzigingen zijn opgeslagen.' }
+        # format.html { redirect_to '/admin/users', notice: 'Alle wijzigingen zijn opgeslagen.' }
+        format.html { render :edit, notice: 'Alle wijzigingen zijn opgeslagen.'  }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -135,41 +150,34 @@ class Admin::UsersController < ApplicationController
     redirect_to root_path
   end
 
-  def add_exercise
+  # internal use
+  def add_new_exercise( _user_id, _ex_id, _target = nil, _frequency = nil)
 
-    # {
-    #  :id => 0,
-    #  :name => "oefening 1",
-    #  :video => "720p_5000kbps_h264_1.mp4",
-    #  :beschrijving => "Lorem Ipsum solet dormit"
-    #},
-
-
-    # geen dubbele exercises
-    # if user has exercis preset --> refuse
-
-    @user = User.find(params[:id])
+    @user = User.find(_user_id)
 
     @user.exercises.each do |ex|
-      if ex.preset == params[:ex_id] # $$ ex.preset.claim_reward
-        flash[:alert] = "User already has this preset."
-        redirect_to "/admin/users/#{params[:id]}"
+      logger.debug "trrr... #{ex.preset}, #{_ex_id}"
+      if ex.preset.to_i == _ex_id.to_i # $$ ex.preset.claim_reward
+        # skip
+        logger.debug "oefening #{_ex_id} was al toegewezen aan de client"
         return
       end
     end
 
-    preset = lookup_exercies( params[:ex_id] )
+    preset = lookup_exercies( _ex_id )
     @exercise = Exercise.new()
     @exercise.user = @user
-    @exercise.preset = params[:ex_id]
+    @exercise.preset = _ex_id
     @exercise.name = preset["oefening"]
 
-    if params[:target]
-      @exercise.target = params[:target].to_i
+    if _target
+      @exercise.target = _target.to_i
+    else 
+      @exercise.target = preset["target"]
     end
 
-    if params[:freqency]
-      @exercise.frequency = params[:freqency].to_i
+    if _frequency
+      @exercise.frequency = _frequency.to_i
     else
       @exercise.frequency = preset["frequentie"]
     end
@@ -180,6 +188,31 @@ class Admin::UsersController < ApplicationController
     @user.exercises << @exercise
     @user.save
 
+  end
+
+  def add_exercise
+
+    # {
+    #  :id => 0,
+    #  :name => "oefening 1",
+    #  :video => "720p_5000kbps_h264_1.mp4",
+    #  :beschrijving => "Lorem Ipsum solet dormit"
+    #},
+
+    # needs user to check doubloures
+    @user = User.find(params[:id])
+
+    # geen dubbele exercises
+    # if user has exercis preset --> refuse
+    @user.exercises.each do |ex|
+      if ex.preset == params[:ex_id] # $$ ex.preset.claim_reward
+        flash[:alert] = "User already has this preset."
+        redirect_to "/admin/users/#{params[:id]}"
+        return
+      end
+    end
+
+    add_new_exercise( params[:id], params[:ex_id], params[:target], params[:freqency] )
     redirect_to "/admin/users/#{params[:id]}/edit#just_added"
   end
 
@@ -205,6 +238,6 @@ class Admin::UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       #params.fetch(:user, {:name, :email})
-      params.require(:user).permit(:name, :email, :password, :language, :external_id, :logopedist, :roles => [])
+      params.require(:user).permit(:name, :email, :password, :language, :external_id, :logopedist, :bulk_selected_new_exercies, :roles => [])
     end
 end

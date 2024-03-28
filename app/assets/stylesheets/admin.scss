@@ -316,16 +316,43 @@
     margin: 0;
     padding: 0;
 
+    .actions {
+      display: flex;      
+      justify-content: space-between;
+
+      > div {
+        width: 33%;
+      }
+    }
 
     li.new_exercise {
-      margin-bottom: 6px;
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
+      margin-bottom: 12px;
+      background-color: #e5e5e5;
+      padding: 12px 12px 26px 12px;
+      border-radius: 6px;
+      color: black;
+      box-shadow: 0px 1px 8px rgba(40,40,40,0.1);
+
+      &.selected {
+        border: solid 1px #5f9985;        
+        margin-left: -1px;
+        margin-top: -1px;
+      }
+
+      .content {
+        margin-bottom: 6px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;        
+      }
 
       .title {
-        width: 100%;
+        width: 90%;
+      }
+
+      .check_add {
+        width: 10%;
       }
 
       .left_col {
