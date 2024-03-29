@@ -100,7 +100,7 @@
 
           .toepassen-form{:style=>"text-align:right;"}
             %br
-            .pull-right= form.submit :value => t('common.save')
+            .pull-right= form.submit :value => t('common.save'), :class=>"emphasis"
 
         
         %hr
@@ -117,9 +117,10 @@
     %hr
 
     %br
+    .pull-right
+      = form.submit :value => t('common.save'), :class=>"emphasis"
     %br
-    %br.actions
-      .pull-right= form.submit :value => t('common.save')
+    %br
 
 %br
 %hr
@@ -146,135 +147,132 @@
       %video.videoplayer{:src=>"", :controls => true}
     .footer
 
-:javascript
-  function init_exercises() {
+- if @user.persisted? && ( @user.has_role?(:client) || @user == current_user )
+  :javascript
+    function init_exercises() {
 
-    // dropdowns
-    document.getElementById('assigned_exercises').onclick = function() {
-      if ( document.querySelector('.huidige_oefeningen').style.display != "none" ) {
-        document.querySelector('.huidige_oefeningen').style.display = "none"
-      }else{
-       document.querySelector('.huidige_oefeningen').style.display = "block"
-       }
+      // dropdowns
+      document.getElementById('assigned_exercises').onclick = function() {
+        if ( document.querySelector('.huidige_oefeningen').style.display != "none" ) {
+          document.querySelector('.huidige_oefeningen').style.display = "none"
+        }else{
+        document.querySelector('.huidige_oefeningen').style.display = "block"
+        }
+      }
+      //document.querySelector('.huidige_oefeningen').style.display = "none"
+
+      document.getElementById('available_exersises').onclick = function() {
+        if ( document.querySelector('.beschikbare_oefeningen').style.display != "none" ) {
+          document.querySelector('.beschikbare_oefeningen').style.display = "none"
+        }else{
+        document.querySelector('.beschikbare_oefeningen').style.display = "block"
+        }
+      }
+      document.querySelector('.beschikbare_oefeningen').style.display = "none"
+
+      // filters
+      document.getElementById('filter-input').oninput = function(evt) {
+        document.querySelectorAll('.new_exercise').forEach( function(_elm) {
+          _elm.style.display = "block"
+          currentInput = evt.target.value.toLowerCase()
+          if (currentInput.length > 3) {
+            _elm.style.display = "none"
+
+            console.log( _elm.querySelector('.title').innerText )
+
+            if ( _elm.querySelector('.title').innerText.toLowerCase().indexOf(currentInput) != -1 ) {
+              _elm.style.display = "block"
+            }
+
+            if ( _elm.querySelector('.category').innerText.toLowerCase().indexOf(currentInput) != -1 ) {
+              _elm.style.display = "block"
+            }
+
+            if ( _elm.querySelector('.tags').innerText.toLowerCase().indexOf(currentInput) != -1 ) {
+              _elm.style.display = "block"
+            }
+          }
+        })
+      }
     }
-    //document.querySelector('.huidige_oefeningen').style.display = "none"
 
-    document.getElementById('available_exersises').onclick = function() {
-      if ( document.querySelector('.beschikbare_oefeningen').style.display != "none" ) {
-        document.querySelector('.beschikbare_oefeningen').style.display = "none"
-      }else{
-       document.querySelector('.beschikbare_oefeningen').style.display = "block"
-       }
+    function show_text( _title, _text ) {
+      var modal = document.getElementById('text_modal')
+      modal.querySelector(".title").innerHTML = _title
+      modal.querySelector(".text").innerHTML = _text
+      modal.querySelector(".close_button").onclick = function() {
+        modal.style.display = "none"
+      }
+      modal.style.display = "block"
     }
-    document.querySelector('.beschikbare_oefeningen').style.display = "none"
 
-    // filters
-    document.getElementById('filter-input').oninput = function(evt) {
-      document.querySelectorAll('.new_exercise').forEach( function(_elm) {
-        _elm.style.display = "block"
-        currentInput = evt.target.value.toLowerCase()
-        if (currentInput.length > 3) {
-          _elm.style.display = "none"
+    function open_video_modal(_url) {
 
-          console.log( _elm.querySelector('.title').innerText )
-
-          if ( _elm.querySelector('.title').innerText.toLowerCase().indexOf(currentInput) != -1 ) {
-            _elm.style.display = "block"
-          }
-
-          if ( _elm.querySelector('.category').innerText.toLowerCase().indexOf(currentInput) != -1 ) {
-            _elm.style.display = "block"
-          }
-
-          if ( _elm.querySelector('.tags').innerText.toLowerCase().indexOf(currentInput) != -1 ) {
-            _elm.style.display = "block"
-          }
+      var modal = document.getElementById('video_modal')
+      modal.querySelector(".videoplayer").src = _url
+      //modal.querySelector(".text").innerHTML = _text
+      modal.querySelector(".close_button").onclick = function() {
+        modal.style.display = "none"
+        modal.querySelector(".videoplayer").pause()
+      }
+      modal.style.display = "block"
+    }
+    
+    document.getElementById('filter-existing').onchange = function( checkbox ) {         
+      document.querySelectorAll('.was_assigned').forEach( function( oefening ) {
+        if ( checkbox.target.checked ) {
+          oefening.classList.remove('hidden')
+        }else{
+          oefening.classList.add('hidden')
         }
       })
     }
 
-  }
+    var bulk_selected_new_exercies = []
+    document.querySelectorAll('.select_new_exercise').forEach( function(checkbox) {
+      console.log("oi", checkbox.checked )
+      console.log("oi", checkbox )
 
-  function show_text( _title, _text ) {
-    var modal = document.getElementById('text_modal')
-    modal.querySelector(".title").innerHTML = _title
-    modal.querySelector(".text").innerHTML = _text
-    modal.querySelector(".close_button").onclick = function() {
-      modal.style.display = "none"
-    }
-    modal.style.display = "block"
-  }
+      checkbox.onchange = function( checkbox ) {
+        console.log("oi oi", checkbox.target.checked )
+        console.log(checkbox.target)
+        var _id = checkbox.target.dataset.id
+        if (checkbox.target.checked) {        
+          document.getElementById("new_exercise_"+_id).classList.add('selected')        
+        }else{
+          document.getElementById("new_exercise_"+_id).classList.remove('selected')
+        }
 
-  function open_video_modal(_url) {
-
-    var modal = document.getElementById('video_modal')
-    modal.querySelector(".videoplayer").src = _url
-    //modal.querySelector(".text").innerHTML = _text
-    modal.querySelector(".close_button").onclick = function() {
-      modal.style.display = "none"
-      modal.querySelector(".videoplayer").pause()
-    }
-    modal.style.display = "block"
-  }
-
-  document.getElementById('filter-existing').onchange = function( checkbox ) {         
-    document.querySelectorAll('.was_assigned').forEach( function( oefening ) {
-      if ( checkbox.target.checked ) {
-        oefening.classList.remove('hidden')
-      }else{
-        oefening.classList.add('hidden')
+        update_new_exercises()
       }
     })
-  }
 
-  var bulk_selected_new_exercies = []
-  document.querySelectorAll('.select_new_exercise').forEach( function(checkbox) {
-    console.log("oi", checkbox.checked )
-    console.log("oi", checkbox )
+    function update_new_exercises() {
+      bulk_selected_new_exercies = []
+      document.querySelectorAll('.new_exercise.selected').forEach(function(elm) {
+        console.log("got id for selected", elm.dataset.id )
+        ex = {
+          "exercise_id": elm.dataset.id, 
+          "frequency": document.getElementById('frequency_' + elm.dataset.id).value,
+          "target": document.getElementById('target_' + elm.dataset.id).value
+        }
 
-    checkbox.onchange = function( checkbox ) {
-      console.log("oi oi", checkbox.target.checked )
-      console.log(checkbox.target)
-      var _id = checkbox.target.dataset.id
-      if (checkbox.target.checked) {        
-        document.getElementById("new_exercise_"+_id).classList.add('selected')        
-      }else{
-        document.getElementById("new_exercise_"+_id).classList.remove('selected')
-      }
+        bulk_selected_new_exercies.push(ex)
+      })
 
-      update_new_exercises()
+      // updated array
+      console.log(bulk_selected_new_exercies)
+      
+      // update hidden
+      document.getElementById("user_bulk_selected_new_exercies").value = JSON.stringify(bulk_selected_new_exercies)
+      // document.getElementById("user_bulk_selected_new_exercies").value = bulk_selected_new_exercies.join(",")
     }
-  })
 
-  function update_new_exercises() {
-    bulk_selected_new_exercies = []
-    document.querySelectorAll('.new_exercise.selected').forEach(function(elm) {
-      console.log("got id for selected", elm.dataset.id )
-      ex = {
-        "exercise_id": elm.dataset.id, 
-        "frequency": document.getElementById('frequency_' + elm.dataset.id).value,
-        "target": document.getElementById('target_' + elm.dataset.id).value
-      }
-
-      bulk_selected_new_exercies.push(ex)
+    document.querySelectorAll('.new_exercise_input').forEach( function(input_element) {
+      input_element.onchange = function() { update_new_exercises() }
+      input_element.ontext = function() { update_new_exercises() }
+      input_element.oninput = function() { update_new_exercises() }
     })
 
-    // updated array
-    console.log(bulk_selected_new_exercies)
-    
-    // update hidden
-    document.getElementById("user_bulk_selected_new_exercies").value = JSON.stringify(bulk_selected_new_exercies)
-    // document.getElementById("user_bulk_selected_new_exercies").value = bulk_selected_new_exercies.join(",")
-  }
-
-  document.querySelectorAll('.new_exercise_input').forEach( function(input_element) {
-    input_element.onchange = function() { update_new_exercises() }
-    input_element.ontext = function() { update_new_exercises() }
-    input_element.oninput = function() { update_new_exercises() }
-  })
-
-  
-  
-
-  // main
-  init_exercises();
+    // main
+    init_exercises();

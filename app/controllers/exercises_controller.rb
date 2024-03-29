@@ -6,11 +6,16 @@ class ExercisesController < ApplicationController
   # GET /exercises.json
   def index
     # TODO: move to modal
+    @limit = params[:limit].blank? ? 50 : params[:limit].to_i
+    @page = params[:page].blank? ? 0 : (params[:page].to_i - 1) 
+
     if current_user.has_role?(:admin)
-      @exercises = Exercise.all()
+      @total = Exercise.all().count
+      @exercises = Exercise.all().limit(@limit).skip(@page*@limit)      
     else
       @clients = User.where(:logopedist => current_user, :roles.in => [:client]).map{|u| u.id.to_s }
-      @exercises = Exercise.where(:user_id.in => @clients )
+      @total = Exercise.where(:user_id.in => @clients ).count
+      @exercises = Exercise.where(:user_id.in => @clients ).limit(@limit).skip(page*@limit)
     end
   end
 

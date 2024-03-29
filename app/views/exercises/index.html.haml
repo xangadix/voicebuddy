@@ -1,6 +1,32 @@
 
 %h1= t('common.exercises')
 
+.pagination
+  .page_selection.pull-right
+    %select#change_page{:style=>"width: 120px;"}
+      - pages = (@total/@limit).ceil()
+      - index = 0
+      - while index < pages do
+        - index = index + 1 
+        - if @page + 1 == index 
+          %option{:value=>index, :selected=>"selected"}
+            Page 
+            = index
+        - else
+          %option{:value=>index}                
+            Page 
+            = index
+
+  .info
+    totaal: 
+    = @total
+    &nbsp; | &nbsp;
+    pagina: 
+    = @page + 1
+
+%br
+%hr 
+
 .vlakje
   %table
     %thead
@@ -43,3 +69,7 @@
   %br
 
   =# link_to t('exercies.new'), new_exercise_path
+  :javascript 
+    document.getElementById('change_page').onchange = function() { 
+      window.location.search = "&page=" + document.getElementById('change_page').value
+    }    
