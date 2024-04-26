@@ -1,5 +1,5 @@
 - preset = lookup_exercies(exercise.preset)
-- if exercise.claimed_award
+- if exercise.claimed_award || exercise.completed
   %li
 
     .btn-group{:style=>"float:right"}
@@ -14,11 +14,15 @@
       = link_to "/app/oefening/#{exercise.id}", :target=>"_blank", :class => "btn btn pull-right" do
         %i.fa.fas.fa-eye
 
+    .empty_container{:style=>"min-height:42px;"}
+      %div{:style=>"float:left;width:100px;"}
+        .thumbnail{:style=>""}
+          %image{:src=> preset[I18n.locale.to_s]["thumbnail"], :style=>"width:64px;"}
 
-    %b= preset[I18n.locale.to_s]["naam"]
-    (
-    = t('common.completed')
-    )
+      %div{:style=>"float:left;width:200px;"}
+        %b= preset[I18n.locale.to_s]["naam"]
+        = (exercise.claimed_award? ? "<small>(Prijs opgehaald)</small>".html_safe : "<small>(Afgerond)</small>".html_safe)
+
 - else
   %li
 
@@ -36,11 +40,12 @@
 
     .content{:style=>""}
       .thumbnail{:style=>""}
-        %image{:src=> preset[I18n.locale.to_s]["thumbnail"], :width=>"200px"}
+        %image{:src=> preset[I18n.locale.to_s]["thumbnail"], :style=>"width:200px;"}
 
       .tekst{:style=>""}
         %h3
           = preset[I18n.locale.to_s]["naam"]
+          = ( exercise.completed? ? "(afgerond)" : "" )
           %br
           %small
             sinds
@@ -48,7 +53,8 @@
             ,
             = time_ago_in_words(exercise.created_at)
             geleden
-        .description= preset[I18n.locale.to_s]["doel"]
+        - unless exercise.completed?
+          .description= preset[I18n.locale.to_s]["doel"]
 
 
       .score

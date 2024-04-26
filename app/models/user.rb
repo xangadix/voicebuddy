@@ -122,4 +122,12 @@ class User
     return self.api_token
   end
 
+  def active_exercises 
+    active_ex = []
+    self.exercises.each do |ex| 
+      active_ex << ex unless ( ex.completed || ex.claimed_award )
+    end
+    active_ex
+  end
+
 end

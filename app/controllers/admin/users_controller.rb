@@ -99,7 +99,12 @@ class Admin::UsersController < ApplicationController
     #logger.debug " -------------------------- UPDATE : #{@user} #{user_params}"
     logger.debug " -------------------------- UPDATE : #{user_params[:bulk_selected_new_exercies]}"
     
-    add_exercises = JSON.parse( user_params[:bulk_selected_new_exercies] )
+    if user_params[:bulk_selected_new_exercies].blank?
+      add_exercises = []
+    else 
+      add_exercises = JSON.parse( user_params[:bulk_selected_new_exercies] )      
+    end 
+
     user_params.delete(:bulk_selected_new_exercies)
     
     logger.debug "parsed values:" + add_exercises.inspect 
@@ -113,11 +118,15 @@ class Admin::UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update(user_params)
+
+        logger.debug "\n\n---\nGELUKT\n--\n\n"
+
         # format.html { redirect_to '/admin/users', notice: 'Alle wijzigingen zijn opgeslagen.' }
         format.html { render :edit, notice: 'Alle wijzigingen zijn opgeslagen.'  }
         format.json { render :show, status: :ok, location: @user }
       else
-        format.html { render :edit }
+        logger.debug "\n\n---\ALLES IS KAPOT\n--\n\n"
+        format.html { render :edit, notice: "er waren problemen. #{@user.errors.inspect}"  }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -157,7 +166,7 @@ class Admin::UsersController < ApplicationController
 
     @user.exercises.each do |ex|
       logger.debug "trrr... #{ex.preset}, #{_ex_id}"
-      if ex.preset.to_i == _ex_id.to_i # $$ ex.preset.claim_reward
+      if ex.preset.to_i == _ex_id.to_i && !ex.completed
         # skip
         logger.debug "oefening #{_ex_id} was al toegewezen aan de client"
         return
@@ -205,7 +214,7 @@ class Admin::UsersController < ApplicationController
     # geen dubbele exercises
     # if user has exercis preset --> refuse
     @user.exercises.each do |ex|
-      if ex.preset == params[:ex_id] # $$ ex.preset.claim_reward
+      if ex.preset == params[:ex_id] && !ex.completed
         flash[:alert] = "User already has this preset."
         redirect_to "/admin/users/#{params[:id]}"
         return
