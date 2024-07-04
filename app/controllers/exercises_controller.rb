@@ -15,7 +15,7 @@ class ExercisesController < ApplicationController
     else
       @clients = User.where(:logopedist => current_user, :roles.in => [:client]).map{|u| u.id.to_s }
       @total = Exercise.where(:user_id.in => @clients ).count
-      @exercises = Exercise.where(:user_id.in => @clients ).limit(@limit).skip(page*@limit)
+      @exercises = Exercise.where(:user_id.in => @clients ).limit(@limit).skip(@page*@limit)
     end
   end
 
