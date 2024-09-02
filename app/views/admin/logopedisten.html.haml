@@ -35,19 +35,9 @@
         %td= link_to t('common.edit'), edit_admin_user_path(user)
         %td= link_to t('common.destroy'), "/admin/users/#{user.id.to_s}", method: :delete, data: { confirm: 'Are you sure?' }
 
-%br
-.pagination
-  .pull-right
-    / # move to a pagination partial
-    - unless @page == 0
-      = link_to t('common.previous'), "/admin/logopedisten/?page=#{@page - 1}"
-    - else
-      = t('common.previous')
-    \|
-    - unless @page > @total/(PER_PAGE-1)
-      = link_to t('common.next'), "/admin/logopedisten/?page=#{@page + 1}"
-    - else
-      = t('common.next')
+%br  
+  = render "/admin/partials/pagination", :pagination_for => "logopedisten"
+  
 %br
 
 %br
@@ -56,14 +46,3 @@
 = link_to t('common.new'), new_admin_user_path
 =# link_to t('common.show'), new_admin_logepedist_path
 
-:javascript
-  document.getElementById('search').onclick = function() {
-    window.location.search = "?page=0&search=" + document.getElementById('search_input').value
-  }
-
-  window.onkeyup = function(evt) {
-    console.log(evt.which)
-    if (evt.which  == "13" ) {
-      window.location.search = "?page=0&search=" + document.getElementById('search_input').value
-    }
-  }

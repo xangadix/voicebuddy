@@ -1,0 +1,44 @@
+.pagination
+  .pull-right
+    / # move to a pagination partial
+    - unless @page == 0
+      = link_to t('common.previous'), "javascript:next_page(#{@page - 1});"
+      &nbsp;        
+      &nbsp;
+    - else
+      =# t('common.previous')
+      
+    - unless @page >= (@total/(PER_PAGE)).floor
+      = link_to t('common.next'), "javascript:next_page(#{@page + 1});"
+    - else
+      =# t('common.next')
+  
+  / for testing
+  /= @page
+  /\|
+  /= @total
+  /= PER_PAGE
+  /= (@total/(PER_PAGE)).floor
+
+:javascript
+
+  // search
+  document.getElementById('search').onclick = function() {
+    window.location.search = "?page=0&search=" + document.getElementById('search_input').value
+  }
+
+  window.onkeyup = function(evt) {
+    console.log(evt.which)
+    if (evt.which  == "13" ) {
+      window.location.search = "?page=0&search=" + document.getElementById('search_input').value
+    }
+  }
+
+  // previous/ next
+  var next_page = function( _page ) {
+    window.location.href = "/admin/#{pagination_for}/?page=" + _page + "&search=" + window.location.search
+  }
+
+  var prev_page = function( _page ) {
+    window.location.href = "/admin/#{pagination_for}/?page=" + _page + "&search=" + window.location.search
+  }
