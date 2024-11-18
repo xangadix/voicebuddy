@@ -112,7 +112,7 @@ class Admin::UsersController < ApplicationController
     add_exercises.each do |ex|
       #add_new_exercise
       logger.debug "add: #{ex}"
-      add_new_exercise( @user.id.to_s, ex["exercise_id"], ex["frequency"], ex["target"],  )
+      add_new_exercise( @user.id.to_s, ex["exercise_id"], ex["target"], ex["frequency"],  )
     end
     
 
