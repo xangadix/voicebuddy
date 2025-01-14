@@ -70,7 +70,7 @@ class AppController < ApplicationController
     @secret = CLIENT_TOKEN_SALT
     @time = DateTime.now.to_s
     @token = Digest::SHA2.hexdigest @secret + "_" + @time
-    @login_failed = "Login is niet gelukt"
+    @login_failed = "Login niet gelukt; controleer uw email adres en wachtwoord."
     render "app/login"
   end
 
