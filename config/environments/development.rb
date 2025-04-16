@@ -36,15 +36,29 @@ Rails.application.configure do
   # config.action_mailer.perform_caching = false
 
   # default_url_options[:host]
-  config.action_mailer.default_url_options = { :host => "https://app.voicebuddy.nl" }
+  #config.action_mailer.default_url_options = { :host => "app.voicebuddy.nl" }
 
+  #config.action_mailer.delivery_method = :smtp
+  #config.action_mailer.smtp_settings = {
+    # :address                => "smtp.quickhost.nl",
+  #  :domain                 => "app.voicebuddy.nl"
+  # }
+  config.action_mailer.default_url_options = { :host => "voicebuddy.nl" }
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    :address                => "smtp.quickhost.nl",
-    :domain                 => "https://app.voicebuddy.nl"
-  }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
+
+  config.action_mailer.smtp_settings = {
+    address: "localhost", # Send to the local machine
+    port: 25,             # Default SMTP port. Change if your local server uses a different one (e.g., 1025 for Mailcatcher)
+    domain: "voicebuddy.nl", # Optional: Usually not needed for localhost, but keep if required by your local setup
+    openssl_verify_mode: 'none'
+    # You might need authentication settings here if your local SMTP server requires them:
+    # user_name:            'your_username',
+    # password:             'your_password',
+    # authentication:       'plain', # or 'login', 'cram_md5'
+    # enable_starttls_auto: true    # Use true if your server uses STARTTLS (common on port 587)
+  }
 
   # config.action_mailer.default_url_options = { :host => "localhost:80" }
   # config.action_mailer.delivery_method = :smtp
@@ -75,6 +89,8 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   config.web_console.permissions = '83.87.66.134'
   config.hosts << "voicebuddy.sense-studios.com"
+  config.hosts << "voicebuddy-dev4.sense-studios.com"
   config.hosts << "app.voicebuddy.nl"
   config.hosts << "dev.voicebuddy.nl"
 end
+
